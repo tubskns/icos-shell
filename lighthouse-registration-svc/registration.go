@@ -28,9 +28,11 @@ func main() {
 	password := os.Getenv("PASSWORD")
 	keycloak := os.Getenv("KEYCLOAK")
 	lighthouse := os.Getenv("LIGHTHOUSE")
+	advertiseAddress := os.Getenv("ADV_ADDRESS")
+	advertiseName := os.Getenv("ADV_NAME")
 	ctx := context.Background()
 
-	log.Print("clientID: " + clientID + "| realm: " + realm + "| username: " + username + "| keycloak: " + keycloak + "| lighthouse: " + lighthouse)
+	log.Print("clientID: " + clientID + "| realm: " + realm + "| username: " + username + "| keycloak: " + keycloak + "| lighthouse: " + lighthouse + "| advertising address: " + advertiseAddress + "| advertising name: " + advertiseName)
 
 	for {
 
@@ -41,7 +43,7 @@ func main() {
 
 		localVarPath := lighthouse + "/controller/"
 
-		var localVarPostBody = []byte(`{"name": "controller_2", "address": "192.168.100.3"}`)
+		var localVarPostBody = []byte(`{"name": "` + advertiseName + `", "address": "` + advertiseAddress + `"}`)
 
 		req, err := http.NewRequest("POST", localVarPath, bytes.NewBuffer(localVarPostBody))
 		req.Header.Set("Content-Type", "application/json")
@@ -65,7 +67,8 @@ func main() {
 			body, _ := io.ReadAll(resp.Body)
 			fmt.Println("response code: "+resp.Status+" with body: ", string(body))
 		}
-		time.Sleep(25 * time.Second)
+
+		time.Sleep(13 * time.Second)
 	}
 }
 
