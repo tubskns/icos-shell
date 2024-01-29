@@ -54,7 +54,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	dir, err := os.Getwd()
-	fmt.Println(dir)
+	//fmt.Println(dir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "There was an error while getting the current directory '%s'", err)
 	}
