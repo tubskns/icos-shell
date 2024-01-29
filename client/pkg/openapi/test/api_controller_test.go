@@ -12,6 +12,8 @@ package openapi
 import (
 	"context"
 	"log"
+
+	"shellclient/cmd"
 	openapiclient "shellclient/pkg/openapi"
 	"testing"
 
@@ -22,8 +24,8 @@ import (
 
 func Test_openapi_ControllerAPIService(t *testing.T) {
 
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
+	cmd.InitConfigForTesting()
+	apiClient := openapiclient.Client
 
 	t.Run("Test ControllerAPIService AddController", func(t *testing.T) {
 
@@ -36,7 +38,7 @@ func Test_openapi_ControllerAPIService(t *testing.T) {
 			log.Fatalf("Error reading config file: %s", err)
 		}
 		tokenRaw := viper.GetString("auth_token")
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
 		controller := *openapiclient.NewController("name_test", "address_test")
 
