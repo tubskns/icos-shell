@@ -72,3 +72,9 @@ openapi-generator-cli generate -g markdown -i openapi.yaml -o backend/docs/
 cd client/
 go run main.go create docs --path docs
 ```
+
+# Legal
+The lighthouse registration service is released under the Apache license 2.0.
+Copyright © 2022-2024 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
+
+🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
