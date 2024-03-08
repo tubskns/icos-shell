@@ -88,7 +88,9 @@ func (s *DeploymentAPIService) GetDeploymentById(ctx context.Context, deployment
 
 // GetDeployments - Returns a list of deployments
 func (s *DeploymentAPIService) GetDeployments(ctx context.Context, apiKey string) (ImplResponse, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs"), nil)
+//	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs"), nil)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+"/jobmanager/jobs/group", nil)
+	log.Printf("Sending a GET request to: "viper.GetString("components.job_manager.server")+"/jobmanager/jobs/group")
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
