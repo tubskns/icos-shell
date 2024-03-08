@@ -14,6 +14,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -91,6 +92,7 @@ func (s *DeploymentAPIService) GetDeployments(ctx context.Context, apiKey string
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
