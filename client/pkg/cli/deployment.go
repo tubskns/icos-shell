@@ -12,13 +12,17 @@ import (
 
 func CreateDeployment(yamlFile []byte) {
 	body := make(map[string]interface{})
-	err := yaml.Unmarshal(yamlFile, &body)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error unmarshaling YAML: %v", err)
-	}
+	//We need this now to maintain the original data structures between all interfaces while still
+	//complying with the jobManager interface. If we marshal/unmarshal the yaml input, we have
+	//difficulties keeping the file separators since they get removed. Therefore, we treat the input
+	//as a string until we send it from the backend.
+	s := string(yamlFile)
+	body["content"] = s
+
 	token := viper.GetString("auth_token")
 	deployment, resp, err := openapi.Client.DeploymentAPI.CreateDeployment(context.Background()).ApiKey(token).Body(body).Execute()
 	printPrettyJSON(deployment, resp, err)
+
 }
 
 func UpdateDeployment(id string, yamlFile []byte) {
