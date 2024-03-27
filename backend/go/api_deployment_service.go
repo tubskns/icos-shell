@@ -16,10 +16,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
-	"gopkg.in/yaml.v3"
 )
 
 // DeploymentAPIService is a service that implements the logic for the DeploymentAPIServicer
@@ -35,16 +35,14 @@ func NewDeploymentAPIService() DeploymentAPIServicer {
 
 // CreateDeployment - Creates a new deployment
 func (s *DeploymentAPIService) CreateDeployment(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
-	//	jsonData, _ := json.Marshal(body)
-	yamlData, _ := yaml.Marshal(body)
+	yamlData := body["content"].(string)
 
 	timestamp := fmt.Sprint(int32(time.Now().Unix()))
-	//req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs_create")+"/"+timestamp, bytes.NewBuffer(jsonData))
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs_create")+"/"+timestamp, bytes.NewBuffer(yamlData))
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs_create")+"/"+timestamp, strings.NewReader(yamlData))
 	log.Printf("Sending a POST request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobs_create") + "/" + timestamp)
-	log.Print("With content: " + string(yamlData))
+	fmt.Printf("Payload:\n%v\n", yamlData)
+
 	req = addBearerToToken(ctx, apiKey, req)
-	//	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Content-Type", "application/x-yaml")
 	client := &http.Client{}
 	resp, err := client.Do(req)
