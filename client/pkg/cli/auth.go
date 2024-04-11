@@ -20,7 +20,7 @@ func LoginUser() {
 	} else {
 		if resp.StatusCode == 200 {
 			if token != "" {
-				fmt.Printf("%s%s%s", "ICOS_AUTH_TOKEN='", token, "'")
+				fmt.Printf("%s%s%s", "ICOS_AUTH_TOKEN=", token)
 				viper.Set("auth_token", token)
 				if err := viper.WriteConfig(); err != nil {
 					panic(fmt.Errorf("fatal error writing config file %s", err))
