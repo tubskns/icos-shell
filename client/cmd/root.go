@@ -6,12 +6,11 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"shellclient/pkg/cli"
 	"shellclient/pkg/openapi"
 
+	"github.com/adrg/xdg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -53,23 +52,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	dir, err := os.Getwd()
-	//fmt.Println(dir)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "There was an error while getting the current directory '%s'", err)
-	}
-	// Find the index of the desired substring
-	index := strings.Index(dir, "shell/")
-
-	// Slice the string from the index to the end
-	newDir := dir[:index]
-
-	// Append the relative path
-	configPath := filepath.Join(newDir, "shell/client/config_client.yml")
-	// fmt.Println("configPath:", configPath)
-
-	//rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "$XDG_CONFIG_HOME/icos-shell/config.yaml", "config file")
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", configPath, "config file")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", xdg.ConfigHome+"/icos-shell/config.yaml", "config file")
 	viper.BindEnv("controller", "CONTROLLER")
 	viper.BindEnv("auth_token", "ICOS_AUTH_TOKEN")
 }
