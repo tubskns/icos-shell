@@ -10,6 +10,7 @@ import (
 	"shellclient/pkg/cli"
 	"shellclient/pkg/openapi"
 
+	"github.com/adrg/xdg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -51,7 +52,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "$XDG_CONFIG_HOME/icos-shell/config.yaml", "config file")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", xdg.ConfigHome+"/icos-shell/config.yaml", "config file")
 	viper.BindEnv("controller", "CONTROLLER")
 	viper.BindEnv("auth_token", "ICOS_AUTH_TOKEN")
 }
@@ -106,4 +107,9 @@ func initConfig() {
 		cli.CleanToken()
 		openapi.Init(viper.GetString("controller"))
 	}
+}
+
+// InitConfigForTesting is a function to initialize the configuration for testing.
+func InitConfigForTesting() {
+	initConfig()
 }

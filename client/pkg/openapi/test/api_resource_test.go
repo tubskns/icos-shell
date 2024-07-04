@@ -15,6 +15,7 @@ import (
 	"log"
 	"testing"
 
+	"shellclient/cmd"
 	openapi "shellclient/pkg/openapi"
 
 	"github.com/spf13/viper"
@@ -24,8 +25,8 @@ import (
 
 func Test_openapi_ResourceApiService(t *testing.T) {
 
-	configuration := openapi.NewConfiguration()
-	apiClient := openapi.NewAPIClient(configuration)
+	cmd.InitConfigForTesting()
+	apiClient := openapi.Client
 
 	t.Run("Test ResourceApiService GetResourceById", func(t *testing.T) {
 
@@ -59,9 +60,6 @@ func Test_openapi_ResourceApiService(t *testing.T) {
 
 	t.Run("Test ResourceApiService GetResources", func(t *testing.T) {
 
-		/*
-			This functionality is not correctly implemented in the ICOS system
-		*/
 		// t.Skip("skip test") // remove to run test
 
 		// Read in the Token
@@ -74,7 +72,7 @@ func Test_openapi_ResourceApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
 		resp, httpRes, err := apiClient.ResourceAPI.GetResources(context.Background()).ApiKey(token).Execute()
 

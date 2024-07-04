@@ -15,6 +15,7 @@ import (
 	"reflect"
 	"testing"
 
+	"shellclient/cmd"
 	openapi "shellclient/pkg/openapi"
 
 	"github.com/spf13/viper"
@@ -24,12 +25,12 @@ import (
 
 func Test_openapi_DeploymentApiService(t *testing.T) {
 
-	configuration := openapi.NewConfiguration()
-	apiClient := openapi.NewAPIClient(configuration)
+	cmd.InitConfigForTesting()
+	apiClient := openapi.Client
 
 	t.Run("Test DeploymentApiService CreateDeployment", func(t *testing.T) {
 
-		// t.Skip("skip test") // remove to run test
+		t.Skip("skip test") // remove to run test
 
 		// Read in the Token
 		// that is stored locally, to be able to connect to keycloak
@@ -43,7 +44,7 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
 		// Create a new deployment
 
@@ -53,9 +54,10 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		// Convert the Deployment object to a map[string]interface{}
 		bodyMap := structToMap(body, "name_test", "status_test")
 
-		httpRes, err := apiClient.DeploymentAPI.CreateDeployment(context.Background()).Body(bodyMap).ApiKey(token).Execute()
+		returnValue, httpRes, err := apiClient.DeploymentAPI.CreateDeployment(context.Background()).Body(bodyMap).ApiKey(token).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, returnValue)
 		assert.Equal(t, 201, httpRes.StatusCode)
 
 	})
@@ -78,13 +80,14 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
-		deploymentId := int64(0)
+		deploymentId := "0"
 
-		httpRes, err := apiClient.DeploymentAPI.DeleteDeploymentById(context.Background(), deploymentId).ApiKey(token).Execute()
+		returnValue, httpRes, err := apiClient.DeploymentAPI.DeleteDeploymentById(context.Background(), deploymentId).ApiKey(token).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, returnValue)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -107,24 +110,21 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
-		deploymentId := int64(0)
+		deploymentId := "0"
 
-		resp, httpRes, err := apiClient.DeploymentAPI.GetDeploymentById(context.Background(), deploymentId).ApiKey(token).Execute()
+		returnValue, httpRes, err := apiClient.DeploymentAPI.GetDeploymentById(context.Background(), deploymentId).ApiKey(token).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
+		require.NotNil(t, returnValue)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
 	t.Run("Test DeploymentApiService GetDeployments", func(t *testing.T) {
 
-		/*
-			This functionality is not correctly implemented yet in the ICOS system
-		*/
-		t.Skip("skip test") // remove to run test
+		//t.Skip("skip test") // remove to run test
 
 		// Read in the Token
 
@@ -137,12 +137,12 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
-		resp, httpRes, err := apiClient.DeploymentAPI.GetDeployments(context.Background()).ApiKey(token).Execute()
+		returnValue, httpRes, err := apiClient.DeploymentAPI.GetDeployments(context.Background()).ApiKey(token).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
+		require.NotNil(t, returnValue)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -164,19 +164,20 @@ func Test_openapi_DeploymentApiService(t *testing.T) {
 		tokenRaw := viper.GetString("auth_token")
 
 		// Extract the token from the raw string, otherwise it can not be passed as a httpReq
-		token := tokenRaw[1 : len(tokenRaw)-2]
+		token := tokenRaw[1 : len(tokenRaw)-1]
 
-		var deploymentId int64
 		// Update a new deployment
 
-		deploymentID := int64(0) // replace with the actual deployment ID
-		body := openapi.NewDeployment(deploymentID)
+		deploymentID_int := int64(0) // replace with the actual deployment ID
+		body := openapi.NewDeployment(deploymentID_int)
+		deploymentID := "0"
 
 		// Convert the Deployment object to a map[string]interface{}
 		bodyMap := structToMap(body, "name_test_updated", "status_test_updated")
-		httpRes, err := apiClient.DeploymentAPI.UpdateDeployment(context.Background(), deploymentId).Body(bodyMap).ApiKey(token).Execute()
+		returnValue, httpRes, err := apiClient.DeploymentAPI.UpdateDeployment(context.Background(), deploymentID).Body(bodyMap).ApiKey(token).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, returnValue)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

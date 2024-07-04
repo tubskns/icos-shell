@@ -13,6 +13,7 @@ import (
 	"context"
 	"testing"
 
+	"shellclient/cmd"
 	openapi "shellclient/pkg/openapi"
 
 	"github.com/stretchr/testify/assert"
@@ -21,8 +22,8 @@ import (
 
 func Test_openapi_DefaultApiService(t *testing.T) {
 
-	configuration := openapi.NewConfiguration()
-	apiClient := openapi.NewAPIClient(configuration)
+	cmd.InitConfigForTesting()
+	apiClient := openapi.Client
 
 	t.Run("Test DefaultApiService GetHealthcheck", func(t *testing.T) {
 

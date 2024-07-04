@@ -17,6 +17,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"shellclient/cmd"
+	"shellclient/pkg/cli"
 	openapi "shellclient/pkg/openapi"
 
 	"github.com/spf13/viper"
@@ -24,13 +26,14 @@ import (
 
 func Test_openapi_UserApiService(t *testing.T) {
 
-	configuration := openapi.NewConfiguration()
-	apiClient := openapi.NewAPIClient(configuration)
+	cmd.InitConfigForTesting()
+	apiClient := openapi.Client
 
 	t.Run("Test UserApiService LoginUser", func(t *testing.T) {
 
 		// t.Skip("skip test") // remove to run test
 
+		cli.LoginUser()
 		// get the user credentials from the config_client.yml file
 		viper.SetConfigFile("../../../config_client.yml") // Read the config file
 		viper.AddConfigPath(".")                          // look for config in the working directory
