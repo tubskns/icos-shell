@@ -1,10 +1,10 @@
-# \DefaultApi
+# \DefaultAPI
 
 All URIs are relative to *http://localhost:8080/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetHealthcheck**](DefaultApi.md#GetHealthcheck) | **Get** /healthcheck | Health check
+[**GetHealthcheck**](DefaultAPI.md#GetHealthcheck) | **Get** /healthcheck | Health check
 
 
 
@@ -30,9 +30,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultApi.GetHealthcheck(context.Background()).Execute()
+    r, err := apiClient.DefaultAPI.GetHealthcheck(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.GetHealthcheck``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.GetHealthcheck``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -53,7 +53,7 @@ Other parameters are passed through a pointer to a apiGetHealthcheckRequest stru
 
 ### Authorization
 
-No authorization required
+[api_key](../README.md#api_key)
 
 ### HTTP request headers
 
