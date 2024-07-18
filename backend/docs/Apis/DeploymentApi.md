@@ -8,6 +8,7 @@ All URIs are relative to *http://localhost:8080/api/v3*
 | [**deleteDeploymentById**](DeploymentApi.md#deleteDeploymentById) | **DELETE** /deployment/{deploymentId} | Deletes a deployment |
 | [**getDeploymentById**](DeploymentApi.md#getDeploymentById) | **GET** /deployment/{deploymentId} | Find deployment by ID |
 | [**getDeployments**](DeploymentApi.md#getDeployments) | **GET** /deployment/ | Returns a list of deployments |
+| [**stopDeploymentById**](DeploymentApi.md#stopDeploymentById) | **DELETE** /deployment/{deploymentId}/stop | Stops a deployment |
 | [**updateDeployment**](DeploymentApi.md#updateDeployment) | **PUT** /deployment/{deploymentId} | Updates a deployment |
 
 
@@ -112,6 +113,34 @@ Returns a list of deployments
 ### Return type
 
 [**List**](../Models/map.md)
+
+### Authorization
+
+[api_key](../README.md#api_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="stopDeploymentById"></a>
+# **stopDeploymentById**
+> Map stopDeploymentById(deploymentId, api\_key)
+
+Stops a deployment
+
+    Stops a deployment
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **deploymentId** | **String**| ID of deployment that needs to be stopped | [default to null] |
+| **api\_key** | **String**|  | [optional] [default to null] |
+
+### Return type
+
+[**Map**](../Models/AnyType.md)
 
 ### Authorization
 

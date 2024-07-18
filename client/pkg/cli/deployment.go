@@ -53,3 +53,9 @@ func DeleteDeployment(id string) {
 	deployment, resp, err := openapi.Client.DeploymentAPI.DeleteDeploymentById(context.Background(), id).ApiKey(token).Execute()
 	printPrettyJSON(deployment, resp, err)
 }
+
+func StopDeployment(id string) {
+	token := viper.GetString("auth_token")
+	deployment, resp, err := openapi.Client.DeploymentAPI.StopDeploymentById(context.Background(), id).ApiKey(token).Execute()
+	printPrettyJSON(deployment, resp, err)
+}

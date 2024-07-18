@@ -242,6 +242,37 @@ paths:
       summary: Updates a deployment
       tags:
       - deployment
+  /deployment/{deploymentId}/stop:
+    delete:
+      description: Stops a deployment
+      operationId: stopDeploymentById
+      parameters:
+      - description: ID of deployment that needs to be stopped
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Stops a deployment
+      tags:
+      - deployment
   /resource/:
     get:
       description: Returns a list of resources

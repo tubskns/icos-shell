@@ -77,7 +77,7 @@ func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploym
 }
 
 // StopDeploymentByID - Removes all existing resources related to a deployment
-func (s *DeploymentAPIService) StopDeploymentByID(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
+func (s *DeploymentAPIService) StopDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/undeploy/"+deploymentId, nil)
 	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/undeploy/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)

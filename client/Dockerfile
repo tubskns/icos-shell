@@ -1,4 +1,4 @@
-FROM golang:1.21 AS build
+FROM golang:1.22.5 AS build
 
 LABEL maintainer="Marc Michalke"
 

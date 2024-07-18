@@ -21,23 +21,23 @@ Adds a new controller
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
 )
 
 func main() {
-    controller := *openapiclient.NewController("controller_1", "192.168.100.1") // Controller | 
-    apiKey := "apiKey_example" // string |  (optional)
+	controller := *openapiclient.NewController("controller_1", "192.168.100.1") // Controller | 
+	apiKey := "apiKey_example" // string |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ControllerAPI.AddController(context.Background()).Controller(controller).ApiKey(apiKey).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.AddController``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.ControllerAPI.AddController(context.Background()).Controller(controller).ApiKey(apiKey).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.AddController``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -85,23 +85,23 @@ Returns a list of controllers
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ControllerAPI.GetControllers(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.GetControllers``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetControllers`: []Controller
-    fmt.Fprintf(os.Stdout, "Response from `ControllerAPI.GetControllers`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ControllerAPI.GetControllers(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.GetControllers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetControllers`: []Controller
+	fmt.Fprintf(os.Stdout, "Response from `ControllerAPI.GetControllers`: %v\n", resp)
 }
 ```
 

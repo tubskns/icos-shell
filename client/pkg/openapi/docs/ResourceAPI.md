@@ -23,24 +23,24 @@ Find resource by ID
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
 )
 
 func main() {
-    resourceId := int64(789) // int64 | ID of resource to return
+	resourceId := int64(789) // int64 | ID of resource to return
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ResourceAPI.GetResourceById(context.Background(), resourceId).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResourceById``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetResourceById`: map[string]interface{}
-    fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResourceById`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ResourceAPI.GetResourceById(context.Background(), resourceId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResourceById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetResourceById`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResourceById`: %v\n", resp)
 }
 ```
 
@@ -93,24 +93,24 @@ Returns a list of resources
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
 )
 
 func main() {
-    apiKey := "apiKey_example" // string |  (optional)
+	apiKey := "apiKey_example" // string |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ResourceAPI.GetResources(context.Background()).ApiKey(apiKey).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResources``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetResources`: map[string]interface{}
-    fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResources`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ResourceAPI.GetResources(context.Background()).ApiKey(apiKey).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResources``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetResources`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResources`: %v\n", resp)
 }
 ```
 
