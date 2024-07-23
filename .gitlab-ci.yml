@@ -21,7 +21,7 @@ variables:
 .parallel-matrix-config:
   parallel:
     matrix:
-      - PH_CUSTOM_PLATFORM: [linux/amd64, linux/arm64, linux/arm/v7]
+      - PH_CUSTOM_PLATFORM: [linux/amd64, darwin/arm64]
 
 cli-compile:
   timeout: 3h
