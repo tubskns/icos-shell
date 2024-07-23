@@ -14,13 +14,26 @@ variables:
   PH_CUSTOM_DOCKER_BUILD_CONTEXT_FOLDER: backend
   PH_DOCKER_IMAGE_PATH: icos/shell-backend
 
+
 # Client Jobs
 
+
+.parallel-matrix-config:
+  parallel:
+    matrix:
+      - PH_CUSTOM_PLATFORM: [linux/amd64, linux/arm64, linux/arm/v7]
+
 cli-compile:
+  timeout: 3h
+  parallel: !reference [.parallel-matrix-config, parallel]
+  tags:
+    - platform-$PH_CUSTOM_PLATFORM
   extends: .go-job-compile
   variables:
     PH_GO_SRC_DIR: client
     PH_GO_OUTPUT_FILENAME: icosctl
+    PH_GO_OUTPUT_APPEND_PLATFORM_SLUG: "true"
+
 
 # cli-lint:
 #   extends: .go-job-lint
