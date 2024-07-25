@@ -1,17 +1,17 @@
-# \ResourceApi
+# \ResourceAPI
 
 All URIs are relative to *http://localhost:8080/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetResourceById**](ResourceApi.md#GetResourceById) | **Get** /resource/{resourceId} | Find resource by ID
-[**GetResources**](ResourceApi.md#GetResources) | **Get** /resource/ | Returns a list of resources
+[**GetResourceById**](ResourceAPI.md#GetResourceById) | **Get** /resource/{resourceId} | Find resource by ID
+[**GetResources**](ResourceAPI.md#GetResources) | **Get** /resource/ | Returns a list of resources
 
 
 
 ## GetResourceById
 
-> Resource GetResourceById(ctx, resourceId).Execute()
+> map[string]interface{} GetResourceById(ctx, resourceId).Execute()
 
 Find resource by ID
 
@@ -34,13 +34,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ResourceApi.GetResourceById(context.Background(), resourceId).Execute()
+    resp, r, err := apiClient.ResourceAPI.GetResourceById(context.Background(), resourceId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ResourceApi.GetResourceById``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResourceById``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetResourceById`: Resource
-    fmt.Fprintf(os.Stdout, "Response from `ResourceApi.GetResourceById`: %v\n", resp)
+    // response from `GetResourceById`: map[string]interface{}
+    fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResourceById`: %v\n", resp)
 }
 ```
 
@@ -63,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Resource**](Resource.md)
+**map[string]interface{}**
 
 ### Authorization
 
@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 
 ## GetResources
 
-> []Resource GetResources(ctx).Execute()
+> map[string]interface{} GetResources(ctx).ApiKey(apiKey).Execute()
 
 Returns a list of resources
 
@@ -100,31 +100,36 @@ import (
 )
 
 func main() {
+    apiKey := "apiKey_example" // string |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ResourceApi.GetResources(context.Background()).Execute()
+    resp, r, err := apiClient.ResourceAPI.GetResources(context.Background()).ApiKey(apiKey).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ResourceApi.GetResources``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ResourceAPI.GetResources``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `GetResources`: []Resource
-    fmt.Fprintf(os.Stdout, "Response from `ResourceApi.GetResources`: %v\n", resp)
+    // response from `GetResources`: map[string]interface{}
+    fmt.Fprintf(os.Stdout, "Response from `ResourceAPI.GetResources`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiGetResourcesRequest struct via the builder pattern
 
 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **apiKey** | **string** |  | 
+
 ### Return type
 
-[**[]Resource**](Resource.md)
+**map[string]interface{}**
 
 ### Authorization
 
