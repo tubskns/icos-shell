@@ -1,17 +1,17 @@
-# \ControllerApi
+# \ControllerAPI
 
 All URIs are relative to *http://localhost:8080/api/v3*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddController**](ControllerApi.md#AddController) | **Post** /controller/ | Adds a new controller
-[**GetControllers**](ControllerApi.md#GetControllers) | **Get** /controller/ | Returns a list of controllers
+[**AddController**](ControllerAPI.md#AddController) | **Post** /controller/ | Adds a new controller
+[**GetControllers**](ControllerAPI.md#GetControllers) | **Get** /controller/ | Returns a list of controllers
 
 
 
 ## AddController
 
-> AddController(ctx).Username(username).Password(password).Controller(controller).Execute()
+> AddController(ctx).Controller(controller).ApiKey(apiKey).Execute()
 
 Adds a new controller
 
@@ -28,15 +28,14 @@ import (
 )
 
 func main() {
-    username := "username_example" // string | 
-    password := "password_example" // string | 
     controller := *openapiclient.NewController("controller_1", "192.168.100.1") // Controller | 
+    apiKey := "apiKey_example" // string |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.ControllerApi.AddController(context.Background()).Username(username).Password(password).Controller(controller).Execute()
+    r, err := apiClient.ControllerAPI.AddController(context.Background()).Controller(controller).ApiKey(apiKey).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ControllerApi.AddController``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.AddController``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -53,9 +52,8 @@ Other parameters are passed through a pointer to a apiAddControllerRequest struc
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **username** | **string** |  | 
- **password** | **string** |  | 
  **controller** | [**Controller**](Controller.md) |  | 
+ **apiKey** | **string** |  | 
 
 ### Return type
 
@@ -63,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[api_key](../README.md#api_key)
 
 ### HTTP request headers
 
@@ -97,13 +95,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ControllerApi.GetControllers(context.Background()).Execute()
+    resp, r, err := apiClient.ControllerAPI.GetControllers(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ControllerApi.GetControllers``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `ControllerAPI.GetControllers``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `GetControllers`: []Controller
-    fmt.Fprintf(os.Stdout, "Response from `ControllerApi.GetControllers`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `ControllerAPI.GetControllers`: %v\n", resp)
 }
 ```
 
@@ -122,7 +120,7 @@ Other parameters are passed through a pointer to a apiGetControllersRequest stru
 
 ### Authorization
 
-No authorization required
+[api_key](../README.md#api_key)
 
 ### HTTP request headers
 

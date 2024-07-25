@@ -17,7 +17,6 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/spf13/viper"
 )
@@ -37,9 +36,9 @@ func NewDeploymentAPIService() DeploymentAPIServicer {
 func (s *DeploymentAPIService) CreateDeployment(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
 	yamlData := body["content"].(string)
 
-	timestamp := fmt.Sprint(int32(time.Now().Unix()))
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs_create")+"/"+timestamp, strings.NewReader(yamlData))
-	log.Printf("Sending a POST request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobs_create") + "/" + timestamp)
+	// timestamp := fmt.Sprint(int32(time.Now().Unix()))
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups"), strings.NewReader(yamlData))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups"))
 	fmt.Printf("Payload:\n%v\n", yamlData)
 
 	req = addBearerToToken(ctx, apiKey, req)
@@ -60,8 +59,27 @@ func (s *DeploymentAPIService) CreateDeployment(ctx context.Context, body map[st
 
 // DeleteDeploymentById - Deletes a deployment
 func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodDelete, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs")+"/"+deploymentId, nil)
-	log.Printf("Sending a DELETE request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobs") + "/" + deploymentId)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodDelete, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/"+deploymentId, nil)
+	log.Printf("Sending a DELETE request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/" + deploymentId)
+	req = addBearerToToken(ctx, apiKey, req)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
+	if err != nil {
+		return errorConnect(resp, err)
+	} else {
+		if resp.StatusCode == 200 {
+			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
+		} else {
+			return unexpectedCode(resp.StatusCode)
+		}
+	}
+}
+
+// StopDeploymentByID - Removes all existing resources related to a deployment
+func (s *DeploymentAPIService) StopDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/undeploy/"+deploymentId, nil)
+	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/undeploy/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -79,8 +97,8 @@ func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploym
 
 // GetDeploymentById - Find deployment by ID
 func (s *DeploymentAPIService) GetDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs")+"/"+deploymentId, nil)
-	log.Printf("Sending a GET request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobs") + "/" + deploymentId)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/"+deploymentId, nil)
+	log.Printf("Sending a GET request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -98,9 +116,9 @@ func (s *DeploymentAPIService) GetDeploymentById(ctx context.Context, deployment
 
 // GetDeployments - Returns a list of deployments
 func (s *DeploymentAPIService) GetDeployments(ctx context.Context, apiKey string) (ImplResponse, error) {
-	//	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs"), nil)
-	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+"/jobmanager/jobs", nil)
-	log.Printf("Sending a GET request to: " + viper.GetString("components.job_manager.server") + "/jobmanager/jobs")
+	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups"), nil)
+	// req, _ := http.NewRequestWithContext(ctx, http.MethodGet, viper.GetString("components.job_manager.server")+"/jobmanager/jobs", nil)
+	log.Printf("Sending a GET request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups"))
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -119,8 +137,8 @@ func (s *DeploymentAPIService) GetDeployments(ctx context.Context, apiKey string
 // UpdateDeployment - Updates a deployment
 func (s *DeploymentAPIService) UpdateDeployment(ctx context.Context, deploymentId string, body map[string]interface{}, apiKey string) (ImplResponse, error) {
 	jsonData, _ := json.Marshal(body)
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobs")+"/"+deploymentId, bytes.NewBuffer(jsonData))
-	log.Printf("Sending a POST request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobs") + "/" + deploymentId)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/"+deploymentId, bytes.NewBuffer(jsonData))
+	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)

@@ -11,7 +11,9 @@ components:
   job_manager: 
     server: https://ocm-hub.bull1.ari-imet.eu
     path_jobs: /jobmanager/jobs
-    path_jobs_create: /jobmanager/jobs/create
+    path_jobgroups: /jobmanager/groups
+    path_policies: /jobmanager/policies
+    # path_jobs_create: /jobmanager/jobs/create
   aggregator: 
     server: http://127.0.0.1:8080
     path: /
