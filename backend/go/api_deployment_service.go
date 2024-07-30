@@ -59,7 +59,7 @@ func (s *DeploymentAPIService) CreateDeployment(ctx context.Context, body map[st
 
 // DeleteDeploymentById - Deletes a deployment
 func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodDelete, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/"+deploymentId, nil)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodDelete, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/undeploy/"+deploymentId, nil)
 	log.Printf("Sending a DELETE request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
