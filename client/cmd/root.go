@@ -28,7 +28,7 @@ var rootCmd = &cobra.Command{
 			cli.GetHealthcheck()
 		} else {
 			if viper.GetString("lighthouse") != "" {
-				fmt.Fprintln(os.Stderr, "Retrieving controllers from lighthouse...")
+				fmt.Fprintln(os.Stdout, "Retrieving controllers from lighthouse...")
 				openapi.Init(viper.GetString("lighthouse"))
 				cli.GetController()
 				fmt.Fprintln(os.Stderr, "Please, add a controller to the config file. Exiting.")
@@ -77,7 +77,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Config:", viper.ConfigFileUsed())
+		fmt.Fprintln(os.Stdout, "Config:", viper.ConfigFileUsed())
 	}
 
 	// if controller not defined, ask for one to the lighthouse
@@ -103,7 +103,7 @@ func initConfig() {
 		cli.LoginUser()
 		cli.CleanToken()
 	} else {
-		fmt.Fprintln(os.Stderr, "Controller:", viper.GetString("controller"))
+		fmt.Fprintln(os.Stdout, "Controller:", viper.GetString("controller"))
 		cli.CleanToken()
 		openapi.Init(viper.GetString("controller"))
 	}

@@ -1,58 +1,21 @@
-name: my_application
-...
-
+name: hello-world
+description: "example hello world function"
 components:
-- name: component-1
-  type: helm
-  repository: foo/bar
-  values:
-    ...
-- name: component-2
-  type: manifest
-  manifests:
-  - ...
-  - ...
-- name: component-3
-  type: container
-  image: foo/bar:latest
-  env:
-    - name: env1
-      value: val1
-  ports: [80, 8080]
+  - name: hello-world
+    type: manifest
+    manifests:
+    - name: hello-world-pod
 
-...
-
-telemetry:
-- type: metrics_endpoint
-  port: 9000
-  path: /metrics
-  protocol: prometheus
-  apply_to:
-    - component: component-1
-
-...
-
-policies:
-  - name: policy1
-    type: performance
-    apply_to:
-    - component-1
-    expression:  my_metric > 100
-    for: 10m
-    remediations:
-      - scale_pod   
-
-...
-
-matchmaking_requirements:
-  optimization_metric: metric_x
-  - type: hard
-    infrastructure: nkua
-  - type: soft
-    req: camera at GPS XX.XX YY.YY
-         facing North
-  - type: data
-    component: component-1
-    require:
-    - dataset1
-...
+manifests:
+  - apiVersion: v1
+    kind: Pod
+    metadata:
+      name: hello-world-container
+      namespace: hello-world-demo
+    spec:
+      containers:
+      - name: hello-world-container
+        image: crccheck/hello-world
+        ports:
+        - containerPort: 8000
+      

@@ -6,9 +6,16 @@ services:
         build: ./
         container_name: icos-shell-backend
         restart: always
-        environment:
-            KEYCLOAK_URL: "keycloak:443"
         ports:
             - "8080:8080"
         volumes:
-            - ./config.yml:/app/config.yml
+            - ./config_server.yml:/app/config.yml
+    lighthouse:
+        image: michalkeit/icos-shell-backend
+        container_name: lighthouse
+        ports:
+            - "8081:8080"
+        volumes:
+            - ./config_lighthouse.yml:/app/config.yml
+
+        
