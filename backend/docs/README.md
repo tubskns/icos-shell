@@ -14,6 +14,7 @@ All URIs are relative to *http://localhost:8080/api/v3*
 *DeploymentApi* | [**deleteDeploymentById**](Apis/DeploymentApi.md#deletedeploymentbyid) | **DELETE** /deployment/{deploymentId} | Deletes a deployment |
 *DeploymentApi* | [**getDeploymentById**](Apis/DeploymentApi.md#getdeploymentbyid) | **GET** /deployment/{deploymentId} | Find deployment by ID |
 *DeploymentApi* | [**getDeployments**](Apis/DeploymentApi.md#getdeployments) | **GET** /deployment/ | Returns a list of deployments |
+*DeploymentApi* | [**startDeploymentById**](Apis/DeploymentApi.md#startdeploymentbyid) | **DELETE** /deployment/{deploymentId}/start | Starts a deployment |
 *DeploymentApi* | [**stopDeploymentById**](Apis/DeploymentApi.md#stopdeploymentbyid) | **DELETE** /deployment/{deploymentId}/stop | Stops a deployment |
 *DeploymentApi* | [**updateDeployment**](Apis/DeploymentApi.md#updatedeployment) | **PUT** /deployment/{deploymentId} | Updates a deployment |
 | *ResourceApi* | [**getResourceById**](Apis/ResourceApi.md#getresourcebyid) | **GET** /resource/{resourceId} | Find resource by ID |

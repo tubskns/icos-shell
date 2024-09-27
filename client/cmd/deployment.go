@@ -43,6 +43,9 @@ var deploymentCmd = &cobra.Command{
 		} else if cmd.Parent().Use == "delete" {
 			specificId, _ := cmd.Flags().GetString("id")
 			cli.DeleteDeployment(specificId)
+		} else if cmd.Parent().Use == "start" {
+			specificId, _ := cmd.Flags().GetString("id")
+			cli.StartDeployment(specificId)
 		} else if cmd.Parent().Use == "stop" {
 			specificId, _ := cmd.Flags().GetString("id")
 			cli.StopDeployment(specificId)
@@ -56,9 +59,11 @@ func init() {
 	var getDeploymentCmd = *deploymentCmd
 	var updateDeploymentCmd = *deploymentCmd
 	var deleteDeploymentCmd = *deploymentCmd
+	var startDeploymentCmd = *deploymentCmd
 	var stopDeploymentCmd = *deploymentCmd
 	createCmd.AddCommand(&createDeploymentCmd)
 	deleteCmd.AddCommand(&deleteDeploymentCmd)
+	startCmd.AddCommand(&startDeploymentCmd)
 	stopCmd.AddCommand(&stopDeploymentCmd)
 	updateCmd.AddCommand(&updateDeploymentCmd)
 	getCmd.AddCommand(&getDeploymentCmd)
@@ -68,6 +73,7 @@ func init() {
 	getDeploymentCmd.PersistentFlags().StringP("id", "", "", "ID of the deployment")
 	updateDeploymentCmd.PersistentFlags().StringP("id", "", "", "ID of the deployment")
 	deleteDeploymentCmd.PersistentFlags().StringP("id", "", "", "ID of the deployment")
+	startDeploymentCmd.PersistentFlags().StringP("id", "", "", "ID of the deployment")
 	stopDeploymentCmd.PersistentFlags().StringP("id", "", "", "ID of the deployment")
 
 }

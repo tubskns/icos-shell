@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeleteDeploymentById**](DeploymentAPI.md#DeleteDeploymentById) | **Delete** /deployment/{deploymentId} | Deletes a deployment
 [**GetDeploymentById**](DeploymentAPI.md#GetDeploymentById) | **Get** /deployment/{deploymentId} | Find deployment by ID
 [**GetDeployments**](DeploymentAPI.md#GetDeployments) | **Get** /deployment/ | Returns a list of deployments
+[**StartDeploymentById**](DeploymentAPI.md#StartDeploymentById) | **Delete** /deployment/{deploymentId}/start | Starts a deployment
 [**StopDeploymentById**](DeploymentAPI.md#StopDeploymentById) | **Delete** /deployment/{deploymentId}/stop | Stops a deployment
 [**UpdateDeployment**](DeploymentAPI.md#UpdateDeployment) | **Put** /deployment/{deploymentId} | Updates a deployment
 
@@ -276,6 +277,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]map[string]interface{}**](map.md)
+
+### Authorization
+
+[api_key](../README.md#api_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## StartDeploymentById
+
+> map[string]interface{} StartDeploymentById(ctx, deploymentId).ApiKey(apiKey).Execute()
+
+Starts a deployment
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+)
+
+func main() {
+	deploymentId := "deploymentId_example" // string | ID of deployment to be resumed
+	apiKey := "apiKey_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DeploymentAPI.StartDeploymentById(context.Background(), deploymentId).ApiKey(apiKey).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DeploymentAPI.StartDeploymentById``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `StartDeploymentById`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `DeploymentAPI.StartDeploymentById`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**deploymentId** | **string** | ID of deployment to be resumed | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiStartDeploymentByIdRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **apiKey** | **string** |  | 
+
+### Return type
+
+**map[string]interface{}**
 
 ### Authorization
 

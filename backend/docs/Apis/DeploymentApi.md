@@ -8,6 +8,7 @@ All URIs are relative to *http://localhost:8080/api/v3*
 | [**deleteDeploymentById**](DeploymentApi.md#deleteDeploymentById) | **DELETE** /deployment/{deploymentId} | Deletes a deployment |
 | [**getDeploymentById**](DeploymentApi.md#getDeploymentById) | **GET** /deployment/{deploymentId} | Find deployment by ID |
 | [**getDeployments**](DeploymentApi.md#getDeployments) | **GET** /deployment/ | Returns a list of deployments |
+| [**startDeploymentById**](DeploymentApi.md#startDeploymentById) | **DELETE** /deployment/{deploymentId}/start | Starts a deployment |
 | [**stopDeploymentById**](DeploymentApi.md#stopDeploymentById) | **DELETE** /deployment/{deploymentId}/stop | Stops a deployment |
 | [**updateDeployment**](DeploymentApi.md#updateDeployment) | **PUT** /deployment/{deploymentId} | Updates a deployment |
 
@@ -113,6 +114,34 @@ Returns a list of deployments
 ### Return type
 
 [**List**](../Models/map.md)
+
+### Authorization
+
+[api_key](../README.md#api_key)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+<a name="startDeploymentById"></a>
+# **startDeploymentById**
+> Map startDeploymentById(deploymentId, api\_key)
+
+Starts a deployment
+
+    Starts a deployment
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **deploymentId** | **String**| ID of deployment to be resumed | [default to null] |
+| **api\_key** | **String**|  | [optional] [default to null] |
+
+### Return type
+
+[**Map**](../Models/AnyType.md)
 
 ### Authorization
 
