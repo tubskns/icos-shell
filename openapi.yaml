@@ -237,6 +237,38 @@ paths:
                 type: object
                 additionalProperties: true
                 # $ref: '#/components/schemas/Deployment'
+  /deployment/{deploymentId}/start:
+    delete:
+      tags:
+      - deployment
+      summary: Starts a deployment
+      description: "Starts a deployment"
+      operationId: startDeploymentById
+      parameters:
+      - name: deploymentId
+        in: path
+        description: ID of deployment to be resumed
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
   /deployment/{deploymentId}/stop:
     delete:
       tags:

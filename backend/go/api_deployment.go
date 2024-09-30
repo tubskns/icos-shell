@@ -71,6 +71,11 @@ func (c *DeploymentAPIController) Routes() Routes {
 			"/api/v3/deployment/",
 			c.GetDeployments,
 		},
+		"StartDeploymentById": Route{
+			strings.ToUpper("Delete"),
+			"/api/v3/deployment/{deploymentId}/start",
+			c.StartDeploymentById,
+		},
 		"StopDeploymentById": Route{
 			strings.ToUpper("Delete"),
 			"/api/v3/deployment/{deploymentId}/stop",
@@ -146,6 +151,25 @@ func (c *DeploymentAPIController) GetDeploymentById(w http.ResponseWriter, r *ht
 func (c *DeploymentAPIController) GetDeployments(w http.ResponseWriter, r *http.Request) {
 	apiKeyParam := r.Header.Get("api_key")
 	result, err := c.service.GetDeployments(r.Context(), apiKeyParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// StartDeploymentById - Starts a deployment
+func (c *DeploymentAPIController) StartDeploymentById(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	deploymentIdParam := params["deploymentId"]
+	if deploymentIdParam == "" {
+		c.errorHandler(w, r, &RequiredError{"deploymentId"}, nil)
+		return
+	}
+	apiKeyParam := r.Header.Get("api_key")
+	result, err := c.service.StartDeploymentById(r.Context(), deploymentIdParam, apiKeyParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

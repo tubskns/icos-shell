@@ -76,10 +76,29 @@ func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploym
 	}
 }
 
+// SartDeploymentByID - Starts existing resources related to a deployment
+func (s *DeploymentAPIService) StartDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/start/"+deploymentId, nil)
+	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/start/" + deploymentId)
+	req = addBearerToToken(ctx, apiKey, req)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
+	if err != nil {
+		return errorConnect(resp, err)
+	} else {
+		if resp.StatusCode == 200 {
+			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
+		} else {
+			return unexpectedCode(resp.StatusCode)
+		}
+	}
+}
+
 // StopDeploymentByID - Removes all existing resources related to a deployment
 func (s *DeploymentAPIService) StopDeploymentById(ctx context.Context, deploymentId string, apiKey string) (ImplResponse, error) {
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/undeploy/"+deploymentId, nil)
-	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/undeploy/" + deploymentId)
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.job_manager.server")+viper.GetString("components.job_manager.path_jobgroups")+"/stop/"+deploymentId, nil)
+	log.Printf("Sending a PUT request to: " + viper.GetString("components.job_manager.server") + viper.GetString("components.job_manager.path_jobgroups") + "/stop/" + deploymentId)
 	req = addBearerToToken(ctx, apiKey, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)

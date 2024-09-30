@@ -85,6 +85,7 @@ Class | Method | HTTP request | Description
 *DeploymentAPI* | [**DeleteDeploymentById**](docs/DeploymentAPI.md#deletedeploymentbyid) | **Delete** /deployment/{deploymentId} | Deletes a deployment
 *DeploymentAPI* | [**GetDeploymentById**](docs/DeploymentAPI.md#getdeploymentbyid) | **Get** /deployment/{deploymentId} | Find deployment by ID
 *DeploymentAPI* | [**GetDeployments**](docs/DeploymentAPI.md#getdeployments) | **Get** /deployment/ | Returns a list of deployments
+*DeploymentAPI* | [**StartDeploymentById**](docs/DeploymentAPI.md#startdeploymentbyid) | **Delete** /deployment/{deploymentId}/start | Starts a deployment
 *DeploymentAPI* | [**StopDeploymentById**](docs/DeploymentAPI.md#stopdeploymentbyid) | **Delete** /deployment/{deploymentId}/stop | Stops a deployment
 *DeploymentAPI* | [**UpdateDeployment**](docs/DeploymentAPI.md#updatedeployment) | **Put** /deployment/{deploymentId} | Updates a deployment
 *ResourceAPI* | [**GetResourceById**](docs/ResourceAPI.md#getresourcebyid) | **Get** /resource/{resourceId} | Find resource by ID

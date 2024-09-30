@@ -38,6 +38,7 @@ type DeploymentAPIRouter interface {
 	DeleteDeploymentById(http.ResponseWriter, *http.Request)
 	GetDeploymentById(http.ResponseWriter, *http.Request)
 	GetDeployments(http.ResponseWriter, *http.Request)
+	StartDeploymentById(http.ResponseWriter, *http.Request)
 	StopDeploymentById(http.ResponseWriter, *http.Request)
 	UpdateDeployment(http.ResponseWriter, *http.Request)
 }
@@ -85,6 +86,7 @@ type DeploymentAPIServicer interface {
 	DeleteDeploymentById(context.Context, string, string) (ImplResponse, error)
 	GetDeploymentById(context.Context, string, string) (ImplResponse, error)
 	GetDeployments(context.Context, string) (ImplResponse, error)
+	StartDeploymentById(context.Context, string, string) (ImplResponse, error)
 	StopDeploymentById(context.Context, string, string) (ImplResponse, error)
 	UpdateDeployment(context.Context, string, map[string]interface{}, string) (ImplResponse, error)
 }
