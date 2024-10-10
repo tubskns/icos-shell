@@ -1,21 +1,21 @@
-name: hello-world
-description: "example hello world function"
+name: shell-demo-application
+description: "app to demo deployment"
+namespace: shell-demo
 components:
+- name: hello-world
+  type: manifest
+  manifests:
   - name: hello-world
-    type: manifest
-    manifests:
-    - name: hello-world-pod
-
-manifests:
-  - apiVersion: v1
-    kind: Pod
-    metadata:
-      name: hello-world-container
-      namespace: hello-world-demo
-    spec:
-      containers:
-      - name: hello-world-container
-        image: crccheck/hello-world
-        ports:
-        - containerPort: 8000
-      
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world
+  namespace: shell-demo
+spec:
+  containers:
+  - name: hello-world-pod
+    image: testcontainers/helloworld
+    resources:
+      requests: 
+        memory: 1Gi
