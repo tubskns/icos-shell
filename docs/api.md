@@ -5,4 +5,4 @@ hide:
 
 # APIs
 
-<swagger-ui src="../openapi.yaml"/>
+<swagger-ui src="openapi.yaml"/>
