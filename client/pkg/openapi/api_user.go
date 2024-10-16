@@ -82,10 +82,10 @@ func (a *UserAPIService) LoginUserExecute(r ApiLoginUserRequest) (string, *http.
 	localVarFormParams := url.Values{}
 
 	if r.username != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "username", r.username, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "username", r.username, "form", "")
 	}
 	if r.password != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "password", r.password, "")
+		parameterAddToHeaderOrQuery(localVarQueryParams, "password", r.password, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
