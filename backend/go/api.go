@@ -42,12 +42,24 @@ type DeploymentAPIRouter interface {
 	StopDeploymentById(http.ResponseWriter, *http.Request)
 	UpdateDeployment(http.ResponseWriter, *http.Request)
 }
+// PredictAPIRouter defines the required methods for binding the api requests to a responses for the PredictAPI
+// The PredictAPIRouter implementation should parse necessary information from the http request,
+// pass the data to a PredictAPIServicer to perform the required actions, then write the service results to the http response.
+type PredictAPIRouter interface { 
+	PredictMetrics(http.ResponseWriter, *http.Request)
+}
 // ResourceAPIRouter defines the required methods for binding the api requests to a responses for the ResourceAPI
 // The ResourceAPIRouter implementation should parse necessary information from the http request,
 // pass the data to a ResourceAPIServicer to perform the required actions, then write the service results to the http response.
 type ResourceAPIRouter interface { 
 	GetResourceById(http.ResponseWriter, *http.Request)
 	GetResources(http.ResponseWriter, *http.Request)
+}
+// TrainAPIRouter defines the required methods for binding the api requests to a responses for the TrainAPI
+// The TrainAPIRouter implementation should parse necessary information from the http request,
+// pass the data to a TrainAPIServicer to perform the required actions, then write the service results to the http response.
+type TrainAPIRouter interface { 
+	TrainMetrics(http.ResponseWriter, *http.Request)
 }
 // UserAPIRouter defines the required methods for binding the api requests to a responses for the UserAPI
 // The UserAPIRouter implementation should parse necessary information from the http request,
@@ -92,6 +104,15 @@ type DeploymentAPIServicer interface {
 }
 
 
+// PredictAPIServicer defines the api actions for the PredictAPI service
+// This interface intended to stay up to date with the openapi yaml used to generate it,
+// while the service implementation can be ignored with the .openapi-generator-ignore file
+// and updated with the logic required for the API.
+type PredictAPIServicer interface { 
+	PredictMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
+}
+
+
 // ResourceAPIServicer defines the api actions for the ResourceAPI service
 // This interface intended to stay up to date with the openapi yaml used to generate it,
 // while the service implementation can be ignored with the .openapi-generator-ignore file
@@ -99,6 +120,15 @@ type DeploymentAPIServicer interface {
 type ResourceAPIServicer interface { 
 	GetResourceById(context.Context, int64) (ImplResponse, error)
 	GetResources(context.Context, string) (ImplResponse, error)
+}
+
+
+// TrainAPIServicer defines the api actions for the TrainAPI service
+// This interface intended to stay up to date with the openapi yaml used to generate it,
+// while the service implementation can be ignored with the .openapi-generator-ignore file
+// and updated with the logic required for the API.
+type TrainAPIServicer interface { 
+	TrainMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 }
 
 

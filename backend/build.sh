@@ -1,0 +1,1 @@
+docker-compose -f /opt/development/shell/backend/docker-compose.yml stop && docker-compose -f /opt/development/shell/backend/docker-compose.yml rm -f && docker build /opt/development/shell/backend/ -t michalkeit/icos-shell-backend --no-cache && docker-compose -f /opt/development/shell/backend/docker-compose.yml up

@@ -1,7 +1,9 @@
 Apis/ControllerApi.md
 Apis/DefaultApi.md
 Apis/DeploymentApi.md
+Apis/PredictApi.md
 Apis/ResourceApi.md
+Apis/TrainApi.md
 Apis/UserApi.md
 Models/Controller.md
 Models/Deployment.md
