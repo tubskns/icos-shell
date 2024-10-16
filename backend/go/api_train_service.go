@@ -35,7 +35,7 @@ func (s *TrainAPIService) TrainMetrics(ctx context.Context, body map[string]inte
 	jsonData := body["content"].(string)
 
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.train_metrics"), strings.NewReader(jsonData))
-	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + "/train_metrics_utilisation")
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.train_metrics"))
 	fmt.Printf("Payload:\n%v\n", jsonData)
 
 	req = addBearerToToken(ctx, apiKey, req)
