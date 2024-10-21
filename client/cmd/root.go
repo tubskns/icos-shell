@@ -77,7 +77,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stdout, "Config:", viper.ConfigFileUsed())
+		// fmt.Fprintln(os.Stdout, "Config:", viper.ConfigFileUsed())
 	}
 
 	// if controller not defined, ask for one to the lighthouse
@@ -103,7 +103,7 @@ func initConfig() {
 		cli.LoginUser()
 		cli.CleanToken()
 	} else {
-		fmt.Fprintln(os.Stdout, "Controller:", viper.GetString("controller"))
+		// fmt.Fprintln(os.Stdout, "Controller:", viper.GetString("controller"))
 		cli.CleanToken()
 		openapi.Init(viper.GetString("controller"))
 	}

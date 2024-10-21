@@ -53,6 +53,6 @@ func printArrayPrettyJSON(object []map[string]interface{}, resp *http.Response, 
 func CleanToken() {
 	token := viper.GetString("auth_token")
 	token = strings.ReplaceAll(token, "\n", "")
-	fmt.Fprintln(os.Stdout, "Token found:", "..."+token[len(token)-50:len(token)-1])
+	//	fmt.Fprintln(os.Stdout, "Token found:", "..."+token[len(token)-50:len(token)-1])
 	viper.Set("auth_token", token)
 }
