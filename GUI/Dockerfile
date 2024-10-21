@@ -1,11 +1,15 @@
-FROM node:lts-slim AS build
+FROM node:18-alpine
+WORKDIR /
+COPY package*.json ./
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-WORKDIR /app
-COPY * ./
-RUN npm install next && \
-    mkdir ./app && \
-    npm run build
+# Install dependencies
+RUN npm install
 
-CMD ["npm", "run", "dev"]
+COPY . .
+
+EXPOSE 3000
+
+# Using "npm run dev" and the proxy server together in the same container
+CMD ["sh", "-c", "node proxyserver.js & npm run dev"]

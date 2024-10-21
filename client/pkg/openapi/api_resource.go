@@ -209,7 +209,7 @@ func (a *ResourceAPIService) GetResourcesExecute(r ApiGetResourcesRequest) (map[
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication

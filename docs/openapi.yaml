@@ -1,48 +1,50 @@
 openapi: 3.0.3
 info:
+  title: ICOS Shell
   description: This is the ICOS Shell based on the OpenAPI 3.0 specification.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: ICOS Shell
   version: 1.0.11
 servers:
 - url: http://localhost:8080/api/v3
-security:
-- api_key: []
 tags:
-- description: Operations about resources
-  name: resource
-- description: Operations about deployments
-  name: deployment
-- description: Operations about user
-  name: user
+- name: resource
+  description: Operations about resources
+- name: deployment
+  description: Operations about deployments
+- name: user
+  description: Operations about user
+
 paths:
   /healthcheck:
     get:
       operationId: getHealthcheck
+      summary: Health check
       responses:
         "200":
           description: successful operation
-      summary: Health check
   /controller/:
     get:
+      tags:
+      - controller
+      summary: Returns a list of controllers
       operationId: getControllers
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
+                type: array
                 items:
                   $ref: '#/components/schemas/Controller'
-                type: array
-          description: successful operation
         "204":
           description: No content
-      summary: Returns a list of controllers
+    post:
       tags:
       - controller
-    post:
+      summary: Adds a new controller
       operationId: addController
       parameters:
       - explode: false
@@ -53,31 +55,26 @@ paths:
           type: string
         style: simple
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Controller'
-        required: true
       responses:
         "201":
           description: Controller added
         "202":
           description: Controller already exists
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+           $ref: "#/components/responses/UnauthorizedError"
         "405":
           description: Invalid input
-      summary: Adds a new controller
-      tags:
-      - controller
+      
   /deployment/:
     get:
+      tags:
+      - deployment
+      summary: Returns a list of deployments
       description: Returns the list of deployments
       operationId: getDeployments
       parameters:
@@ -90,18 +87,21 @@ paths:
         style: simple
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                items:
-                  additionalProperties: true
-                  type: object
                 type: array
-          description: successful operation
-      summary: Returns a list of deployments
+                items: 
+                  type: object
+                  additionalProperties: true
+                # type: array
+                # items:
+                #   $ref: '#/components/schemas/Deployment'
+    post:
       tags:
       - deployment
-    post:
+      summary: Creates a new deployment
       description: ""
       operationId: createDeployment
       parameters:
@@ -113,75 +113,40 @@ paths:
           type: string
         style: simple
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Descriptor'
-        required: true
       responses:
         "201":
+          description: Deployment created
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: Deployment created
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+           $ref: "#/components/responses/UnauthorizedError"
         "405":
           description: Invalid input
-      summary: Creates a new deployment
-      tags:
-      - deployment
   /deployment/{deploymentId}:
-    delete:
-      description: Deletes a deployment
-      operationId: deleteDeploymentById
-      parameters:
-      - description: ID of deployment that needs to be deleted
-        explode: false
-        in: path
-        name: deploymentId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: header
-        name: api_key
-        required: false
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                additionalProperties: true
-                type: object
-          description: successful operation
-      summary: Deletes a deployment
+    get:
       tags:
       - deployment
-    get:
+      summary: Find deployment by ID
       description: Returns a single deployment
       operationId: getDeploymentById
       parameters:
-      - description: ID of deployment to return
-        explode: false
+      - name: deploymentId
         in: path
-        name: deploymentId
+        description: ID of deployment to return
         required: true
+        style: simple
+        explode: false
         schema:
           type: string
-        style: simple
       - explode: false
         in: header
         name: api_key
@@ -191,31 +156,32 @@ paths:
         style: simple
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: successful operation
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
         "400":
           description: Invalid ID supplied
         "404":
           description: Deployment not found
-      summary: Find deployment by ID
+    put:
       tags:
       - deployment
-    put:
-      description: Updates a deployment
+      summary: Updates a deployment
+      description: "Updates a deployment"
       operationId: updateDeployment
       parameters:
-      - description: ID of deployment that needs to be updated
-        explode: false
+      - name: deploymentId
         in: path
-        name: deploymentId
+        description: ID of deployment that needs to be updated
         required: true
+        style: simple
+        explode: false
         schema:
           type: string
-        style: simple
       - explode: false
         in: header
         name: api_key
@@ -224,37 +190,69 @@ paths:
           type: string
         style: simple
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Descriptor'
-        required: true
       responses:
         "200":
+          description: Deployment updated
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: Deployment updated
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
         "405":
           description: Invalid input
-      summary: Updates a deployment
+    delete:
       tags:
       - deployment
+      summary: Deletes a deployment
+      description: "Deletes a deployment"
+      operationId: deleteDeploymentById
+      parameters:
+      - name: deploymentId
+        in: path
+        description: ID of deployment that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
   /deployment/{deploymentId}/start:
     delete:
-      description: Starts a deployment
+      tags:
+      - deployment
+      summary: Starts a deployment
+      description: "Starts a deployment"
       operationId: startDeploymentById
       parameters:
-      - description: ID of deployment to be resumed
-        explode: false
+      - name: deploymentId
         in: path
-        name: deploymentId
+        description: ID of deployment to be resumed
         required: true
+        style: simple
+        explode: false
         schema:
           type: string
-        style: simple
       - explode: false
         in: header
         name: api_key
@@ -264,28 +262,29 @@ paths:
         style: simple
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: successful operation
-      summary: Starts a deployment
-      tags:
-      - deployment
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
   /deployment/{deploymentId}/stop:
     delete:
-      description: Stops a deployment
+      tags:
+      - deployment
+      summary: Stops a deployment
+      description: "Stops a deployment"
       operationId: stopDeploymentById
       parameters:
-      - description: ID of deployment that needs to be stopped
-        explode: false
+      - name: deploymentId
         in: path
-        name: deploymentId
+        description: ID of deployment that needs to be stopped
         required: true
+        style: simple
+        explode: false
         schema:
           type: string
-        style: simple
       - explode: false
         in: header
         name: api_key
@@ -295,17 +294,18 @@ paths:
         style: simple
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: successful operation
-      summary: Stops a deployment
-      tags:
-      - deployment
+                additionalProperties: true
+                # $ref: '#/components/schemas/Deployment'
   /resource/:
     get:
+      tags:
+      - resource
+      summary: Returns a list of resources
       description: Returns a list of resources
       operationId: getResources
       parameters:
@@ -318,151 +318,112 @@ paths:
         style: simple
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: successful operation
-      summary: Returns a list of resources
-      tags:
-      - resource
+                additionalProperties: true
+                # type: array
+                # items:
+                #   $ref: '#/components/schemas/Resource'
   /resource/{resourceId}:
     get:
+      tags:
+      - resource
+      summary: Find resource by ID
       description: Returns a single resource
       operationId: getResourceById
       parameters:
-      - description: ID of resource to return
-        explode: false
+      - name: resourceId
         in: path
-        name: resourceId
+        description: ID of resource to return
         required: true
-        schema:
-          format: int64
-          type: integer
         style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
       responses:
         "200":
+          description: successful operation
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: successful operation
+                additionalProperties: true
+                # $ref: '#/components/schemas/Resource'
         "400":
           description: Invalid ID supplied
         "404":
           description: Deployment not found
-      summary: Find resource by ID
-      tags:
-      - resource
   /user/login:
     get:
+      tags:
+      - user
+      summary: Logs user into the system
       description: ""
       operationId: loginUser
       parameters:
-      - description: The user name for login
-        explode: true
+      - name: username
         in: query
-        name: username
+        description: The user name for login
         required: false
+        style: form
+        explode: true
         schema:
           type: string
-        style: form
-      - description: The password for login in clear text
-        explode: true
+      - name: password
         in: query
-        name: password
+        description: The password for login in clear text
         required: false
+        style: form
+        explode: true
         schema:
           type: string
-        style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                type: string
           description: successful operation
           headers:
             X-Rate-Limit:
               description: calls per hour allowed by the user
+              style: simple
               explode: false
               schema:
-                format: int32
                 type: integer
-              style: simple
+                format: int32
             X-Expires-After:
               description: date in UTC when token expires
+              style: simple
               explode: false
               schema:
-                format: date-time
                 type: string
-              style: simple
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
         "400":
           description: Invalid username/password supplied
-      summary: Logs user into the system
-      tags:
-      - user
   /user/logout:
     get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
       description: ""
       operationId: logoutUser
       parameters: []
       responses:
         default:
           description: successful operation
-      summary: Logs out current logged in user session
-      tags:
-      - user
   /metrics/train:
     post:
-      description: ""
-      operationId: trainMetrics
-      parameters:
-      - explode: false
-        in: header
-        name: api_key
-        required: false
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MlModel'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                additionalProperties: true
-                type: object
-          description: submitted successfully
-        "400":
-          description: Invalid input
-        "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
-        "404":
-          description: Intelligence component not found
-        "500":
-          description: Intelligence component error
-      summary: Trains a model on a set of metrics
       tags:
       - train
-  /metrics/predict:
-    post:
+      summary: Trains a model on a set of metrics
       description: ""
-      operationId: predictMetrics
-      parameters:
+      operationId: trainMetrics
+      parameters: 
       - explode: false
         in: header
         name: api_key
@@ -471,145 +432,173 @@ paths:
           type: string
         style: simple
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MlModel'
-        required: true
       responses:
         "200":
+          description:  submitted successfully
           content:
             application/json:
               schema:
-                additionalProperties: true
                 type: object
-          description: submitted successfully
+                additionalProperties: true
+                # $ref: '#/components/schemas/MlModel'
         "400":
           description: Invalid input
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+           $ref: "#/components/responses/UnauthorizedError"
         "404":
           description: Intelligence component not found
         "500":
           description: Intelligence component error
-      summary: Predict metrics development based on model and input metrics
+  /metrics/predict:
+    post:
       tags:
       - predict
+      summary: Predict metrics development based on model and input metrics
+      description: ""
+      operationId: predictMetrics
+      parameters: 
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MlModel'
+      responses:
+        "200":
+          description:  submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                # $ref: '#/components/schemas/MlModel'
+        "400":
+          description: Invalid input
+        "401":
+           $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
 components:
-  responses:
-    UnauthorizedError:
-      description: API key is missing or invalid
-      headers:
-        WWW_Authenticate:
-          explode: false
-          schema:
-            type: string
-          style: simple
   schemas:
     Resource:
+      required:
+      - id
+      - type
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier of the resource
+        name:
+          type: string
+          description: Name of the resource
+        type:
+          type: string
+          description: Type of resource
+          enum:
+          - controller
+          - node
+        parentId:
+          type: integer
+          description: ID of the parent resource
+          format: int64
+        status:
+          type: string
+          description: Status of the resource
+          enum:
+          - online
+          - offline
       example:
         id: 1
         name: resource_1
         type: controller
         parentId: 1
         status: online
-      properties:
-        id:
-          description: Unique identifier of the resource
-          format: int64
-          type: integer
-        name:
-          description: Name of the resource
-          type: string
-        type:
-          description: Type of resource
-          enum:
-          - controller
-          - node
-          type: string
-        parentId:
-          description: ID of the parent resource
-          format: int64
-          type: integer
-        status:
-          description: Status of the resource
-          enum:
-          - online
-          - offline
-          type: string
+    Deployment:
       required:
       - id
-      - type
       type: object
-    Deployment:
-      example:
-        id: 1
-        name: test_deployment
-        status: running
       properties:
         id:
-          description: Unique identifier of the deployment
-          format: int64
           type: integer
+          format: int64
+          description: Unique identifier of the deployment
         name:
-          description: Name of the deployment
           type: string
+          description: Name of the deployment
         status:
+          type: string
           description: Status of the deployment
           enum:
           - running
           - pending
-          type: string
-      required:
-      - id
-      type: object
-    Controller:
       example:
-        address: 192.168.100.1
-        name: controller_1
+        id: 1
+        name: test_deployment
+        status: running
+    Controller:
+      required:
+      - name
+      - address
+      type: object
       properties:
         name:
+          type: string
+          example: "controller_1"
           description: Name of the controller
-          example: controller_1
-          type: string
         address:
-          description: IP address of the controller
-          example: 192.168.100.1
           type: string
-      required:
-      - address
-      - name
-      type: object
+          example: "192.168.100.1"
+          description: IP address of the controller
     Descriptor:
-      example:
-        name: my_application
-        components:
-        - name: component-1
-          type: helm
-          repository: foo/bar
-        Requirements:
-        - optimization_metric: metric_x
-        repository: foo/bar
       type: object
+      example:
+        name: "my_application"
+        components: 
+          - name: component-1
+            type: helm
+            repository: foo/bar
+        Requirements:
+          - optimization_metric: metric_x
+        repository: foo/bar
     MlModel:
-      example:
-        name: ml_input
-        components:
-        - name: component-1
-          type: helm
-          repository: foo/bar
-        Requirements:
-        - optimization_metric: metric_x
-        repository: foo/bar
       type: object
+      example:
+        name: "ml_input"
+        components: 
+          - name: component-1
+            type: helm
+            repository: foo/bar
+        Requirements:
+          - optimization_metric: metric_x
+        repository: foo/bar
+  responses:
+    UnauthorizedError:
+      description: API key is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
   securitySchemes:
     api_key:
-      in: header
-      name: api_key
       type: apiKey
+      name: api_key
+      in: header
+
+security:
+  - api_key: [] 

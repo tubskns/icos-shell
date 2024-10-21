@@ -8,25 +8,23 @@ import axios from 'axios';
 import TopologyGraph from './TopologyGraph.js';  // Import the TopologyGraph component
 
 export default function eCommerce() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [error, setError] = useState(""); // State for managing the error message
     const [data, setData] = useState(null); // State for storing the fetched data
     const router = useRouter(); // Next.js router for navigation
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const token = Cookies.get('authToken');
+        const token = Cookies.get('authToken'); // Get auth token from cookies
 
         if (!token) {
-            router.push("/authentication/sign-in/");
+            router.push("/authentication/sign-in/"); // Redirect to sign-in if no token is found
         } else {
             const config = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:3001/api/v3/resource/',
+                url: `${process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS}/api/v3/resource/`, // Use env variable for the API base URL
                 headers: {
                     'Content-Type': 'application/json',
-                    'api_key': token
+                    'api_key': token // Include the token in headers
                 }
             };
 
@@ -36,7 +34,7 @@ export default function eCommerce() {
                 })
                 .catch((error) => {
                     console.log(error);
-                    setError("Failed to fetch data");
+                    setError("Failed to fetch data"); // Set an error message if the request fails
                 });
         }
     }, [router]);
@@ -55,27 +53,16 @@ export default function eCommerce() {
             </div>
 
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
-                {/*<Grid item xs={12} md={12} lg={12} xl={8}>*/}
-                {/*    /!* Features *!/*/}
-                {/*    <Features />*/}
-                {/*    */}
-                {/*    <iframe*/}
-                {/*        src="http://37.32.29.40:3003"*/}
-                {/*        style={{ border: 'white', borderRadius: '2%' }}*/}
-                {/*        title="Example"*/}
-                {/*        width="100%"*/}
-                {/*        height="500px"*/}
-                {/*    ></iframe>*/}
-                {/*</Grid>*/}
-
-                <Grid item xs={12} md={12} lg={12} xl={4}>
-                    {/* ClusterNodesByCPUArchitecture */}
-                    {/*<ClusterNodesByCPUArchitecture />*/}
-
-                    {/* Topology Graph */}
-                    {data && <TopologyGraph width="100%" height="500px" data={data} />}
-                </Grid>
+                {/* Topology Graph */}
+                {data && <TopologyGraph width="100%" height="500px" data={data} />}
             </Grid>
+
+            {/* Error handling */}
+            {error && (
+                <div style={{ color: 'red', marginTop: '20px' }}>
+                    {error}
+                </div>
+            )}
         </>
     );
 }

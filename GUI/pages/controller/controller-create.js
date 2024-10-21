@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Link from 'next/link';
 import styles from '@/styles/PageTitle.module.css';
-import axios from 'axios';
+const axios = require('axios');
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -20,7 +20,7 @@ const RichTextEditor = dynamic(() => import('@mantine/rte'), {
     ssr: false,
 });
 
-const ProjectCreate = () => {
+const ControllerCreate = () => {
     const [error, setError] = useState(""); // State for managing the error message
     const [data, setData] = useState(null); // State for storing the fetched data
     const [priority, setPriority] = useState(''); // State for the select input
@@ -48,7 +48,7 @@ const ProjectCreate = () => {
         const config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_LIGHTHOUSE_ADDRESS}/api/v3/deployment`, // Use env variable for the API base URL
+            url: `${process.env.NEXT_PUBLIC_LIGHTHOUSE_ADDRESS}/api/v3/controller`,
             headers: {
                 'Content-Type': 'application/json',
                 'api_key': token
@@ -65,7 +65,7 @@ const ProjectCreate = () => {
             })
             .catch((error) => {
                 console.log(error);
-                setError("Error while connecting to the Lighthouse component."); // Set the error message
+                setError("lighthouse.icos-project.eu: Error while connecting to the component " ); // Set the error message
                 setOpenSnackbar(true); // Open Snackbar to show error
             });
     };
@@ -230,4 +230,4 @@ const ProjectCreate = () => {
     );
 };
 
-export default ProjectCreate;
+export default ControllerCreate;

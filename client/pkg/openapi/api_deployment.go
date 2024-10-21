@@ -101,7 +101,7 @@ func (a *DeploymentAPIService) CreateDeploymentExecute(r ApiCreateDeploymentRequ
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.body
@@ -229,7 +229,7 @@ func (a *DeploymentAPIService) DeleteDeploymentByIdExecute(r ApiDeleteDeployment
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -355,7 +355,7 @@ func (a *DeploymentAPIService) GetDeploymentByIdExecute(r ApiGetDeploymentByIdRe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -477,7 +477,7 @@ func (a *DeploymentAPIService) GetDeploymentsExecute(r ApiGetDeploymentsRequest)
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -603,7 +603,7 @@ func (a *DeploymentAPIService) StartDeploymentByIdExecute(r ApiStartDeploymentBy
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -729,7 +729,7 @@ func (a *DeploymentAPIService) StopDeploymentByIdExecute(r ApiStopDeploymentById
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -864,7 +864,7 @@ func (a *DeploymentAPIService) UpdateDeploymentExecute(r ApiUpdateDeploymentRequ
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.body

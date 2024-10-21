@@ -96,7 +96,7 @@ func (a *ControllerAPIService) AddControllerExecute(r ApiAddControllerRequest) (
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	if r.apiKey != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "")
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.controller
