@@ -62,9 +62,14 @@ fi
 
 # Create deployment
 COMPONENTS="[shell-backend --> job-manager]"
-RESPONSE=$(./icos-shell --config=config_client.yml create deployment --file app_descriptor_example.yaml 2> /dev/null)
-if [[ $RESPONSE == "201" ]]; then
-    log "DONE" "Deployment added to the controller successfully" "$COMPONENTS"
+{
+    IFS=$'\n' read -r -d '' CAPTURED_STDERR;
+    IFS=$'\n' read -r -d '' CAPTURED_STDOUT;
+} < <((printf '\0%s\0' "$(./icos-shell --config=config_client.yml create deployment --file app_descriptor_example.yaml)" 1>&2) 2>&1)
+JOBID=$(echo "$CAPTURED_STDERR" | jq -r ".ID")
+
+if [[ $CAPTURED_STDOUT == "201" ]]; then
+    log "DONE" "Deployment [$JOBID] added to the controller successfully" "$COMPONENTS"
 elif [[ $RESPONSE == "202" ]]; then
     log "INFO" "Deployment already exists in the controller" "$COMPONENTS"
 elif [[ $RESPONSE == "200" ]]; then
@@ -72,14 +77,72 @@ elif [[ $RESPONSE == "200" ]]; then
 else
     log "FAIL" "Error while trying to add a deployment to the controller" "$COMPONENTS"
 fi
+sleep 30
 
-# Get deployment
+# Get deployments
 COMPONENTS="[shell-backend --> job-manager]"
 RESPONSE=$(./icos-shell --config=config_client.yml get deployment 2> /dev/null)
 if [[ $RESPONSE ]]; then
     log "DONE" "Deployments retrieved successfully" "$COMPONENTS"
 else
     log "FAIL" "Error while retrieving deployments" "$COMPONENTS"
+fi
+sleep 3
+
+# Get specific deployment
+COMPONENTS="[shell-backend --> job-manager]"
+end=$((SECONDS+60))
+while true; do
+    RESPONSE=$(./icos-shell --config=config_client.yml get deployment --id $JOBID 2> /dev/null)
+
+    if [[ -n $RESPONSE ]]; then
+        log "DONE" "Specific deployment retrieved successfully" "$COMPONENTS"
+        break
+    fi
+
+    if (( SECONDS >= end )); then
+        log "FAIL" "Error while retrieving specific deployment" "$COMPONENTS"
+        break
+    fi
+  sleep 5
+done
+
+# Start deployment
+COMPONENTS="[shell-backend --> job-manager]"
+RESPONSE=$(./icos-shell --config=config_client.yml start deployment --id $JOBID 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Deployment started successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while starting deployment" "$COMPONENTS"
+fi
+sleep 5
+
+# Stop deployment
+COMPONENTS="[shell-backend --> job-manager]"
+end=$((SECONDS+60))
+while true; do
+    RESPONSE=$(./icos-shell --config=config_client.yml stop deployment --id $JOBID 2> /dev/null)
+
+    if [[ -n $RESPONSE ]]; then
+        log "DONE" "Deployment stopped successfully" "$COMPONENTS"
+        break
+    fi
+
+    if (( SECONDS >= end )); then
+        log "FAIL" "Error while stopping deployment" "$COMPONENTS"
+        break
+    fi
+  sleep 5
+done
+sleep 5
+
+# Delete deployment
+COMPONENTS="[shell-backend --> job-manager]"
+RESPONSE=$(./icos-shell --config=config_client.yml delete deployment --id $JOBID 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Deployment deleted successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while deleting deployments" "$COMPONENTS"
 fi
 
 # Get resources
