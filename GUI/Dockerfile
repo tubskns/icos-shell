@@ -2,6 +2,8 @@ FROM node:18-alpine
 WORKDIR /
 COPY package*.json ./
 
+ENV NEXT_TELEMETRY_DISABLED=1
+
 # Install dependencies
 RUN npm install
 
