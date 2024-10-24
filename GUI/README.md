@@ -1,14 +1,13 @@
 Initial implementation of Icos-Web using [Next.js](https://nextjs.org/).
 
 ## Run
-First we should run following proxyserver to handle the HTTPS requests.
-(this is temporary and will be removed on final deployment.)
+Simply run the development server in Docker compose:
 
-```bash
-node .\proxyserver.js
+```
+docker-compose up --build
 ```
 
-Then, concurrently run the development server:
+or, if you need to run locally:
 
 ```bash
 npm run dev

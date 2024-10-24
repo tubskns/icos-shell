@@ -54,7 +54,7 @@ const AllProjects = () => {
             let config = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: 'http://localhost:3001/api/v3/deployment/',
+                url: `${process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS}/api/v3/deployment/`,
                 headers: {
                     'Content-Type': 'application/json',
                     'api_key': token

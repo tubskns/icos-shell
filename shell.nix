@@ -8,5 +8,6 @@ in pkgs.mkShell {
       python-pkgs.seaborn
       python-pkgs.numpy
     ]))
+    pkgs.nodejs
   ];
 }
