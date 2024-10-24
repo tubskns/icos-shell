@@ -5,4 +5,4 @@ services:
       - '3000:3000'
     environment:
       - NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500
-      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=lighthouse.icos-project.eu:8080
+      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.icos-project.eu:8080
