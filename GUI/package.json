@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "concurrently": "^7.0.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.10.5",
     "@fullcalendar/core": "^6.0.2",

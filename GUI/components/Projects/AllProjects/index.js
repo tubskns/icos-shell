@@ -1,24 +1,7 @@
-import React, {useEffect, useState} from "react";
-import { Box } from "@mui/material";
-import Card from "@mui/material/Card";
-import { Typography } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import React, { useEffect, useState } from "react";
+import { Box, Card, Typography, InputLabel, MenuItem, FormControl, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, LinearProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import LinearProgress, {
-    linearProgressClasses,
-} from "@mui/material/LinearProgress";
-import styles from "@/components/Projects/AllProjects/AllProjects.module.css";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DeployRowComponent from './DeployRowComponent'; // Adjust the import path as needed
@@ -27,8 +10,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 5,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-        backgroundColor:
-            theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
+        backgroundColor: theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
     },
     [`& .${linearProgressClasses.bar}`]: {
         borderRadius: 5,
@@ -38,9 +20,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const AllProjects = () => {
     const [select, setSelect] = useState("");
-    const [error, setError] = useState(""); // State for managing the error message
-    const router = useRouter(); // Next.js router for navigation
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true); // New loading state
+    const router = useRouter();
     const [rows, setRows] = useState([]);
+    const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     const handleChange = (event) => {
         setSelect(event.target.value);
@@ -48,13 +32,14 @@ const AllProjects = () => {
 
     useEffect(() => {
         const token = Cookies.get('authToken');
-        if (token === undefined) {
+        if (!token) {
             router.push("/authentication/sign-in/");
         } else {
-            let config = {
+            setLoading(true); // Start loading
+            const config = {
                 method: 'get',
                 maxBodyLength: Infinity,
-                url: `${process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS}/api/v3/deployment/`,
+                url: `${controllerBaseUrl}/api/v3/deployment/`,
                 headers: {
                     'Content-Type': 'application/json',
                     'api_key': token
@@ -63,15 +48,14 @@ const AllProjects = () => {
 
             axios.request(config)
                 .then((response) => {
-                    console.log("Deployment:");
-                    console.log(JSON.stringify(response.data));
-
-                    setRows(prevRows => [...prevRows, ...response.data]); // Update state with new rows
+                    console.log("Deployment:", response.data);
+                    setRows(response.data); // Update rows with response data
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                     setError("Failed to fetch deployments.");
-                });
+                })
+                .finally(() => setLoading(false)); // End loading
         }
     }, [router]);
 
@@ -138,65 +122,57 @@ const AllProjects = () => {
                     </Box>
                 </Box>
 
-                <TableContainer
-                    component={Paper}
-                    sx={{
-                        boxShadow: "none",
-                        maxHeight: "800px",
-                        overflowY: "auto",
-                    }}
-                >
-                    <Table
-                        sx={{ minWidth: 700 }}
-                        aria-label="simple table"
-                        className="dark-table"
+                {loading ? ( // Show loading indicator while data is being fetched
+                    <LinearProgress sx={{ marginBottom: "15px" }} />
+                ) : (
+                    <TableContainer
+                        component={Paper}
+                        sx={{
+                            boxShadow: "none",
+                            maxHeight: "800px",
+                            overflowY: "auto",
+                        }}
                     >
-                        <TableHead sx={{ background: "#F7FAFF" }}>
-                            <TableRow>
-                                <TableCell
-                                    sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}
-                                >
-                                    namespace
-                                </TableCell>
-
-                                <TableCell
-                                    sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}
-                                >
-                                    Job Group Name
-                                </TableCell>
-
-                                <TableCell
-                                    sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}
-                                    align="center"
-                                >
-                                    Orchestrator
-                                </TableCell>
-
-                                <TableCell
-                                    sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}
-                                    align="center"
-                                >
-                                    State
-                                </TableCell>
-
-
-                                <TableCell
-                                    sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}
-                                    align="right"
-                                >
-                                    Targets
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody id="table-body">
-
-                            {rows.map((rowData, index) => (
-                                <DeployRowComponent key={index} data={rowData} />
-                            ))}
-                        </TableBody >
-                    </Table>
-                </TableContainer>
+                        <Table
+                            sx={{ minWidth: 700 }}
+                            aria-label="simple table"
+                            className="dark-table"
+                        >
+                            <TableHead sx={{ background: "#F7FAFF" }}>
+                                <TableRow>
+                                    <TableCell sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}>
+                                        Namespace
+                                    </TableCell>
+                                    <TableCell sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }}>
+                                        Job Group Name
+                                    </TableCell>
+                                    <TableCell sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }} align="center">
+                                        Orchestrator
+                                    </TableCell>
+                                    <TableCell sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }} align="center">
+                                        State
+                                    </TableCell>
+                                    <TableCell sx={{ borderBottom: "1px solid #F7FAFF", fontSize: "13.5px" }} align="right">
+                                        Targets
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody id="table-body">
+                                {rows.map((rowData, index) =>
+                                    rowData.jobs.map((job, jobIndex) => (
+                                        <TableRow key={`${index}-${jobIndex}`}>
+                                            <TableCell>{job.namespace ?? "N/A"}</TableCell>
+                                            <TableCell>{rowData.appName ?? "N/A"}</TableCell>
+                                            <TableCell align="center">{job.orchestrator ?? "N/A"}</TableCell>
+                                            <TableCell align="center">{job.state ?? "N/A"}</TableCell>
+                                            <TableCell align="right">{job.targets?.cluster_name ?? "N/A"}</TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
             </Card>
         </>
     );

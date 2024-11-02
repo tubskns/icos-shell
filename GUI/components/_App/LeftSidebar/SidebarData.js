@@ -48,7 +48,7 @@ export const SidebarData = [
 
   {
     title: "Controllers",
-    path: "",
+    path: "/controller/",
     icon: <CopyAllIcon />,
     iconClosed: <KeyboardArrowRightIcon />,
     iconOpened: <KeyboardArrowDownIcon />,

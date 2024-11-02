@@ -8,27 +8,28 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import CircularProgress from "@mui/material/CircularProgress";
 import Cookies from "js-cookie";
-import axios from "axios";
 import styles from "@/components/Authentication/Authentication.module.css";
+import axios from "axios";
 
 const SignInForm = () => {
-    const [error, setError] = useState(""); // State for managing the error message
-    const router = useRouter(); // Next.js router for navigation
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false); // State for managing loading animation
+    const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true); // Start the loading animation
+        setError(""); // Clear previous errors
+
+        const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         const data = new FormData(event.currentTarget);
-
-        const email = data.get("email");
-        const password = data.get("password");
-
-        console.log(email, password);
 
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS}/api/v3/user/login?username=${email}&password=${password}`,
+            url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}`,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -36,21 +37,16 @@ const SignInForm = () => {
 
         try {
             const response = await axios.request(config);
-            console.log(JSON.stringify(response.data));
-
-            // Assuming the response contains the auth token
             const authToken = response.data;
 
-            // Set the auth token in a session cookie
-            Cookies.set("authToken", authToken, { expires: 1 }); // Expires in 1 day
-
-            console.log(Cookies.get('authToken'));
-
-            // Navigate to the desired page
+            Cookies.set("authToken", authToken, { expires: 1 });
             router.push("/");
         } catch (error) {
-            console.error("Error:", error); // Log the error for debugging
-            setError("An error occurred while trying to sign in. Please try again."); // Update the error message state
+            console.error("Error:", error);
+            setError("Authentication Failed! please try again.");
+            setLoading(false);
+        } finally {
+            // setLoading(false); // Stop the loading animation after completion
         }
     };
 
@@ -65,7 +61,7 @@ const SignInForm = () => {
                     padding: "50px 0 100px",
                 }}
             >
-                <Grid item xs={12}>
+                <Grid item xs={12} md={12} lg={12} xl={12}>
                     <Box>
                         <Typography as="h1" fontSize="28px" fontWeight="700" mb="5px">
                             Sign In{" "}
@@ -157,13 +153,16 @@ const SignInForm = () => {
                             )}
 
                             <Grid container alignItems="center" spacing={2}>
-                                <Grid item xs={6}>
+                                <Grid item xs={6} sm={6}>
                                     <FormControlLabel
-                                        control={<Checkbox color="primary" />}
-                                        label="Remember me"
+                                        control={
+                                            <Checkbox value="allowExtraEmails" color="primary" />
+                                        }
+                                        label="Remember me."
                                     />
                                 </Grid>
-                                <Grid item xs={6} textAlign="end">
+
+                                <Grid item xs={6} sm={6} textAlign="end">
                                     <Link
                                         href="/authentication/forgot-password"
                                         className="primaryColor text-decoration-none"
@@ -177,6 +176,7 @@ const SignInForm = () => {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
+                                disabled={loading} // Disable button when loading
                                 sx={{
                                     mt: 2,
                                     textTransform: "capitalize",
@@ -186,8 +186,9 @@ const SignInForm = () => {
                                     padding: "12px 10px",
                                     color: "#fff !important",
                                 }}
+                                startIcon={loading && <CircularProgress size={20} color="inherit" />} // Add spinner as start icon
                             >
-                                Sign In
+                                {loading ? "Signing In..." : "Sign In"} {/* Update button text when loading */}
                             </Button>
                         </Box>
                     </Box>

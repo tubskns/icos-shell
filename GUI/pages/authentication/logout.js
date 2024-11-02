@@ -44,10 +44,6 @@ export default function Logout() {
                             />
                         </Box>
 
-                        <Box mt={4} mb={4}>
-                            <img src="/images/coffee.png" alt="Coffee" />
-                        </Box>
-
                         <Typography as="h1" fontSize="20px" fontWeight="500" mb={1}>
                             You are Logged Out
                         </Typography>
@@ -78,5 +74,3 @@ export default function Logout() {
         </>
     );
 }
-
-
