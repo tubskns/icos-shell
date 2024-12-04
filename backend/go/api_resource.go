@@ -50,17 +50,30 @@ func NewResourceAPIController(s ResourceAPIServicer, opts ...ResourceAPIOption) 
 // Routes returns all the api routes for the ResourceAPIController
 func (c *ResourceAPIController) Routes() Routes {
 	return Routes{
-		"GetResourceById": Route{
-			strings.ToUpper("Get"),
-			"/api/v3/resource/{resourceId}",
-			c.GetResourceById,
-		},
 		"GetResources": Route{
 			strings.ToUpper("Get"),
 			"/api/v3/resource/",
 			c.GetResources,
 		},
+		"GetResourceById": Route{
+			strings.ToUpper("Get"),
+			"/api/v3/resource/{resourceId}",
+			c.GetResourceById,
+		},
 	}
+}
+
+// GetResources - Returns a list of resources
+func (c *ResourceAPIController) GetResources(w http.ResponseWriter, r *http.Request) {
+	apiKeyParam := r.Header.Get("api_key")
+	result, err := c.service.GetResources(r.Context(), apiKeyParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
 }
 
 // GetResourceById - Find resource by ID
@@ -75,19 +88,6 @@ func (c *ResourceAPIController) GetResourceById(w http.ResponseWriter, r *http.R
 		return
 	}
 	result, err := c.service.GetResourceById(r.Context(), resourceIdParam)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
-	}
-	// If no error, encode the body and the result code
-	_ = EncodeJSONResponse(result.Body, &result.Code, w)
-}
-
-// GetResources - Returns a list of resources
-func (c *ResourceAPIController) GetResources(w http.ResponseWriter, r *http.Request) {
-	apiKeyParam := r.Header.Get("api_key")
-	result, err := c.service.GetResources(r.Context(), apiKeyParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
