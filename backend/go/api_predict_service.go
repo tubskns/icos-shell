@@ -32,6 +32,7 @@ func NewPredictAPIService() *PredictAPIService {
 
 // PredictMetrics - Predict metrics development based on model and input metrics
 func (s *PredictAPIService) PredictMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
+	log.Printf("Hit PredictAPIService\n")
 	jsonData := body["content"].(string)
 
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + ("components.intelligence.predict_metrics"), strings.NewReader(jsonData))
