@@ -1,0 +1,1767 @@
+{
+	"timestamp": {
+		"oldestTimestamp": 1707471621.015,
+		"timeSinceOldest": 88.94869780540466
+	},
+	"cluster": {
+		"08c66cd5-ae67-4336-99c8-9016cb2b5546": {
+			"name": "08c66cd5-ae67-4336-99c8-9016cb2b5546",
+			"location": {},
+			"serviceLevelAgreement": {},
+			"API": {},
+			"node": {
+				"a04a67ba78534559840cfc8b9101f218": {
+					"name": "08c66cd5-ae67-4336-99c8-9016cb2b5546:master",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64",
+						"cpuCores": 1,
+						"RAMMemory": 8325955584
+					},
+					"dynamicMetrics": {
+						"freeRAM": 675799040,
+						"availableStorage": {}
+					}
+				},
+				"d7b51655a3a748b180c145af90429e5a": {
+					"name": "08c66cd5-ae67-4336-99c8-9016cb2b5546:node1",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64",
+						"cpuCores": 1,
+						"RAMMemory": 8325955584
+					},
+					"dynamicMetrics": {
+						"freeRAM": 3780579328,
+						"availableStorage": {}
+					}
+				}
+			},
+			"network": {},
+			"pod": {
+				"cilium-9b4pl": {
+					"name": "cilium-9b4pl",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-agent": {
+							"name": "cilium-agent",
+							"cpuUsage": 0.006317441
+						}
+					}
+				},
+				"cilium-d2rdh": {
+					"name": "cilium-d2rdh",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-agent": {
+							"name": "cilium-agent",
+							"cpuUsage": 0.004784756
+						}
+					}
+				},
+				"cilium-operator-94687ffb9-v9l22": {
+					"name": "cilium-operator-94687ffb9-v9l22",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-operator": {
+							"name": "cilium-operator",
+							"cpuUsage": 0.004439814
+						}
+					}
+				},
+				"cilium-operator-94687ffb9-vmgtj": {
+					"name": "cilium-operator-94687ffb9-vmgtj",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-operator": {
+							"name": "cilium-operator",
+							"cpuUsage": 0.000674619
+						}
+					}
+				},
+				"coredns-77f7cc69db-4z4wc": {
+					"name": "coredns-77f7cc69db-4z4wc",
+					"ip": "10.233.64.124",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"coredns": {
+							"name": "coredns",
+							"cpuUsage": 0.001390648
+						}
+					}
+				},
+				"coredns-77f7cc69db-m9qg5": {
+					"name": "coredns-77f7cc69db-m9qg5",
+					"ip": "10.233.65.87",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"coredns": {
+							"name": "coredns",
+							"cpuUsage": 0.001363385
+						}
+					}
+				},
+				"dns-autoscaler-8576bb9f5b-sfp5f": {
+					"name": "dns-autoscaler-8576bb9f5b-sfp5f",
+					"ip": "10.233.65.55",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"autoscaler": {
+							"name": "autoscaler",
+							"cpuUsage": 0.00043123
+						}
+					}
+				},
+				"hello-cloud-5c4d745f8f-4jtft": {
+					"name": "hello-cloud-5c4d745f8f-4jtft",
+					"ip": "10.233.64.87",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"hello-cloud-one": {
+							"name": "hello-cloud-one"
+						}
+					}
+				},
+				"klusterlet-fdc97bbcf-8b56c": {
+					"name": "klusterlet-fdc97bbcf-8b56c",
+					"ip": "10.233.64.39",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet": {
+							"name": "klusterlet",
+							"cpuUsage": 0.002518806
+						}
+					}
+				},
+				"klusterlet-registration-agent-56f4c4454f-xlj9r": {
+					"name": "klusterlet-registration-agent-56f4c4454f-xlj9r",
+					"ip": "10.233.64.131",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"registration-controller": {
+							"name": "registration-controller",
+							"cpuUsage": 0.004260455
+						}
+					}
+				},
+				"klusterlet-work-agent-c57c45bfb-xgsdj": {
+					"name": "klusterlet-work-agent-c57c45bfb-xgsdj",
+					"ip": "10.233.64.176",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet-manifestwork-agent": {
+							"name": "klusterlet-manifestwork-agent",
+							"cpuUsage": 0.002308929
+						}
+					}
+				},
+				"kube-apiserver-master": {
+					"name": "kube-apiserver-master",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-apiserver": {
+							"name": "kube-apiserver"
+						}
+					}
+				},
+				"kube-controller-manager-master": {
+					"name": "kube-controller-manager-master",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-controller-manager": {
+							"name": "kube-controller-manager"
+						}
+					}
+				},
+				"kube-proxy-qmhtd": {
+					"name": "kube-proxy-qmhtd",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-proxy": {
+							"name": "kube-proxy",
+							"cpuUsage": 0.00688127
+						}
+					}
+				},
+				"kube-proxy-vzzgf": {
+					"name": "kube-proxy-vzzgf",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-proxy": {
+							"name": "kube-proxy",
+							"cpuUsage": 0.006657373
+						}
+					}
+				},
+				"kube-scheduler-master": {
+					"name": "kube-scheduler-master",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-scheduler": {
+							"name": "kube-scheduler"
+						}
+					}
+				},
+				"nginx-proxy-node1": {
+					"name": "nginx-proxy-node1",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"nginx-proxy": {
+							"name": "nginx-proxy"
+						}
+					}
+				},
+				"nodelocaldns-28fqp": {
+					"name": "nodelocaldns-28fqp",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-cache": {
+							"name": "node-cache",
+							"cpuUsage": 0.001478353
+						}
+					}
+				},
+				"nodelocaldns-vjxkh": {
+					"name": "nodelocaldns-vjxkh",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-cache": {
+							"name": "node-cache",
+							"cpuUsage": 0.001506814
+						}
+					}
+				},
+				"telagent-kube-state-metrics-79549b7955-dp26v": {
+					"name": "telagent-kube-state-metrics-79549b7955-dp26v",
+					"ip": "10.233.64.96",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-state-metrics": {
+							"name": "kube-state-metrics",
+							"cpuUsage": 0.001453908
+						}
+					}
+				},
+				"telagent-prometheus-node-exporter-khrbw": {
+					"name": "telagent-prometheus-node-exporter-khrbw",
+					"ip": "10.160.3.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.00326164
+						}
+					}
+				},
+				"telagent-prometheus-node-exporter-qjmhs": {
+					"name": "telagent-prometheus-node-exporter-qjmhs",
+					"ip": "10.160.3.187",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.00008117
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-node-agent-dkdrg": {
+					"name": "telagent-telemetry-agent-otel-node-agent-dkdrg",
+					"ip": "10.233.65.211",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"otel-collector": {
+							"name": "otel-collector",
+							"cpuUsage": 0.003552613
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-node-agent-xbrfc": {
+					"name": "telagent-telemetry-agent-otel-node-agent-xbrfc",
+					"ip": "10.233.64.42",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"otel-collector": {
+							"name": "otel-collector",
+							"cpuUsage": 0.004565521
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-target-allocator-597bfc754-nswjt": {
+					"name": "telagent-telemetry-agent-otel-target-allocator-597bfc754-nswjt",
+					"ip": "10.233.64.118",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"telagent-telemetry-agent-otel-target-allocator": {
+							"name": "telagent-telemetry-agent-otel-target-allocator",
+							"cpuUsage": 0.000784497
+						}
+					}
+				}
+			}
+		},
+		"550b0907-8f7a-4811-9ba2-f7ded0cf7b21": {
+			"name": "550b0907-8f7a-4811-9ba2-f7ded0cf7b21",
+			"location": {},
+			"serviceLevelAgreement": {},
+			"API": {},
+			"node": {
+				"757213681b524a7d843998f2ccde9c3d": {
+					"name": "550b0907-8f7a-4811-9ba2-f7ded0cf7b21:nuvla-edge-icos-1",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64",
+						"cpuCores": 2,
+						"RAMMemory": 4110307328
+					},
+					"dynamicMetrics": {
+						"freeRAM": 284180480,
+						"availableStorage": {}
+					}
+				}
+			},
+			"network": {},
+			"pod": {
+				"agent-5f5f6b7f59-lgdgs": {
+					"name": "agent-5f5f6b7f59-lgdgs",
+					"ip": "10.42.0.24",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"agent": {
+							"name": "agent",
+							"cpuUsage": 0.001017507
+						}
+					}
+				},
+				"coredns-77ccd57875-rjtnc": {
+					"name": "coredns-77ccd57875-rjtnc",
+					"ip": "10.42.0.188",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"coredns": {
+							"name": "coredns",
+							"cpuUsage": 0.002295356
+						}
+					}
+				},
+				"data-gateway-756575d687-wzktb": {
+					"name": "data-gateway-756575d687-wzktb",
+					"ip": "10.42.0.25",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"data-gateway": {
+							"name": "data-gateway",
+							"cpuUsage": 0.000327148
+						}
+					}
+				},
+				"helm-install-traefik-crd-ftnvl": {
+					"name": "helm-install-traefik-crd-ftnvl",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"helm": {
+							"name": "helm"
+						}
+					}
+				},
+				"helm-install-traefik-rqtkm": {
+					"name": "helm-install-traefik-rqtkm",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"helm": {
+							"name": "helm"
+						}
+					}
+				},
+				"job-8afab5dc-7104-4efe-89f3-2ab8e8637148-q9fx7": {
+					"name": "job-8afab5dc-7104-4efe-89f3-2ab8e8637148-q9fx7",
+					"ip": "10.42.0.64",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"job-8afab5dc-7104-4efe-89f3-2ab8e8637148": {
+							"name": "job-8afab5dc-7104-4efe-89f3-2ab8e8637148"
+						}
+					}
+				},
+				"job-e86871f3-d7ed-4dc4-a9ae-55f23fe712c5-2q59c": {
+					"name": "job-e86871f3-d7ed-4dc4-a9ae-55f23fe712c5-2q59c",
+					"ip": "10.42.0.65",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"job-e86871f3-d7ed-4dc4-a9ae-55f23fe712c5": {
+							"name": "job-e86871f3-d7ed-4dc4-a9ae-55f23fe712c5"
+						}
+					}
+				},
+				"local-path-provisioner-957fdf8bc-xjlfg": {
+					"name": "local-path-provisioner-957fdf8bc-xjlfg",
+					"ip": "10.42.0.194",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"local-path-provisioner": {
+							"name": "local-path-provisioner",
+							"cpuUsage": 0.0003437
+						}
+					}
+				},
+				"metrics-server-648b5df564-zn5fp": {
+					"name": "metrics-server-648b5df564-zn5fp",
+					"ip": "10.42.0.196",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"metrics-server": {
+							"name": "metrics-server",
+							"cpuUsage": 0.004636843
+						}
+					}
+				},
+				"node-exporter-46tj5": {
+					"name": "node-exporter-46tj5",
+					"ip": "10.42.0.193",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.006089803
+						}
+					}
+				},
+				"node-exporter-v6m6h": {
+					"name": "node-exporter-v6m6h",
+					"ip": "10.42.0.192",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.007425723
+						}
+					}
+				},
+				"nuvlaedge-20222ae7-5cba-4f0c-b675-9a1e652c90d6-iproute": {
+					"name": "nuvlaedge-20222ae7-5cba-4f0c-b675-9a1e652c90d6-iproute",
+					"ip": "10.160.3.160",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"nuvlaedge-20222ae7-5cba-4f0c-b675-9a1e652c90d6-iproute": {
+							"name": "nuvlaedge-20222ae7-5cba-4f0c-b675-9a1e652c90d6-iproute"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-27pcf": {
+					"name": "prometheus-deployment-96898bbc9-27pcf",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-2gxvd": {
+					"name": "prometheus-deployment-96898bbc9-2gxvd",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-4b5b2": {
+					"name": "prometheus-deployment-96898bbc9-4b5b2",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-4chjw": {
+					"name": "prometheus-deployment-96898bbc9-4chjw",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-4m6bn": {
+					"name": "prometheus-deployment-96898bbc9-4m6bn",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-4r4m8": {
+					"name": "prometheus-deployment-96898bbc9-4r4m8",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-4xvh5": {
+					"name": "prometheus-deployment-96898bbc9-4xvh5",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-52lnw": {
+					"name": "prometheus-deployment-96898bbc9-52lnw",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-55d92": {
+					"name": "prometheus-deployment-96898bbc9-55d92",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-5wr42": {
+					"name": "prometheus-deployment-96898bbc9-5wr42",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-68lgh": {
+					"name": "prometheus-deployment-96898bbc9-68lgh",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-6nplt": {
+					"name": "prometheus-deployment-96898bbc9-6nplt",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-6nt5n": {
+					"name": "prometheus-deployment-96898bbc9-6nt5n",
+					"ip": "10.42.0.191",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus",
+							"cpuUsage": 0.003984901
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-7s5d5": {
+					"name": "prometheus-deployment-96898bbc9-7s5d5",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-9vwbj": {
+					"name": "prometheus-deployment-96898bbc9-9vwbj",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-b5gmt": {
+					"name": "prometheus-deployment-96898bbc9-b5gmt",
+					"status": "Failed"
+				},
+				"prometheus-deployment-96898bbc9-bhsvg": {
+					"name": "prometheus-deployment-96898bbc9-bhsvg",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-bz5h2": {
+					"name": "prometheus-deployment-96898bbc9-bz5h2",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-cqqdl": {
+					"name": "prometheus-deployment-96898bbc9-cqqdl",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-ffxdt": {
+					"name": "prometheus-deployment-96898bbc9-ffxdt",
+					"status": "Succeeded",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-fn4kx": {
+					"name": "prometheus-deployment-96898bbc9-fn4kx",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-fqnd7": {
+					"name": "prometheus-deployment-96898bbc9-fqnd7",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-fzjhx": {
+					"name": "prometheus-deployment-96898bbc9-fzjhx",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-gchdj": {
+					"name": "prometheus-deployment-96898bbc9-gchdj",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-hl7b7": {
+					"name": "prometheus-deployment-96898bbc9-hl7b7",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-hvzfv": {
+					"name": "prometheus-deployment-96898bbc9-hvzfv",
+					"ip": "10.42.0.203",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus",
+							"cpuUsage": 0.032365135
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-jplql": {
+					"name": "prometheus-deployment-96898bbc9-jplql",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-js86f": {
+					"name": "prometheus-deployment-96898bbc9-js86f",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-jxjhq": {
+					"name": "prometheus-deployment-96898bbc9-jxjhq",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-jzc9k": {
+					"name": "prometheus-deployment-96898bbc9-jzc9k",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-kclwz": {
+					"name": "prometheus-deployment-96898bbc9-kclwz",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-kgp8s": {
+					"name": "prometheus-deployment-96898bbc9-kgp8s",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-kkpf7": {
+					"name": "prometheus-deployment-96898bbc9-kkpf7",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-ktxds": {
+					"name": "prometheus-deployment-96898bbc9-ktxds",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-lmv95": {
+					"name": "prometheus-deployment-96898bbc9-lmv95",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-npdkh": {
+					"name": "prometheus-deployment-96898bbc9-npdkh",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-phnvz": {
+					"name": "prometheus-deployment-96898bbc9-phnvz",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-q4d2z": {
+					"name": "prometheus-deployment-96898bbc9-q4d2z",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-q696x": {
+					"name": "prometheus-deployment-96898bbc9-q696x",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-r79w4": {
+					"name": "prometheus-deployment-96898bbc9-r79w4",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-rb48c": {
+					"name": "prometheus-deployment-96898bbc9-rb48c",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-rn8fh": {
+					"name": "prometheus-deployment-96898bbc9-rn8fh",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-rqjq9": {
+					"name": "prometheus-deployment-96898bbc9-rqjq9",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-s2tps": {
+					"name": "prometheus-deployment-96898bbc9-s2tps",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-slkb9": {
+					"name": "prometheus-deployment-96898bbc9-slkb9",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-t22ns": {
+					"name": "prometheus-deployment-96898bbc9-t22ns",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-v64jw": {
+					"name": "prometheus-deployment-96898bbc9-v64jw",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-wdz9m": {
+					"name": "prometheus-deployment-96898bbc9-wdz9m",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-xsc2z": {
+					"name": "prometheus-deployment-96898bbc9-xsc2z",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"prometheus-deployment-96898bbc9-zwbld": {
+					"name": "prometheus-deployment-96898bbc9-zwbld",
+					"status": "Failed",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus": {
+							"name": "prometheus"
+						}
+					}
+				},
+				"push-gw-deployment-5c4dd6d9b6-kfmmq": {
+					"name": "push-gw-deployment-5c4dd6d9b6-kfmmq",
+					"ip": "10.42.0.195",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"prometheus-push-gateway": {
+							"name": "prometheus-push-gateway"
+						}
+					}
+				},
+				"security-deployment-6b6978f7cf-skcxc": {
+					"name": "security-deployment-6b6978f7cf-skcxc",
+					"ip": "10.160.3.160",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"security": {
+							"name": "security",
+							"cpuUsage": 0.00007134
+						}
+					}
+				},
+				"svclb-traefik-8e04ff50-rs74l": {
+					"name": "svclb-traefik-8e04ff50-rs74l",
+					"ip": "10.42.0.200",
+					"status": "Running",
+					"numberOfContainers": 2,
+					"container": {
+						"lb-tcp-443": {
+							"name": "lb-tcp-443"
+						},
+						"lb-tcp-80": {
+							"name": "lb-tcp-80"
+						}
+					}
+				},
+				"system-manager-76bcf44fd8-smkqq": {
+					"name": "system-manager-76bcf44fd8-smkqq",
+					"ip": "10.42.0.26",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"system-manager": {
+							"name": "system-manager",
+							"cpuUsage": 0.00123063
+						}
+					}
+				},
+				"telagent-kube-state-metrics-fd546749c-tzdwb": {
+					"name": "telagent-kube-state-metrics-fd546749c-tzdwb",
+					"ip": "10.42.0.109",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-state-metrics": {
+							"name": "kube-state-metrics",
+							"cpuUsage": 0.001483091
+						}
+					}
+				},
+				"telagent-prometheus-node-exporter-tvbzw": {
+					"name": "telagent-prometheus-node-exporter-tvbzw",
+					"ip": "10.160.3.160",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.008957715
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-node-agent-dvdsb": {
+					"name": "telagent-telemetry-agent-otel-node-agent-dvdsb",
+					"ip": "10.42.0.110",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"otel-collector": {
+							"name": "otel-collector",
+							"cpuUsage": 0.001387514
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-target-allocator-66d4984684-5g4qm": {
+					"name": "telagent-telemetry-agent-otel-target-allocator-66d4984684-5g4qm",
+					"ip": "10.42.0.185",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"telagent-telemetry-agent-otel-target-allocator": {
+							"name": "telagent-telemetry-agent-otel-target-allocator",
+							"cpuUsage": 0.000754339
+						}
+					}
+				},
+				"traefik-64f55bb67d-xlws7": {
+					"name": "traefik-64f55bb67d-xlws7",
+					"ip": "10.42.0.199",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"traefik": {
+							"name": "traefik",
+							"cpuUsage": 0.0006062
+						}
+					}
+				},
+				"vpn-client-bc9885847-s298l": {
+					"name": "vpn-client-bc9885847-s298l",
+					"ip": "10.160.3.160",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"vpn-client": {
+							"name": "vpn-client",
+							"cpuUsage": 0.081271463
+						}
+					}
+				}
+			}
+		},
+		"93111014-6276-4c1f-83eb-a5f7aa8386c9": {
+			"name": "93111014-6276-4c1f-83eb-a5f7aa8386c9",
+			"location": {},
+			"serviceLevelAgreement": {},
+			"API": {},
+			"node": {
+				"57e17cac94714bf6976f1e071d64d586": {
+					"name": "93111014-6276-4c1f-83eb-a5f7aa8386c9:icosedge",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64",
+						"cpuCores": 4,
+						"cpuMaxFrequency": 3700000000,
+						"RAMMemory": 16686080000
+					},
+					"dynamicMetrics": {
+						"cpuTemperature": 38,
+						"cpuEnergyConsumption": 16196.47022,
+						"freeRAM": 5870878720,
+						"availableStorage": {}
+					},
+					"devices": {
+						"i2c-video-camera": {
+							"name": "i2c-video-camera",
+							"type": "i2c-video-camera",
+							"status": "available",
+							"path": "squat.ai/video"
+						},
+						"usb-human-interface-dev_0d3d_0040": {
+							"name": "usb-human-interface-dev_0d3d_0040",
+							"type": "usb-human-interface-dev",
+							"status": "available",
+							"path": "none"
+						},
+						"usb-storage_05e3_0723": {
+							"name": "usb-storage_05e3_0723",
+							"type": "usb-storage",
+							"status": "available",
+							"path": "none"
+						},
+						"usb-video_046d_08d9": {
+							"name": "usb-video_046d_08d9",
+							"type": "usb-video",
+							"status": "detached",
+							"path": "squat.ai/video"
+						}
+					}
+				}
+			},
+			"network": {},
+			"pod": {
+				"cilium-8j4cp": {
+					"name": "cilium-8j4cp",
+					"ip": "10.150.0.144",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-agent": {
+							"name": "cilium-agent",
+							"cpuUsage": 0.016668818
+						}
+					}
+				},
+				"cilium-operator-6d77c7bddb-7fgfg": {
+					"name": "cilium-operator-6d77c7bddb-7fgfg",
+					"ip": "10.150.0.144",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-operator": {
+							"name": "cilium-operator",
+							"cpuUsage": 0.001546161
+						}
+					}
+				},
+				"coredns-77ccd57875-lpbxw": {
+					"name": "coredns-77ccd57875-lpbxw",
+					"ip": "10.0.1.194",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"coredns": {
+							"name": "coredns",
+							"cpuUsage": 0.003829056
+						}
+					}
+				},
+				"flask-app-deployment-c57f6cd64-jgg6z": {
+					"name": "flask-app-deployment-c57f6cd64-jgg6z",
+					"ip": "10.0.1.184",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"flask-app": {
+							"name": "flask-app",
+							"cpuUsage": 0.000140357
+						}
+					}
+				},
+				"generic-device-plugin-976d8": {
+					"name": "generic-device-plugin-976d8",
+					"ip": "10.0.1.251",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"generic-device-plugin": {
+							"name": "generic-device-plugin",
+							"cpuUsage": 0.000306291
+						}
+					}
+				},
+				"generic-device-plugin-bbntt": {
+					"name": "generic-device-plugin-bbntt",
+					"ip": "10.0.1.183",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"generic-device-plugin": {
+							"name": "generic-device-plugin",
+							"cpuUsage": 0.001304333
+						}
+					}
+				},
+				"hubble-relay-84cf96bbf6-krtb5": {
+					"name": "hubble-relay-84cf96bbf6-krtb5",
+					"ip": "10.0.1.219",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"hubble-relay": {
+							"name": "hubble-relay",
+							"cpuUsage": 0.00011046
+						}
+					}
+				},
+				"hubble-ui-5dfbdddc49-74bjg": {
+					"name": "hubble-ui-5dfbdddc49-74bjg",
+					"ip": "10.0.1.93",
+					"status": "Running",
+					"numberOfContainers": 2,
+					"container": {
+						"backend": {
+							"name": "backend",
+							"cpuUsage": 0.000370126
+						},
+						"frontend": {
+							"name": "frontend"
+						}
+					}
+				},
+				"klusterlet-f868d4549-5vhcc": {
+					"name": "klusterlet-f868d4549-5vhcc",
+					"ip": "10.0.1.19",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet": {
+							"name": "klusterlet",
+							"cpuUsage": 0.004300217
+						}
+					}
+				},
+				"klusterlet-registration-agent-64bd494fc5-m5dsj": {
+					"name": "klusterlet-registration-agent-64bd494fc5-m5dsj",
+					"ip": "10.0.1.192",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"registration-controller": {
+							"name": "registration-controller",
+							"cpuUsage": 0.004843673
+						}
+					}
+				},
+				"klusterlet-work-agent-847df687d4-kvwd8": {
+					"name": "klusterlet-work-agent-847df687d4-kvwd8",
+					"ip": "10.0.1.252",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet-manifestwork-agent": {
+							"name": "klusterlet-manifestwork-agent",
+							"cpuUsage": 0.003195609
+						}
+					}
+				},
+				"local-path-provisioner-957fdf8bc-8qhlg": {
+					"name": "local-path-provisioner-957fdf8bc-8qhlg",
+					"ip": "10.0.1.239",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"local-path-provisioner": {
+							"name": "local-path-provisioner",
+							"cpuUsage": 0.000438676
+						}
+					}
+				},
+				"metrics-server-648b5df564-w8zhc": {
+					"name": "metrics-server-648b5df564-w8zhc",
+					"ip": "10.0.1.98",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"metrics-server": {
+							"name": "metrics-server",
+							"cpuUsage": 0.00755945
+						}
+					}
+				},
+				"nfd-master-554f8dff79-2hl8b": {
+					"name": "nfd-master-554f8dff79-2hl8b",
+					"ip": "10.0.1.56",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"nfd-master": {
+							"name": "nfd-master",
+							"cpuUsage": 0.000235345
+						}
+					}
+				},
+				"nfd-prom-exporter-85b9bf5cf4-xqdxv": {
+					"name": "nfd-prom-exporter-85b9bf5cf4-xqdxv",
+					"ip": "10.0.1.119",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"exporter-container": {
+							"name": "exporter-container",
+							"cpuUsage": 0.015725998
+						}
+					}
+				},
+				"nfd-worker-p2zzt": {
+					"name": "nfd-worker-p2zzt",
+					"ip": "10.0.1.247",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"nfd-worker": {
+							"name": "nfd-worker",
+							"cpuUsage": 0.000007878
+						}
+					}
+				},
+				"scaphandre-p5zbz": {
+					"name": "scaphandre-p5zbz",
+					"ip": "10.0.1.12",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"scaphandre": {
+							"name": "scaphandre"
+						}
+					}
+				},
+				"telagent-kube-state-metrics-fd546749c-66cqc": {
+					"name": "telagent-kube-state-metrics-fd546749c-66cqc",
+					"ip": "10.0.1.70",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-state-metrics": {
+							"name": "kube-state-metrics",
+							"cpuUsage": 0.000340369
+						}
+					}
+				},
+				"telagent-prometheus-node-exporter-jbd9v": {
+					"name": "telagent-prometheus-node-exporter-jbd9v",
+					"ip": "10.150.0.144",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.000065386
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-node-agent-zk5vw": {
+					"name": "telagent-telemetry-agent-otel-node-agent-zk5vw",
+					"ip": "10.0.1.141",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"otel-collector": {
+							"name": "otel-collector",
+							"cpuUsage": 0.008120876
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-target-allocator-66d4984684-7wthp": {
+					"name": "telagent-telemetry-agent-otel-target-allocator-66d4984684-7wthp",
+					"ip": "10.0.1.235",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"telagent-telemetry-agent-otel-target-allocator": {
+							"name": "telagent-telemetry-agent-otel-target-allocator",
+							"cpuUsage": 0.000597167
+						}
+					}
+				}
+			}
+		},
+		"f1c5829b-bd1b-4c9f-92c2-960d51335397": {
+			"name": "f1c5829b-bd1b-4c9f-92c2-960d51335397",
+			"location": {},
+			"serviceLevelAgreement": {},
+			"API": {},
+			"node": {
+				"553dbda48acd4dce84f5a0e0ceca1de1": {
+					"name": "f1c5829b-bd1b-4c9f-92c2-960d51335397:raspberrypik3",
+					"staticMetrics": {
+						"cpuArchitecture": "aarch64",
+						"cpuCores": 4,
+						"cpuMaxFrequency": 1500000000,
+						"RAMMemory": 3921022976
+					},
+					"dynamicMetrics": {
+						"cpuTemperature": 40.407,
+						"freeRAM": 218296320,
+						"availableStorage": {}
+					},
+					"devices": {
+						"i2c-video-camera": {
+							"name": "i2c-video-camera",
+							"type": "i2c-video-camera",
+							"status": "busy",
+							"path": "squat.ai/video"
+						}
+					}
+				}
+			},
+			"network": {},
+			"pod": {
+				"cilium-lrcs5": {
+					"name": "cilium-lrcs5",
+					"ip": "10.150.0.133",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-agent": {
+							"name": "cilium-agent",
+							"cpuUsage": 0.028314633
+						}
+					}
+				},
+				"cilium-operator-6b865946df-rbchn": {
+					"name": "cilium-operator-6b865946df-rbchn",
+					"ip": "10.150.0.133",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"cilium-operator": {
+							"name": "cilium-operator",
+							"cpuUsage": 0.002313688
+						}
+					}
+				},
+				"coredns-77ccd57875-2n9s7": {
+					"name": "coredns-77ccd57875-2n9s7",
+					"ip": "10.0.0.236",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"coredns": {
+							"name": "coredns",
+							"cpuUsage": 0.007519075
+						}
+					}
+				},
+				"generic-device-plugin-7fvcw": {
+					"name": "generic-device-plugin-7fvcw",
+					"ip": "10.0.0.196",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"generic-device-plugin": {
+							"name": "generic-device-plugin",
+							"cpuUsage": 0.010220471
+						}
+					}
+				},
+				"generic-device-plugin-rdctr": {
+					"name": "generic-device-plugin-rdctr",
+					"ip": "10.0.0.84",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"generic-device-plugin": {
+							"name": "generic-device-plugin",
+							"cpuUsage": 0.001352983
+						}
+					}
+				},
+				"hubble-relay-7487bbc6b9-dbzst": {
+					"name": "hubble-relay-7487bbc6b9-dbzst",
+					"ip": "10.0.0.75",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"hubble-relay": {
+							"name": "hubble-relay",
+							"cpuUsage": 0.000234876
+						}
+					}
+				},
+				"hubble-ui-5dfbdddc49-bvjw8": {
+					"name": "hubble-ui-5dfbdddc49-bvjw8",
+					"ip": "10.0.0.182",
+					"status": "Running",
+					"numberOfContainers": 2,
+					"container": {
+						"backend": {
+							"name": "backend"
+						},
+						"frontend": {
+							"name": "frontend"
+						}
+					}
+				},
+				"klusterlet-f868d4549-4bkq8": {
+					"name": "klusterlet-f868d4549-4bkq8",
+					"ip": "10.0.0.235",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet": {
+							"name": "klusterlet",
+							"cpuUsage": 0.005959991
+						}
+					}
+				},
+				"klusterlet-registration-agent-5b84cf547b-tvsbp": {
+					"name": "klusterlet-registration-agent-5b84cf547b-tvsbp",
+					"ip": "10.0.0.234",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"registration-controller": {
+							"name": "registration-controller",
+							"cpuUsage": 0.006761881
+						}
+					}
+				},
+				"klusterlet-work-agent-7595697f98-srrks": {
+					"name": "klusterlet-work-agent-7595697f98-srrks",
+					"ip": "10.0.0.6",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"klusterlet-manifestwork-agent": {
+							"name": "klusterlet-manifestwork-agent",
+							"cpuUsage": 0.006279561
+						}
+					}
+				},
+				"local-path-provisioner-957fdf8bc-5qt8r": {
+					"name": "local-path-provisioner-957fdf8bc-5qt8r",
+					"ip": "10.0.0.98",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"local-path-provisioner": {
+							"name": "local-path-provisioner",
+							"cpuUsage": 0.000520509
+						}
+					}
+				},
+				"metrics-server-648b5df564-tsx5m": {
+					"name": "metrics-server-648b5df564-tsx5m",
+					"ip": "10.0.0.25",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"metrics-server": {
+							"name": "metrics-server",
+							"cpuUsage": 0.012326477
+						}
+					}
+				},
+				"mjpeg-ffmpeg-app-78f85b696c-7wqn2": {
+					"name": "mjpeg-ffmpeg-app-78f85b696c-7wqn2",
+					"status": "Failed",
+					"numberOfContainers": 2,
+					"container": {
+						"ffmpeg-container": {
+							"name": "ffmpeg-container"
+						},
+						"mjpeg-container": {
+							"name": "mjpeg-container"
+						}
+					}
+				},
+				"mjpeg-ffmpeg-app-78f85b696c-tjcgl": {
+					"name": "mjpeg-ffmpeg-app-78f85b696c-tjcgl",
+					"ip": "10.0.0.56",
+					"status": "Running",
+					"numberOfContainers": 2,
+					"container": {
+						"ffmpeg-container": {
+							"name": "ffmpeg-container",
+							"cpuUsage": 0.01420618
+						},
+						"mjpeg-container": {
+							"name": "mjpeg-container",
+							"cpuUsage": 0.835069827
+						}
+					}
+				},
+				"nfd-master-554f8dff79-n2fkx": {
+					"name": "nfd-master-554f8dff79-n2fkx",
+					"ip": "10.0.0.28",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"nfd-master": {
+							"name": "nfd-master",
+							"cpuUsage": 0.00033465
+						}
+					}
+				},
+				"nfd-prom-exporter-85b9bf5cf4-ds6wv": {
+					"name": "nfd-prom-exporter-85b9bf5cf4-ds6wv",
+					"ip": "10.0.0.155",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"exporter-container": {
+							"name": "exporter-container",
+							"cpuUsage": 0.036890997
+						}
+					}
+				},
+				"nfd-worker-v7fwp": {
+					"name": "nfd-worker-v7fwp",
+					"ip": "10.0.0.126",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"nfd-worker": {
+							"name": "nfd-worker"
+						}
+					}
+				},
+				"telagent-kube-state-metrics-fd546749c-2x98q": {
+					"name": "telagent-kube-state-metrics-fd546749c-2x98q",
+					"ip": "10.0.0.197",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"kube-state-metrics": {
+							"name": "kube-state-metrics",
+							"cpuUsage": 0.000456279
+						}
+					}
+				},
+				"telagent-prometheus-node-exporter-h7q9p": {
+					"name": "telagent-prometheus-node-exporter-h7q9p",
+					"ip": "10.150.0.133",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"node-exporter": {
+							"name": "node-exporter",
+							"cpuUsage": 0.007479014
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-node-agent-kpwrl": {
+					"name": "telagent-telemetry-agent-otel-node-agent-kpwrl",
+					"ip": "10.0.0.48",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"otel-collector": {
+							"name": "otel-collector",
+							"cpuUsage": 0.006032655
+						}
+					}
+				},
+				"telagent-telemetry-agent-otel-target-allocator-66d4984684-42v8j": {
+					"name": "telagent-telemetry-agent-otel-target-allocator-66d4984684-42v8j",
+					"ip": "10.0.0.172",
+					"status": "Running",
+					"numberOfContainers": 1,
+					"container": {
+						"telagent-telemetry-agent-otel-target-allocator": {
+							"name": "telagent-telemetry-agent-otel-target-allocator",
+							"cpuUsage": 0.000855971
+						}
+					}
+				}
+			}
+		},
+		"nuvla": {
+			"name": "nuvla",
+			"location": {},
+			"serviceLevelAgreement": {},
+			"API": {},
+			"node": {
+				"258974c6ac9c4b1a8dcbfbbe33af1e4e": {
+					"name": "nuvlaedge-docker-01",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64"
+					},
+					"dynamicMetrics": {
+						"freeRAM": 322621440,
+						"availableStorage": {}
+					},
+					"devices": {
+						"1.1-root-hub_1d6b_0001": {
+							"name": "1.1-root-hub_1d6b_0001",
+							"type": "1.1-root-hub",
+							"status": "available"
+						},
+						"unnamed-usb-device-with-id-0627:0001_0627_0001": {
+							"name": "unnamed-usb-device-with-id-0627:0001_0627_0001",
+							"type": "unnamed-usb-device-with-id-0627:0001",
+							"status": "available"
+						}
+					}
+				},
+				"fe4d2e2462a64f3fa77b2b54b1d19e63": {
+					"name": "nuvla-prom-01",
+					"staticMetrics": {
+						"cpuArchitecture": "x86_64"
+					},
+					"dynamicMetrics": {
+						"freeRAM": 252440576,
+						"availableStorage": {}
+					},
+					"devices": {
+						"1.1-root-hub_1d6b_0001": {
+							"name": "1.1-root-hub_1d6b_0001",
+							"type": "1.1-root-hub",
+							"status": "available"
+						},
+						"unnamed-usb-device-with-id-0627:0001_0627_0001": {
+							"name": "unnamed-usb-device-with-id-0627:0001_0627_0001",
+							"type": "unnamed-usb-device-with-id-0627:0001",
+							"status": "available"
+						}
+					}
+				}
+			},
+			"network": {}
+		}
+	}
+}
