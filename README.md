@@ -36,12 +36,12 @@ When updating OpenAPI, modify the `openapi.yaml` file from the root directory an
 
 #### Shell Backend 
 ```
-openapi-generator-cli generate -g go-server -i openapi.yaml -o backend/ --additional-properties=packageName=shellbackend
+openapi-generator-cli generate -g go-server -i openapi.yaml -o backend/ --git-repo-id Shell --git-user-id icos-project --additional-properties=packageName=shellbackend
 ```
 
 #### Shell Client 
 ```
-openapi-generator-cli generate -g go -i openapi.yaml -o client/pkg/openapi --additional-properties=packageName=openapi,isGoSubmodule=true
+openapi-generator-cli generate -g go -i openapi.yaml -o client/pkg/openapi --git-repo-id Shell --git-user-id icos-project --additional-properties=packageName=openapi,isGoSubmodule=true
 
 rm client/pkg/openapi/go.mod client/pkg/openapi/go.sum
 ```

@@ -31,7 +31,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -99,7 +99,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -171,7 +171,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -243,7 +243,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -309,7 +309,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -381,7 +381,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {
@@ -453,7 +453,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/openapi"
+	openapiclient "github.com/icos-project/Shell/openapi"
 )
 
 func main() {

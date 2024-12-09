@@ -28,6 +28,4 @@ model_controller.go
 model_deployment.go
 model_resource.go
 response.go
-test/api_predict_test.go
-test/api_train_test.go
 utils.go

@@ -49,17 +49,29 @@ func NewControllerAPIController(s ControllerAPIServicer, opts ...ControllerAPIOp
 // Routes returns all the api routes for the ControllerAPIController
 func (c *ControllerAPIController) Routes() Routes {
 	return Routes{
-		"AddController": Route{
-			strings.ToUpper("Post"),
-			"/api/v3/controller/",
-			c.AddController,
-		},
 		"GetControllers": Route{
 			strings.ToUpper("Get"),
 			"/api/v3/controller/",
 			c.GetControllers,
 		},
+		"AddController": Route{
+			strings.ToUpper("Post"),
+			"/api/v3/controller/",
+			c.AddController,
+		},
 	}
+}
+
+// GetControllers - Returns a list of controllers
+func (c *ControllerAPIController) GetControllers(w http.ResponseWriter, r *http.Request) {
+	result, err := c.service.GetControllers(r.Context())
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
 }
 
 // AddController - Adds a new controller
@@ -81,18 +93,6 @@ func (c *ControllerAPIController) AddController(w http.ResponseWriter, r *http.R
 	}
 	apiKeyParam := r.Header.Get("api_key")
 	result, err := c.service.AddController(r.Context(), controllerParam, apiKeyParam)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
-	}
-	// If no error, encode the body and the result code
-	_ = EncodeJSONResponse(result.Body, &result.Code, w)
-}
-
-// GetControllers - Returns a list of controllers
-func (c *ControllerAPIController) GetControllers(w http.ResponseWriter, r *http.Request) {
-	result, err := c.service.GetControllers(r.Context())
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
