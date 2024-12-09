@@ -27,7 +27,7 @@ build_gui_image:
   stage: docker
   extends: .build_with_kaniko
   variables:
-    PH_CUSTOM_DOCKER_BUILD_CONTEXT_FOLDER: gui
+    PH_CUSTOM_DOCKER_BUILD_CONTEXT_FOLDER: GUI
     PH_DOCKER_IMAGE_PATH: icos/shell-gui
 
 cli-compile:
