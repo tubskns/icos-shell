@@ -23,6 +23,13 @@ variables:
     matrix:
       - PH_CUSTOM_PLATFORM: [linux/amd64, darwin/arm64, darwin/amd64, linux/arm64]
 
+build_gui_image:
+  stage: docker
+  extends: .build_with_kaniko
+  variables:
+    PH_CUSTOM_DOCKER_BUILD_CONTEXT_FOLDER: gui
+    PH_DOCKER_IMAGE_PATH: icos/shell-gui
+
 cli-compile:
   timeout: 3h
   parallel: !reference [.parallel-matrix-config, parallel]
