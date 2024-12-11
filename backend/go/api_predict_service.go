@@ -35,8 +35,8 @@ func (s *PredictAPIService) PredictMetrics(ctx context.Context, body map[string]
 	log.Printf("Hit PredictAPIService\n")
 	jsonData := body["content"].(string)
 
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + ("components.intelligence.predict_metrics"), strings.NewReader(jsonData))
-	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + ("components.intelligence.predict_metrics"))
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.predict_metrics"), strings.NewReader(jsonData))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.predict_metrics"))
 	fmt.Printf("Payload:\n%v\n", jsonData)
 
 	req = addBearerToToken(ctx, apiKey, req)
