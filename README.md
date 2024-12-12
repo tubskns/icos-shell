@@ -52,6 +52,8 @@ Add commands to the Shell Client with `cobra-cli`, more info [here](https://gith
 
 ## Documentation
 
+**Important: URL's for lighthouse and controllers cannot contain '/' characters!**
+
 Current version of docs can be found in:
 
 - Shell Backend [here](./backend/docs/README.md)

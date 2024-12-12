@@ -2,6 +2,8 @@
 
 icos-shell - CLI interface for ICOS
 
+**Important: URL's in the config file cannot contain '/' characters!**
+
 ### Synopsis
 
 icos-shell - a CLI tool to interface with ICOS components

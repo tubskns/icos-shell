@@ -73,9 +73,9 @@ if [[ $CAPTURED_STDOUT == "201" ]]; then
 elif [[ $RESPONSE == "202" ]]; then
     log "INFO" "Deployment already exists in the controller" "$COMPONENTS"
 elif [[ $RESPONSE == "200" ]]; then
-    log "WARN" "Wrong response code from the controller" "$COMPONENTS"
+    log "WARN" "Unexpected response code from the controller: $RESPONSE" "$COMPONENTS"
 else
-    log "FAIL" "Error while trying to add a deployment to the controller" "$COMPONENTS"
+    log "FAIL" "Error while trying to add a deployment to the controller: $RESPONSE" "$COMPONENTS"
 fi
 sleep 30
 
@@ -85,7 +85,7 @@ RESPONSE=$(./icos-shell --config=config_client.yml get deployment 2> /dev/null)
 if [[ $RESPONSE ]]; then
     log "DONE" "Deployments retrieved successfully" "$COMPONENTS"
 else
-    log "FAIL" "Error while retrieving deployments" "$COMPONENTS"
+    log "FAIL" "Error while retrieving deployments: $RESPONSE" "$COMPONENTS"
 fi
 sleep 3
 
@@ -101,7 +101,7 @@ while true; do
     fi
 
     if (( SECONDS >= end )); then
-        log "FAIL" "Error while retrieving specific deployment" "$COMPONENTS"
+        log "FAIL" "Error while retrieving specific deployment: $RESPONSE" "$COMPONENTS"
         break
     fi
   sleep 5
@@ -113,7 +113,7 @@ RESPONSE=$(./icos-shell --config=config_client.yml start deployment --id $JOBID 
 if [[ $RESPONSE ]]; then
     log "DONE" "Deployment started successfully" "$COMPONENTS"
 else
-    log "FAIL" "Error while starting deployment" "$COMPONENTS"
+    log "FAIL" "Error while starting deployment: $RESPONSE" "$COMPONENTS"
 fi
 sleep 5
 
@@ -129,7 +129,7 @@ while true; do
     fi
 
     if (( SECONDS >= end )); then
-        log "FAIL" "Error while stopping deployment" "$COMPONENTS"
+        log "FAIL" "Error while stopping deployment: $RESPONSE" "$COMPONENTS"
         break
     fi
   sleep 5
@@ -142,7 +142,7 @@ RESPONSE=$(./icos-shell --config=config_client.yml delete deployment --id $JOBID
 if [[ $RESPONSE ]]; then
     log "DONE" "Deployment deleted successfully" "$COMPONENTS"
 else
-    log "FAIL" "Error while deleting deployments" "$COMPONENTS"
+    log "FAIL" "Error while deleting deployments: $RESPONSE" "$COMPONENTS"
 fi
 
 # Get resources
@@ -151,5 +151,5 @@ RESPONSE=$(./icos-shell --config=config_client.yml get resource 2> /dev/null)
 if [[ $RESPONSE ]]; then
     log "DONE" "Resources retrieved successfully" "$COMPONENTS"
 else
-    log "FAIL" "Error while retrieving resources" "$COMPONENTS"
+    log "FAIL" "Error while retrieving resources: $RESPONSE" "$COMPONENTS"
 fi
