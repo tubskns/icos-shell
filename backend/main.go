@@ -39,6 +39,16 @@ func enableCors(next http.Handler) http.Handler {
 	})
 }
 
+// Logging middleware function
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Log the request method and URL
+		log.Printf("Received %s request for %s", r.Method, r.URL.Path)
+		// Call the next handler
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 
 	cfgFile := flag.String("config", "config.yml", "config file")
@@ -77,7 +87,7 @@ func main() {
 
 	router := shellbackend.NewRouter(ControllerApiController, DefaultApiController, DeploymentApiController, ResourceApiController, UserApiController, PredictApiController, TrainApiController)
 
-	handlerWithCors := enableCors(router)
+	handlerWithCors := enableCors(loggingMiddleware(router))
 
 	log.Fatal(http.ListenAndServe(":8080", handlerWithCors))
 }
