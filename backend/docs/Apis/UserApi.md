@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost:8080/api/v3*
 
 <a name="loginUser"></a>
 # **loginUser**
-> String loginUser(username, password)
+> String loginUser(username, password, otp)
 
 Logs user into the system
 
@@ -22,6 +22,7 @@ Logs user into the system
 |------------- | ------------- | ------------- | -------------|
 | **username** | **String**| The user name for login | [optional] [default to null] |
 | **password** | **String**| The password for login in clear text | [optional] [default to null] |
+| **otp** | **String**| The OTP token for login in clear text | [optional] [default to null] |
 
 ### Return type
 

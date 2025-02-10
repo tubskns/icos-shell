@@ -61,7 +61,7 @@ func errorConnect(resp *http.Response, err error) (ImplResponse, error) {
 	if resp != nil {
 		return Response(500, resp.Body), nil
 	}
-	return Response(500, "Error while connecting to the component"), nil
+	return Response(500, "Error while connecting from shell backend to the next component"), nil
 }
 
 func unexpectedCode(statusCode int) (ImplResponse, error) {

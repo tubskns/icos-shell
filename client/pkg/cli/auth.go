@@ -10,8 +10,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoginUser() {
-	token, resp, err := openapi.Client.UserAPI.LoginUser(context.Background()).Username(viper.GetString("keycloak.user")).Password(viper.GetString("keycloak.pass")).Execute()
+func LoginUser(otp string) {
+	token, resp, err := openapi.Client.UserAPI.LoginUser(context.Background()).Username(viper.GetString("keycloak.user")).Password(viper.GetString("keycloak.pass")).Otp(otp).Execute()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		if resp != nil {

@@ -100,7 +100,7 @@ func initConfig() {
 	} else if viper.GetString("controller") != "" && viper.GetString("auth_token") == "" {
 		fmt.Fprintln(os.Stderr, "Controller is defined, but no token found, trying to log in...")
 		openapi.Init(viper.GetString("controller"))
-		cli.LoginUser()
+		//		cli.LoginUser()
 		cli.CleanToken()
 	} else {
 		// fmt.Fprintln(os.Stdout, "Controller:", viper.GetString("controller"))

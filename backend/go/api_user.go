@@ -82,7 +82,14 @@ func (c *UserAPIController) LoginUser(w http.ResponseWriter, r *http.Request) {
 		passwordParam = param
 	} else {
 	}
-	result, err := c.service.LoginUser(r.Context(), usernameParam, passwordParam)
+	var otpParam string
+	if query.Has("otp") {
+		param := query.Get("otp")
+
+		otpParam = param
+	} else {
+	}
+	result, err := c.service.LoginUser(r.Context(), usernameParam, passwordParam, otpParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

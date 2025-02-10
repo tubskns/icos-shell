@@ -10,12 +10,4 @@ services:
             - "8080:8080"
         volumes:
             - ./config_server.yml:/app/config.yml
-    lighthouse:
-        image: michalkeit/icos-shell-backend
-        container_name: lighthouse
-        ports:
-            - "8081:8080"
-        volumes:
-            - ./config_lighthouse.yml:/app/config.yml
-
-        
+            - /etc/ssl/certs/icos-lh-cert.pem:/etc/ssl/certs/icos-lh-cert.pem

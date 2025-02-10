@@ -15,7 +15,13 @@ var loginCmd = &cobra.Command{
 	Short: "Login command",
 	Long:  `To login into ICOS.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cli.LoginUser()
+		var oneTimePad string
+		if cmd.Flags().NFlag() == 0 {
+			oneTimePad = ""
+		} else {
+			oneTimePad, _ = cmd.Flags().GetString("otp")
+		}
+		cli.LoginUser(oneTimePad)
 	},
 }
 
@@ -26,7 +32,7 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// loginCmd.PersistentFlags().String("foo", "", "A help for foo")
+	loginCmd.PersistentFlags().String("otp", "", "One Time Pad token in case user has 2FA enabled")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
