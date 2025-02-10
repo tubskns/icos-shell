@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## LoginUser
 
-> string LoginUser(ctx).Username(username).Password(password).Execute()
+> string LoginUser(ctx).Username(username).Password(password).Otp(otp).Execute()
 
 Logs user into the system
 
@@ -32,10 +32,11 @@ import (
 func main() {
 	username := "username_example" // string | The user name for login (optional)
 	password := "password_example" // string | The password for login in clear text (optional)
+	otp := "otp_example" // string | The OTP token for login in clear text (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.UserAPI.LoginUser(context.Background()).Username(username).Password(password).Execute()
+	resp, r, err := apiClient.UserAPI.LoginUser(context.Background()).Username(username).Password(password).Otp(otp).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `UserAPI.LoginUser``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -58,6 +59,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **string** | The user name for login | 
  **password** | **string** | The password for login in clear text | 
+ **otp** | **string** | The OTP token for login in clear text | 
 
 ### Return type
 

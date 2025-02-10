@@ -27,6 +27,7 @@ type ApiLoginUserRequest struct {
 	ApiService *UserAPIService
 	username *string
 	password *string
+	otp *string
 }
 
 // The user name for login
@@ -38,6 +39,12 @@ func (r ApiLoginUserRequest) Username(username string) ApiLoginUserRequest {
 // The password for login in clear text
 func (r ApiLoginUserRequest) Password(password string) ApiLoginUserRequest {
 	r.password = &password
+	return r
+}
+
+// The OTP token for login in clear text
+func (r ApiLoginUserRequest) Otp(otp string) ApiLoginUserRequest {
+	r.otp = &otp
 	return r
 }
 
@@ -86,6 +93,9 @@ func (a *UserAPIService) LoginUserExecute(r ApiLoginUserRequest) (string, *http.
 	}
 	if r.password != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "password", r.password, "form", "")
+	}
+	if r.otp != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "otp", r.otp, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

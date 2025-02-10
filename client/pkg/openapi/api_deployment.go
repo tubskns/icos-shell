@@ -567,7 +567,7 @@ func (a *DeploymentAPIService) StartDeploymentById(ctx context.Context, deployme
 //  @return map[string]interface{}
 func (a *DeploymentAPIService) StartDeploymentByIdExecute(r ApiStartDeploymentByIdRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
+		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 		localVarReturnValue  map[string]interface{}
@@ -693,7 +693,7 @@ func (a *DeploymentAPIService) StopDeploymentById(ctx context.Context, deploymen
 //  @return map[string]interface{}
 func (a *DeploymentAPIService) StopDeploymentByIdExecute(r ApiStopDeploymentByIdRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
+		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
 		localVarReturnValue  map[string]interface{}

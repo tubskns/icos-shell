@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**DeleteDeploymentById**](DeploymentAPI.md#DeleteDeploymentById) | **Delete** /deployment/{deploymentId} | Deletes a deployment
 [**GetDeploymentById**](DeploymentAPI.md#GetDeploymentById) | **Get** /deployment/{deploymentId} | Find deployment by ID
 [**GetDeployments**](DeploymentAPI.md#GetDeployments) | **Get** /deployment/ | Returns a list of deployments
-[**StartDeploymentById**](DeploymentAPI.md#StartDeploymentById) | **Delete** /deployment/{deploymentId}/start | Starts a deployment
-[**StopDeploymentById**](DeploymentAPI.md#StopDeploymentById) | **Delete** /deployment/{deploymentId}/stop | Stops a deployment
+[**StartDeploymentById**](DeploymentAPI.md#StartDeploymentById) | **Put** /deployment/{deploymentId}/start | Starts a deployment
+[**StopDeploymentById**](DeploymentAPI.md#StopDeploymentById) | **Put** /deployment/{deploymentId}/stop | Stops a deployment
 [**UpdateDeployment**](DeploymentAPI.md#UpdateDeployment) | **Put** /deployment/{deploymentId} | Updates a deployment
 
 

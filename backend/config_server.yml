@@ -2,18 +2,16 @@ lighthouse:
   controller_timeout: 60
   
 keycloak: 
-  server: https://keycloak.dev.icos.91.109.56.214.sslip.io
-  client_id: shell-backend
-  client_secret: rECpyPfRd4YaXtCcpJACFrfxQ1kcikG3
-  realm: icos-dev
+  server: https://iam.core.icos-staging.10-160-3-151.sslip.io:443/
+  client_id: lighthouse
+  client_secret: wtZvulvh5z6bCe5ERymJhHIDywkzKROE
+  realm: staging-continuum
 
 components: 
   job_manager: 
-    server: https://ocm-hub.bull1.ari-imet.eu
-    path_jobs: /jobmanager/jobs
+    server: http://10.160.3.20:30200
     path_jobgroups: /jobmanager/groups
-    path_policies: /jobmanager/policies
-    # path_jobs_create: /jobmanager/jobs/create
+    path_jobs: /jobmanager/jobs
   aggregator: 
-    server: http://127.0.0.1:8080
+    server: http://10.160.3.20:30400
     path: /
