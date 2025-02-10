@@ -238,7 +238,7 @@ paths:
                 additionalProperties: true
                 # $ref: '#/components/schemas/Deployment'
   /deployment/{deploymentId}/start:
-    delete:
+    put:
       tags:
       - deployment
       summary: Starts a deployment
@@ -270,7 +270,7 @@ paths:
                 additionalProperties: true
                 # $ref: '#/components/schemas/Deployment'
   /deployment/{deploymentId}/stop:
-    delete:
+    put:
       tags:
       - deployment
       summary: Stops a deployment
@@ -376,6 +376,14 @@ paths:
       - name: password
         in: query
         description: The password for login in clear text
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: otp
+        in: query
+        description: The OTP token for login in clear text
         required: false
         style: form
         explode: true

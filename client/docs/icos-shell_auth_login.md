@@ -14,6 +14,7 @@ icos-shell auth login [flags]
 
 ```
   -h, --help   help for login
+  --otp        provides an OTP for 2FA/MFA
 ```
 
 ### Options inherited from parent commands

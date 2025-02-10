@@ -8,8 +8,8 @@ All URIs are relative to *http://localhost:8080/api/v3*
 | [**deleteDeploymentById**](DeploymentApi.md#deleteDeploymentById) | **DELETE** /deployment/{deploymentId} | Deletes a deployment |
 | [**getDeploymentById**](DeploymentApi.md#getDeploymentById) | **GET** /deployment/{deploymentId} | Find deployment by ID |
 | [**getDeployments**](DeploymentApi.md#getDeployments) | **GET** /deployment/ | Returns a list of deployments |
-| [**startDeploymentById**](DeploymentApi.md#startDeploymentById) | **DELETE** /deployment/{deploymentId}/start | Starts a deployment |
-| [**stopDeploymentById**](DeploymentApi.md#stopDeploymentById) | **DELETE** /deployment/{deploymentId}/stop | Stops a deployment |
+| [**startDeploymentById**](DeploymentApi.md#startDeploymentById) | **PUT** /deployment/{deploymentId}/start | Starts a deployment |
+| [**stopDeploymentById**](DeploymentApi.md#stopDeploymentById) | **PUT** /deployment/{deploymentId}/stop | Stops a deployment |
 | [**updateDeployment**](DeploymentApi.md#updateDeployment) | **PUT** /deployment/{deploymentId} | Updates a deployment |
 
 

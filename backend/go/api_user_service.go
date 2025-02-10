@@ -30,9 +30,16 @@ func NewUserAPIService() UserAPIServicer {
 }
 
 // LoginUser - Logs user into the system
-func (s *UserAPIService) LoginUser(ctx context.Context, username string, password string) (ImplResponse, error) {
+func (s *UserAPIService) LoginUser(ctx context.Context, username string, password string, otp string) (ImplResponse, error) {
 	client := gocloak.NewClient(viper.GetString("keycloak.server"))
-	token, err := client.Login(ctx, viper.GetString("keycloak.client_id"), viper.GetString("keycloak.client_secret"), viper.GetString("keycloak.realm"), username, password)
+	var token *gocloak.JWT
+	var err error
+	if otp != "none" {
+		token, err = client.LoginOtp(ctx, viper.GetString("keycloak.client_id"), viper.GetString("keycloak.client_secret"), viper.GetString("keycloak.realm"), username, password, otp)
+	} else {
+		// TODO: fix the next line, this should be retrieved from the client, not the config
+		token, err = client.Login(ctx, viper.GetString("keycloak.client_id"), viper.GetString("keycloak.client_secret"), viper.GetString("keycloak.realm"), username, password)
+	}
 	if err != nil {
 		return Response(400, nil), errors.New(err.Error())
 	} else {

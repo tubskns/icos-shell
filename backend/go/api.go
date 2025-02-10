@@ -137,6 +137,6 @@ type TrainAPIServicer interface {
 // while the service implementation can be ignored with the .openapi-generator-ignore file
 // and updated with the logic required for the API.
 type UserAPIServicer interface { 
-	LoginUser(context.Context, string, string) (ImplResponse, error)
+	LoginUser(context.Context, string, string, string) (ImplResponse, error)
 	LogoutUser(context.Context) (ImplResponse, error)
 }

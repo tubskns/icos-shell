@@ -243,7 +243,7 @@ paths:
       tags:
       - deployment
   /deployment/{deploymentId}/start:
-    delete:
+    put:
       description: Starts a deployment
       operationId: startDeploymentById
       parameters:
@@ -274,7 +274,7 @@ paths:
       tags:
       - deployment
   /deployment/{deploymentId}/stop:
-    delete:
+    put:
       description: Stops a deployment
       operationId: stopDeploymentById
       parameters:
@@ -373,6 +373,14 @@ paths:
         explode: true
         in: query
         name: password
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The OTP token for login in clear text
+        explode: true
+        in: query
+        name: otp
         required: false
         schema:
           type: string

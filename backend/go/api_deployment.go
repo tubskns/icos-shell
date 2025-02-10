@@ -77,12 +77,12 @@ func (c *DeploymentAPIController) Routes() Routes {
 			c.DeleteDeploymentById,
 		},
 		"StartDeploymentById": Route{
-			strings.ToUpper("Delete"),
+			strings.ToUpper("Put"),
 			"/api/v3/deployment/{deploymentId}/start",
 			c.StartDeploymentById,
 		},
 		"StopDeploymentById": Route{
-			strings.ToUpper("Delete"),
+			strings.ToUpper("Put"),
 			"/api/v3/deployment/{deploymentId}/stop",
 			c.StopDeploymentById,
 		},
