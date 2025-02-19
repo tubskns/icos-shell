@@ -29,7 +29,7 @@ const SignInForm = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}`,
+            url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}&otp=${data.get("otp")}`,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -135,6 +135,34 @@ const SignInForm = () => {
                                             }}
                                         />
                                     </Grid>
+
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            component="label"
+                                            sx={{
+                                                fontWeight: "500",
+                                                fontSize: "14px",
+                                                mb: "10px",
+                                                display: "block",
+                                            }}
+                                        >
+                                            OTP
+                                        </Typography>
+
+                                        <TextField
+                                            required
+                                            fullWidth
+                                            name="otp"
+                                            label="otp"
+                                            type="otp"
+                                            id="otp"
+                                            autoComplete=""
+                                            InputProps={{
+                                                style: { borderRadius: 8 },
+                                            }}
+                                        />
+                                    </Grid>
+
                                 </Grid>
                             </Box>
 
