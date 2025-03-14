@@ -23,13 +23,13 @@ const SignInForm = () => {
         setLoading(true); // Start the loading animation
         setError(""); // Clear previous errors
 
-        const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
         const data = new FormData(event.currentTarget);
 
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}&otp=${data.get("otp")}`,
+            url: `${controllerBaseUrl}/api/v3/user/login?username=${encodeURIComponent(data.get("email"))}&password=${encodeURIComponent(data.get("password"))}&otp=${encodeURIComponent(data.get("otp"))}`,
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -24,7 +24,7 @@ const AllProjects = () => {
     const [loading, setLoading] = useState(true); // New loading state
     const router = useRouter();
     const [rows, setRows] = useState([]);
-    const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
 
     const handleChange = (event) => {
         setSelect(event.target.value);

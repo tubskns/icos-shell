@@ -8,11 +8,11 @@ const Controllers = () => {
     const [controllersData, setControllersData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+    const lighthouseUrl = process.env.NEXT_PUBLIC_LIGHTHOUSE_ADDRESS;
 
     useEffect(() => {
         setLoading(true); // Start loading
-        axios.get(`${controllerBaseUrl}/light_house/api/v3/controller/`)
+        axios.get(`${lighthouseUrl}/api/v3/controller/`)
             .then((response) => {
                 console.log("Controllers data:", response.data);
                 setControllersData(response.data); // Update state with the fetched data
