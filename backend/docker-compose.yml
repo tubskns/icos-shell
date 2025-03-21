@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
     icos-shell-backend:
         image: michalkeit/icos-shell-backend

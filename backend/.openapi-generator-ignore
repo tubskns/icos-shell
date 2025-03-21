@@ -24,8 +24,7 @@
 
 go/api_default_service.go
 go/api_controller_service.go
-go/api_predict_service.go
-go/api_train_service.go
+go/api_metrics_service.go
 go/api_deployment_service.go
 go/api_resource_service.go
 go/api_user_service.go

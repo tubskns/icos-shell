@@ -13,7 +13,7 @@ func TrainMetrics(jsonFile []byte) {
 	body["content"] = s
 
 	token := viper.GetString("auth_token")
-	metrics, resp, err := openapi.Client.TrainAPI.TrainMetrics(context.Background()).ApiKey(token).Body(body).Execute()
+	metrics, resp, err := openapi.Client.MetricsAPI.TrainMetrics(context.Background()).ApiKey(token).Body(body).Execute()
 	printPrettyJSON(metrics, resp, err)
 
 }
@@ -24,7 +24,13 @@ func PredictMetrics(jsonFile []byte) {
 	body["content"] = s
 
 	token := viper.GetString("auth_token")
-	metrics, resp, err := openapi.Client.PredictAPI.PredictMetrics(context.Background()).ApiKey(token).Body(body).Execute()
+	metrics, resp, err := openapi.Client.MetricsAPI.PredictMetrics(context.Background()).ApiKey(token).Body(body).Execute()
 	printPrettyJSON(metrics, resp, err)
 
+}
+
+func GetMetrics() {
+	token := viper.GetString("auth_token")
+	metrics, resp, err := openapi.Client.MetricsAPI.GetMetrics(context.Background()).ApiKey(token).Execute()
+	printArrayPrettyJSON(metrics, resp, err)
 }

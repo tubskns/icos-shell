@@ -79,13 +79,10 @@ func main() {
 	UserApiService := shellbackend.NewUserAPIService()
 	UserApiController := shellbackend.NewUserAPIController(UserApiService)
 
-	PredictApiService := shellbackend.NewPredictAPIService()
-	PredictApiController := shellbackend.NewPredictAPIController(PredictApiService)
+	MetricsApiService := shellbackend.NewMetricsAPIService()
+	MetricsApiController := shellbackend.NewMetricsAPIController(MetricsApiService)
 
-	TrainApiService := shellbackend.NewTrainAPIService()
-	TrainApiController := shellbackend.NewTrainAPIController(TrainApiService)
-
-	router := shellbackend.NewRouter(ControllerApiController, DefaultApiController, DeploymentApiController, ResourceApiController, UserApiController, PredictApiController, TrainApiController)
+	router := shellbackend.NewRouter(ControllerApiController, DefaultApiController, DeploymentApiController, ResourceApiController, UserApiController, MetricsApiController)
 
 	handlerWithCors := enableCors(loggingMiddleware(router))
 

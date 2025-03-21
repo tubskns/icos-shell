@@ -104,7 +104,7 @@ func (c *DeploymentAPIController) GetDeployments(w http.ResponseWriter, r *http.
 
 // CreateDeployment - Creates a new deployment
 func (c *DeploymentAPIController) CreateDeployment(w http.ResponseWriter, r *http.Request) {
-	bodyParam := map[string]interface{}{}
+	var bodyParam map[string]interface{}
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
 	if err := d.Decode(&bodyParam); err != nil {
@@ -149,7 +149,7 @@ func (c *DeploymentAPIController) UpdateDeployment(w http.ResponseWriter, r *htt
 		c.errorHandler(w, r, &RequiredError{"deploymentId"}, nil)
 		return
 	}
-	bodyParam := map[string]interface{}{}
+	var bodyParam map[string]interface{}
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
 	if err := d.Decode(&bodyParam); err != nil {

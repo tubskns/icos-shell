@@ -427,11 +427,11 @@ paths:
   /metrics/train:
     post:
       tags:
-      - train
+      - metrics
       summary: Trains a model on a set of metrics
       description: ""
       operationId: trainMetrics
-      parameters: 
+      parameters:
       - explode: false
         in: header
         name: api_key
@@ -465,7 +465,7 @@ paths:
   /metrics/predict:
     post:
       tags:
-      - predict
+      - metrics
       summary: Predict metrics development based on model and input metrics
       description: ""
       operationId: predictMetrics
@@ -500,6 +500,34 @@ paths:
           description: Intelligence component not found
         "500":
           description: Intelligence component error
+  /metrics/get:
+    get:
+      tags:
+      - metrics
+      summary: Returns a list of metric models
+      description: Returns a list of metric models
+      operationId: getMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                # type: array
+                # items:
+                # $ref: '#/components/schemas/MlModel'
 components:
   schemas:
     Resource:

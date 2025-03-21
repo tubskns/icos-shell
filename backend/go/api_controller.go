@@ -76,7 +76,7 @@ func (c *ControllerAPIController) GetControllers(w http.ResponseWriter, r *http.
 
 // AddController - Adds a new controller
 func (c *ControllerAPIController) AddController(w http.ResponseWriter, r *http.Request) {
-	controllerParam := Controller{}
+	var controllerParam Controller
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
 	if err := d.Decode(&controllerParam); err != nil {
