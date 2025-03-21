@@ -2,26 +2,10 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.app
+      dockerfile: Dockerfile
     ports:
       - '3000:3000'
     restart: always
     environment:
       - NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500
-      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.icos-project.eu:8080
-      - NEXT_PUBLIC_GUI_ADDRESS=http://156.244.14.42:3000
-      - NEXT_PUBLIC_API_BASE_URL=http://156.244.14.42:3001
-    depends_on:
-      - handler
-
-  handler:
-    build:
-      context: .
-      dockerfile: Dockerfile.handler
-    ports:
-      - "3001:3001"
-    environment:
-      - NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500
-      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.icos-project.eu:8080
-      - NEXT_PUBLIC_GUI_ADDRESS=http://156.244.14.42:3000
-      - NEXT_PUBLIC_API_BASE_URL=http://156.244.14.42:3001
+      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=https://lighthouse.core.icos-staging.10-160-3-151.sslip.io
