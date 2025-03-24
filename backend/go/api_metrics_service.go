@@ -47,11 +47,7 @@ jsonData := body["content"].(string)
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -73,11 +69,7 @@ log.Printf("Hit PredictAPIService\n")
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 
 }
@@ -96,10 +88,6 @@ func (s *MetricsAPIService) GetMetrics(ctx context.Context, apiKey string) (Impl
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }

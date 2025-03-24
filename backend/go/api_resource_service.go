@@ -54,10 +54,6 @@ func (s *ResourceAPIService) GetResources(ctx context.Context, apiKey string) (I
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }

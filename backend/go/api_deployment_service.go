@@ -49,11 +49,7 @@ func (s *DeploymentAPIService) CreateDeployment(ctx context.Context, body map[st
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 201 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -68,11 +64,7 @@ func (s *DeploymentAPIService) DeleteDeploymentById(ctx context.Context, deploym
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -87,11 +79,7 @@ func (s *DeploymentAPIService) StartDeploymentById(ctx context.Context, deployme
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -106,11 +94,7 @@ func (s *DeploymentAPIService) StopDeploymentById(ctx context.Context, deploymen
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -125,11 +109,7 @@ func (s *DeploymentAPIService) GetDeploymentById(ctx context.Context, deployment
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
 
@@ -145,11 +125,7 @@ func (s *DeploymentAPIService) GetDeployments(ctx context.Context, apiKey string
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalArrayResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalArrayResponse(resp)), nil
 	}
 }
 
@@ -165,10 +141,6 @@ func (s *DeploymentAPIService) UpdateDeployment(ctx context.Context, deploymentI
 	if err != nil {
 		return errorConnect(resp, err)
 	} else {
-		if resp.StatusCode == 200 {
-			return Response(resp.StatusCode, unmarshalResponse(resp)), nil
-		} else {
-			return unexpectedCode(resp.StatusCode)
-		}
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
 	}
 }
