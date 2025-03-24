@@ -65,10 +65,10 @@ const TopologyGraph = ({ data }) => {
                 .id(d => d.id)
                 .distance(d => d.group === 'cluster' ? 20 : 38) // Closer links between clusters
             )
-            .force("charge", d3.forceManyBody().strength(-30)) // Reduce repulsion strength
+            .force("charge", d3.forceManyBody().strength(-150)) // Reduce repulsion strength
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("x", d3.forceX(width / 2).strength(0.1)) // Pull clusters towards center on the x-axis
-            .force("y", d3.forceY(height / 2).strength(0.1)); // Pull clusters towards center on the y-axis
+            .force("x", d3.forceX(width / 2).strength(0.08)) // Pull clusters towards center on the x-axis
+            .force("y", d3.forceY(height / 2).strength(0.08)); // Pull clusters towards center on the y-axis
 
 
         const clusters = Object.keys(data.cluster).map(clusterId => ({
