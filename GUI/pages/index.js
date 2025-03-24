@@ -16,7 +16,7 @@ export default function eCommerce() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         const token = Cookies.get('authToken');
-        const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
 
         if (!token) {
             router.push("/authentication/sign-in/");

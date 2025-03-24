@@ -1,3 +1,4 @@
+// Not needed anymore
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const express = require('express');
 const cors = require('cors');

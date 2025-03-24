@@ -23,12 +23,13 @@ const SignInForm = () => {
         setLoading(true); // Start the loading animation
         setError(""); // Clear previous errors
 
-        const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
         const data = new FormData(event.currentTarget);
 
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
+<<<<<<< HEAD
             // url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}&otp=''`,
             url: `${controllerBaseUrl}/api/v3/user/login`,
             params: {
@@ -37,6 +38,9 @@ const SignInForm = () => {
               otp: ''  // Explicitly sending an empty string
             },
 
+=======
+            url: `${controllerBaseUrl}/api/v3/user/login?username=${encodeURIComponent(data.get("email"))}&password=${encodeURIComponent(data.get("password"))}&otp=${encodeURIComponent(data.get("otp"))}`,
+>>>>>>> 7128387e239a3099cd22442ad3dff283165d80ea
             headers: {
                 'Content-Type': 'application/json'
             }
