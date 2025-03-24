@@ -8,7 +8,6 @@ services:
     restart: always
     environment:
       - NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500
-<<<<<<< HEAD
       # - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.icos-project.eu:8080
       - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.core.icos-staging.10-160-3-151.sslip.io
       - NEXT_PUBLIC_GUI_ADDRESS=http://51.38.73.234:3000
@@ -28,6 +27,3 @@ services:
       - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=http://lighthouse.core.icos-staging.10-160-3-151.sslip.io
       - NEXT_PUBLIC_GUI_ADDRESS=http://51.38.73.234:3000
       - NEXT_PUBLIC_API_BASE_URL=http://51.38.73.234:3001
-=======
-      - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=https://lighthouse.core.icos-staging.10-160-3-151.sslip.io
->>>>>>> 7128387e239a3099cd22442ad3dff283165d80ea

@@ -6,7 +6,6 @@ const TopologyGraph = ({ data }) => {
     const svgRef = useRef();
     const [open, setOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
-    const [visiblePods, setVisiblePods] = useState(25); // Start with 25 visible pods
 
     const handleOpen = (content) => {
         setModalContent(content);
@@ -16,15 +15,6 @@ const TopologyGraph = ({ data }) => {
     const handleClose = () => {
         setOpen(false);
         setModalContent('');
-    };
-
-    // Handle scrolling to increase the number of visible pods
-    const handleScroll = () => {
-        const container = svgRef.current.parentElement;
-        if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-            // If scrolled to the bottom, increase the number of visible pods
-            setVisiblePods(prev => Math.min(prev + 4, Object.keys(data.cluster).flatMap(clusterId => Object.keys(data.cluster[clusterId].pod || {})).length)); // Increase by 4
-        }
     };
 
     useEffect(() => {
@@ -42,34 +32,29 @@ const TopologyGraph = ({ data }) => {
             .attr("height", "100%")
             .style("background-color", "white");
 
-        // Create a group element to apply zoom transformations
         const g = svg.append("g");
 
-        // Enable zoom and pan
         const zoom = d3.zoom()
-            .scaleExtent([0.5, 3]) // Adjust the scale range for zoom
+            .scaleExtent([0.5, 3])
             .on("zoom", (event) => {
                 g.attr("transform", event.transform);
             });
 
         svg.call(zoom)
-            .style("overflow", "hidden") // Hide the scrollbars
-            .style("cursor", "default"); // Set cursor style to default
+            .style("overflow", "hidden")
+            .style("cursor", "default");
 
-        // Cursor handling for zooming
-        svg.on("pointerdown", () => svg.style("cursor", "move")); // Closed hand when dragging starts
-        svg.on("pointerup", () => svg.style("cursor", "default")); // Open hand when dragging ends
+        svg.on("pointerdown", () => svg.style("cursor", "move"));
+        svg.on("pointerup", () => svg.style("cursor", "default"));
 
         const simulation = d3.forceSimulation()
             .force("link", d3.forceLink()
                 .id(d => d.id)
-                .distance(d => d.group === 'cluster' ? 20 : 38) // Closer links between clusters
-            )
-            .force("charge", d3.forceManyBody().strength(-150)) // Reduce repulsion strength
+                .distance(50))
+            .force("charge", d3.forceManyBody().strength(-150))
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("x", d3.forceX(width / 2).strength(0.08)) // Pull clusters towards center on the x-axis
-            .force("y", d3.forceY(height / 2).strength(0.08)); // Pull clusters towards center on the y-axis
-
+            .force("x", d3.forceX(width / 2).strength(0.08))
+            .force("y", d3.forceY(height / 2).strength(0.08));
 
         const clusters = Object.keys(data.cluster).map(clusterId => ({
             id: clusterId,
@@ -78,38 +63,19 @@ const TopologyGraph = ({ data }) => {
         }));
 
         const nodes = Object.keys(data.cluster).flatMap(clusterId => {
-            const nodeIds = Object.keys(data.cluster[clusterId].node);
-            // Select up to 3 nodes from each cluster
-            return nodeIds.slice(0, 3).map(nodeId => ({
+            const nodeEntries = Object.entries(data.cluster[clusterId].node);
+            return nodeEntries.slice(0, 3).map(([nodeId, nodeData]) => ({
                 id: nodeId,
                 group: 'node',
-                name: '',
-                fullDetail: data.cluster[clusterId].node[nodeId],
-                RAMMemory: "" + data.cluster[clusterId].node[nodeId].staticMetrics.RAMMemory,
-                cpuArchitecture: data.cluster[clusterId].node[nodeId].staticMetrics.cpuArchitecture,
+                name: nodeData.name || nodeId,
+                fullDetail: nodeData,
                 clusterId: clusterId
             }));
         });
 
-        // Update pods based on the current number of visible pods
-        const pods = clusters.flatMap(cluster =>
-            Object.entries(data.cluster[cluster.id].pod || {})
-                .slice(0, visiblePods) // Use the visiblePods state to determine how many to show
-                .map(([podId, podInfo]) => ({
-                    id: podId,
-                    group: 'pod',
-                    name: '',
-                    fullDetail: podInfo,
-                    clusterId: cluster.id
-                }))
-        );
+        const links = nodes.map(node => ({ source: node.clusterId, target: node.id }));
 
-        const links = [
-            ...nodes.map(node => ({ source: node.clusterId, target: node.id })),
-            ...pods.map(pod => ({ source: pod.clusterId, target: pod.id }))
-        ];
-
-        const allNodes = [...clusters, ...nodes, ...pods];
+        const allNodes = [...clusters, ...nodes];
 
         const link = g.append("g")
             .attr("class", "links")
@@ -126,47 +92,32 @@ const TopologyGraph = ({ data }) => {
             .enter().append("g")
             .on('click', showFullName);
 
-        // Append path elements for nodes and pods, and apply event listeners
         node.append("path")
             .attr("d", d => {
                 if (d.group === 'cluster') return d3.symbol().type(d3.symbolSquare).size(400)();
                 if (d.group === 'node') return d3.symbol().type(d3.symbolCircle).size(100)();
-                if (d.group === 'pod') return d3.symbol().type(d3.symbolCircle).size(50)();
                 return d3.symbol().type(d3.symbolSquare).size(100)();
             })
             .attr("fill", d => {
                 if (d.group === 'cluster') return 'blue';
                 if (d.group === 'node') return 'green';
-                if (d.group === 'pod') return 'black';
                 return 'red';
             })
             .on('pointerover', function() {
-                svg.style("cursor", "pointer"); // Change to pointer when hovering over nodes
+                svg.style("cursor", "pointer");
             })
             .on('pointerout', function() {
-                svg.style("cursor", "default"); // Revert to default cursor when leaving nodes
+                svg.style("cursor", "default");
             });
 
-        node.filter(d => d.group === 'cluster').append("text")
-            .text(d => d.name)
-            .attr("x", -30)
-            .attr("y", -15)
-            .attr("fill", "blue");
-
-        node.filter(d => d.group === 'node').append("text")
+        node.append("text")
             .text(d => d.name)
             .attr("x", -25)
-            .attr("y", -50)
-            .attr("fill", "black");
-
-        node.filter(d => d.group === 'pod').append("text")
-            .text(d => d.name)
-            .attr("x", 20)
-            .attr("y", -20)
+            .attr("y", -30)
             .attr("fill", "black");
 
         node.append("title")
-            .text(d => d.id);
+            .text(d => d.name);
 
         simulation.nodes(allNodes)
             .on("tick", () => {
@@ -179,8 +130,7 @@ const TopologyGraph = ({ data }) => {
                 node.attr("transform", d => `translate(${d.x},${d.y})`);
             });
 
-        simulation.force("link")
-            .links(links);
+        simulation.force("link").links(links);
 
         function formatObject(obj, indentLevel = 0) {
             let formatted = '';
@@ -211,37 +161,27 @@ const TopologyGraph = ({ data }) => {
             handleOpen(fullNameFormatted);
         }
 
-        // Add event listener for scrolling
-        const container = svgRef.current.parentElement;
-        container.addEventListener('scroll', handleScroll);
-
-        // Create the legend group within the SVG
         const legendGroup = svg.append("g")
             .attr("class", "legend")
-            .attr("transform", "translate(10, 20)"); // Position the legend
+            .attr("transform", "translate(10, 20)");
 
-        // Define legend items
         const legendItems = [
             { color: 'blue', label: 'Cluster' },
-            { color: 'green', label: 'Node' },
-            { color: 'black', label: 'Pod' }
+            { color: 'green', label: 'Node' }
         ];
 
-        // Create legend items
         legendItems.forEach((item, index) => {
             const legendItem = legendGroup.append("g")
                 .attr("transform", `translate(0, ${index * 20})`);
 
-            // Add colored square
             legendItem.append("rect")
                 .attr("width", 18)
                 .attr("height", 18)
                 .attr("fill", item.color);
 
-            // Add label
             legendItem.append("text")
                 .attr("x", 25)
-                .attr("y", 15) // Align the text vertically
+                .attr("y", 15)
                 .text(item.label);
         });
 
@@ -249,9 +189,8 @@ const TopologyGraph = ({ data }) => {
             simulation.nodes([]);
             simulation.force("link", null);
             simulation.stop();
-            container.removeEventListener('scroll', handleScroll); // Clean up scroll event listener
         };
-    }, [data, visiblePods]); // Re-run effect when visiblePods changes
+    }, [data]);
 
     return (
         <>
