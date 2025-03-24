@@ -29,11 +29,20 @@ const SignInForm = () => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}&otp=${data.get("otp")}`,
+            // url: `${controllerBaseUrl}/api/v3/user/login?username=${data.get("email")}&password=${data.get("password")}&otp=''`,
+            url: `${controllerBaseUrl}/api/v3/user/login`,
+            params: {
+              username: data.get("email"),
+              password: data.get("password"),
+              otp: ''  // Explicitly sending an empty string
+            },
+
             headers: {
                 'Content-Type': 'application/json'
             }
         };
+
+        console.log(config);
 
         try {
             const response = await axios.request(config);
