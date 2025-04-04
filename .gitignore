@@ -4,4 +4,5 @@ client/shell-client
 GUI/cache/
 client/icos-shell
 backend/config_server.yml
+client/config_client.yml
 .gitignore
