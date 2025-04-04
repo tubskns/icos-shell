@@ -509,9 +509,52 @@ paths:
       summary: Predict metrics development based on model and input metrics
       tags:
       - metrics
+  /metrics/delete:
+    post:
+      description: ""
+      operationId: deleteMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MlModel'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: submitted successfully
+        "400":
+          description: Invalid input
+        "401":
+          description: API key is missing or invalid
+          headers:
+            WWW_Authenticate:
+              explode: false
+              schema:
+                type: string
+              style: simple
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
+      summary: Delete metrics models
+      tags:
+      - metrics
   /metrics/get:
     get:
-      description: Returns a list of metric models
+      description: Returns a list of metrics models
       operationId: getMetrics
       parameters:
       - explode: false
@@ -531,7 +574,7 @@ paths:
                   type: object
                 type: array
           description: successful operation
-      summary: Returns a list of metric models
+      summary: Returns a list of metrics models
       tags:
       - metrics
 components:
