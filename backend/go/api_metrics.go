@@ -59,6 +59,11 @@ func (c *MetricsAPIController) Routes() Routes {
 			"/api/v3/metrics/predict",
 			c.PredictMetrics,
 		},
+		"DeleteMetrics": Route{
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/delete",
+			c.DeleteMetrics,
+		},
 		"GetMetrics": Route{
 			strings.ToUpper("Get"),
 			"/api/v3/metrics/get",
@@ -107,7 +112,27 @@ func (c *MetricsAPIController) PredictMetrics(w http.ResponseWriter, r *http.Req
 	_ = EncodeJSONResponse(result.Body, &result.Code, w)
 }
 
-// GetMetrics - Returns a list of metric models
+// DeleteMetrics - Delete metrics models
+func (c *MetricsAPIController) DeleteMetrics(w http.ResponseWriter, r *http.Request) {
+	var bodyParam map[string]interface{}
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+	if err := d.Decode(&bodyParam); err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+	apiKeyParam := r.Header.Get("api_key")
+	result, err := c.service.DeleteMetrics(r.Context(), bodyParam, apiKeyParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// GetMetrics - Returns a list of metrics models
 func (c *MetricsAPIController) GetMetrics(w http.ResponseWriter, r *http.Request) {
 	apiKeyParam := r.Header.Get("api_key")
 	result, err := c.service.GetMetrics(r.Context(), apiKeyParam)

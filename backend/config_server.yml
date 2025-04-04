@@ -20,3 +20,4 @@ components:
     train_metrics: /train_model_metric
     predict_metrics: /create_model_metric
     get_metrics: /show_models
+    delete_metrics: /unregister_metric

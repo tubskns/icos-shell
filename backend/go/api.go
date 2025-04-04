@@ -48,6 +48,7 @@ type DeploymentAPIRouter interface {
 type MetricsAPIRouter interface { 
 	TrainMetrics(http.ResponseWriter, *http.Request)
 	PredictMetrics(http.ResponseWriter, *http.Request)
+	DeleteMetrics(http.ResponseWriter, *http.Request)
 	GetMetrics(http.ResponseWriter, *http.Request)
 }
 // ResourceAPIRouter defines the required methods for binding the api requests to a responses for the ResourceAPI
@@ -107,6 +108,7 @@ type DeploymentAPIServicer interface {
 type MetricsAPIServicer interface { 
 	TrainMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 	PredictMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
+	DeleteMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 	GetMetrics(context.Context, string) (ImplResponse, error)
 }
 

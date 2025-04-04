@@ -17,7 +17,8 @@ All URIs are relative to *http://localhost:8080/api/v3*
 *DeploymentApi* | [**startDeploymentById**](Apis/DeploymentApi.md#startdeploymentbyid) | **PUT** /deployment/{deploymentId}/start | Starts a deployment |
 *DeploymentApi* | [**stopDeploymentById**](Apis/DeploymentApi.md#stopdeploymentbyid) | **PUT** /deployment/{deploymentId}/stop | Stops a deployment |
 *DeploymentApi* | [**updateDeployment**](Apis/DeploymentApi.md#updatedeployment) | **PUT** /deployment/{deploymentId} | Updates a deployment |
-| *MetricsApi* | [**getMetrics**](Apis/MetricsApi.md#getmetrics) | **GET** /metrics/get | Returns a list of metric models |
+| *MetricsApi* | [**deleteMetrics**](Apis/MetricsApi.md#deletemetrics) | **POST** /metrics/delete | Delete metrics models |
+*MetricsApi* | [**getMetrics**](Apis/MetricsApi.md#getmetrics) | **GET** /metrics/get | Returns a list of metrics models |
 *MetricsApi* | [**predictMetrics**](Apis/MetricsApi.md#predictmetrics) | **POST** /metrics/predict | Predict metrics development based on model and input metrics |
 *MetricsApi* | [**trainMetrics**](Apis/MetricsApi.md#trainmetrics) | **POST** /metrics/train | Trains a model on a set of metrics |
 | *ResourceApi* | [**getResourceById**](Apis/ResourceApi.md#getresourcebyid) | **GET** /resource/{resourceId} | Find resource by ID |

@@ -34,6 +34,13 @@ var metricsCmd = &cobra.Command{
 				log.Fatalf("error: %v", err)
 			}
 			cli.PredictMetrics(fileDescriptor)
+		} else if cmd.Parent().Use == "delete" {
+			fileDescriptorString, _ := cmd.Flags().GetString("file")
+			fileDescriptor, err := os.ReadFile(fileDescriptorString)
+			if err != nil {
+				log.Fatalf("error: %v", err)
+			}
+			cli.DeleteMetrics(fileDescriptor)
 		}
 	},
 }
@@ -43,11 +50,14 @@ func init() {
 	var predictMetricsCmd = *metricsCmd
 	var trainMetricsCmd = *metricsCmd
 	var getMetricsCmd = *metricsCmd
+	var deleteMetricsCmd = *metricsCmd
 	trainCmd.AddCommand(&trainMetricsCmd)
 	predictCmd.AddCommand(&predictMetricsCmd)
 	getCmd.AddCommand(&getMetricsCmd)
+	deleteCmd.AddCommand(&deleteMetricsCmd)
 
 	predictMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
 	trainMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
+	deleteMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
 
 }

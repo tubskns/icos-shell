@@ -4,18 +4,47 @@ All URIs are relative to *http://localhost:8080/api/v3*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getMetrics**](MetricsApi.md#getMetrics) | **GET** /metrics/get | Returns a list of metric models |
+| [**deleteMetrics**](MetricsApi.md#deleteMetrics) | **POST** /metrics/delete | Delete metrics models |
+| [**getMetrics**](MetricsApi.md#getMetrics) | **GET** /metrics/get | Returns a list of metrics models |
 | [**predictMetrics**](MetricsApi.md#predictMetrics) | **POST** /metrics/predict | Predict metrics development based on model and input metrics |
 | [**trainMetrics**](MetricsApi.md#trainMetrics) | **POST** /metrics/train | Trains a model on a set of metrics |
 
+
+<a name="deleteMetrics"></a>
+# **deleteMetrics**
+> Map deleteMetrics(body, api\_key)
+
+Delete metrics models
+
+    
+
+### Parameters
+
+|Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **body** | **Object**|  | |
+| **api\_key** | **String**|  | [optional] [default to null] |
+
+### Return type
+
+[**Map**](../Models/AnyType.md)
+
+### Authorization
+
+[api_key](../README.md#api_key)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 <a name="getMetrics"></a>
 # **getMetrics**
 > List getMetrics(api\_key)
 
-Returns a list of metric models
+Returns a list of metrics models
 
-    Returns a list of metric models
+    Returns a list of metrics models
 
 ### Parameters
 

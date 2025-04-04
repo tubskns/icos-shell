@@ -29,6 +29,17 @@ func PredictMetrics(jsonFile []byte) {
 
 }
 
+func DeleteMetrics(jsonFile []byte) {
+	body := make(map[string]interface{})
+	s := string(jsonFile)
+	body["content"] = s
+
+	token := viper.GetString("auth_token")
+	metrics, resp, err := openapi.Client.MetricsAPI.DeleteMetrics(context.Background()).ApiKey(token).Body(body).Execute()
+	printPrettyJSON(metrics, resp, err)
+
+}
+
 func GetMetrics() {
 	token := viper.GetString("auth_token")
 	metrics, resp, err := openapi.Client.MetricsAPI.GetMetrics(context.Background()).ApiKey(token).Execute()

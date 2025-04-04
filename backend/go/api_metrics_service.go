@@ -74,6 +74,29 @@ log.Printf("Hit PredictAPIService\n")
 
 }
 
+// DeleteMetrics - Delete metrics model
+func (s *MetricsAPIService) DeleteMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
+
+log.Printf("Hit DeleteAPIService\n")
+	jsonData := body["content"].(string)
+
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.delete_metrics"), strings.NewReader(jsonData))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.delete_metrics"))
+	fmt.Printf("Payload:\n%v\n", jsonData)
+
+	req = addBearerToToken(ctx, apiKey, req)
+	req.Header.Add("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
+	if err != nil {
+		return errorConnect(resp, err)
+	} else {
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
+	}
+
+}
+
 // GetMetrics - Returns a list of metric models
 func (s *MetricsAPIService) GetMetrics(ctx context.Context, apiKey string) (ImplResponse, error) {
 

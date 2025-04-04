@@ -500,12 +500,50 @@ paths:
           description: Intelligence component not found
         "500":
           description: Intelligence component error
+  /metrics/delete:
+    post:
+      tags:
+      - metrics
+      summary: Delete metrics models
+      description: ""
+      operationId: deleteMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MlModel'
+      responses:
+        "200":
+          description:  submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                # $ref: '#/components/schemas/MlModel'
+        "400":
+          description: Invalid input
+        "401":
+           $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
   /metrics/get:
     get:
       tags:
       - metrics
-      summary: Returns a list of metric models
-      description: Returns a list of metric models
+      summary: Returns a list of metrics models
+      description: Returns a list of metrics models
       operationId: getMetrics
       parameters:
       - explode: false
