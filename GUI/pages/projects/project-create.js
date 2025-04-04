@@ -3,29 +3,18 @@ import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Link from 'next/link';
 import styles from '@/styles/PageTitle.module.css';
 const axios = require('axios');
-import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
-const RichTextEditor = dynamic(() => import('@mantine/rte'), {
-    ssr: false,
-});
-
 const ProjectCreate = () => {
-    const [error, setError] = useState(""); // State for managing the error message
-    const [data, setData] = useState(null); // State for storing the fetched data
-    const [priority, setPriority] = useState(''); // State for the select input
-    const [openSnackbar, setOpenSnackbar] = useState(false); // State to control Snackbar visibility
-    const router = useRouter(); // Next.js router for navigation
+    const [error, setError] = useState("");
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const router = useRouter();
+    const controllerBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
     useEffect(() => {
         const token = Cookies.get('authToken');
@@ -37,50 +26,77 @@ const ProjectCreate = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        console.log("submit_start");
         const token = Cookies.get('authToken');
         if (!token) {
             setError("Authorization token is missing.");
-            setOpenSnackbar(true); // Open Snackbar
+            setOpenSnackbar(true);
             return;
         }
 
-        const formData = new FormData(event.target);
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'lighthouse.icos-project.eu:8080/api/v3/deployment',
-            headers: {
-                'Content-Type': 'application/json',
-                'api_key': token
-            },
-            data: formData,
+        const fileInput = event.target.elements.deploymentFile;
+        if (fileInput.files.length === 0) {
+            setError("No file selected.");
+            setOpenSnackbar(true);
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const fileContent = reader.result;
+
+            console.log(fileContent);
+
+            const payload = {
+                content: fileContent,
+                fileName: file.name,
+                fileType: file.type
+            };
+
+            const config = {
+                method: 'post',
+                url: `${controllerBaseUrl}/api/v3/deployment/`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'api_key': token
+                },
+                data: JSON.stringify(payload),
+            };
+
+            console.log(config);
+
+
+            axios.request(config)
+                .then((response) => {
+                    console.log("success");
+                    console.log(response);
+                    setError("");
+                    setOpenSnackbar(false);
+                    // Optionally redirect or show a success message here
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setError("Error while connecting to the component");
+                    setOpenSnackbar(true);
+                });
         };
 
-        axios.request(config)
-            .then((response) => {
-                setData(response.data); // Set the fetched data
-                setError(""); // Clear error if the request succeeds
-                setOpenSnackbar(false); // Close Snackbar if successful
-                // Optionally redirect or show a success message here
-            })
-            .catch((error) => {
-                console.log(error);
-                setError("lighthouse.icos-project.eu: Error while connecting to the component " ); // Set the error message
-                setOpenSnackbar(true); // Open Snackbar to show error
-            });
-    };
+        reader.onerror = () => {
+            setError("Failed to read the file.");
+            setOpenSnackbar(true);
+        };
 
-    const handleChange = (event) => {
-        setPriority(event.target.value);
+        reader.readAsText(file);
     };
 
     const handleCloseSnackbar = () => {
-        setOpenSnackbar(false); // Close the Snackbar
+        setOpenSnackbar(false);
     };
 
     return (
         <>
-            {/* Page title */}
             <div className={styles.pageTitle}>
                 <h1>Deployment Create</h1>
                 <ul>
@@ -107,84 +123,19 @@ const ProjectCreate = () => {
                         mb: '15px',
                     }}
                 >
-                    Create Deployment
+                    Upload Deployment File
                 </Typography>
 
                 <Box component="form" noValidate onSubmit={handleSubmit}>
                     <Grid container alignItems="center" spacing={2}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Typography
-                                as="h5"
-                                sx={{
-                                    fontWeight: "500",
-                                    fontSize: "14px",
-                                    mb: "12px",
-                                }}
-                            >
-                                Deployment Name
-                            </Typography>
-                            <TextField
-                                autoComplete="project-name"
-                                name="projectName"
+                        <Grid item xs={12}>
+                            <input
+                                type="file"
+                                name="deploymentFile"
+                                accept=".yaml, .yml"
                                 required
-                                fullWidth
-                                id="projectName"
-                                label="Deployment Name"
-                                autoFocus
-                                InputProps={{
-                                    style: { borderRadius: 8 },
-                                }}
+                                style={{ display: 'block', marginBottom: '15px' }}
                             />
-                        </Grid>
-
-                        <Grid item xs={12} md={12} lg={6}>
-                            <Typography
-                                as="h5"
-                                sx={{
-                                    fontWeight: "500",
-                                    fontSize: "14px",
-                                    mb: "12px",
-                                }}
-                            >
-                                ID
-                            </Typography>
-                            <TextField
-                                autoComplete="id"
-                                name="id"
-                                required
-                                fullWidth
-                                id="id"
-                                label="Enter ID"
-                                InputProps={{
-                                    style: { borderRadius: 8 },
-                                }}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} md={12} lg={6}>
-                            <Typography
-                                as="h5"
-                                sx={{
-                                    fontWeight: "500",
-                                    fontSize: "14px",
-                                    mb: "12px",
-                                }}
-                            >
-                                Status
-                            </Typography>
-                            <FormControl fullWidth>
-                                <InputLabel id="status-label">Status</InputLabel>
-                                <Select
-                                    labelId="status-label"
-                                    id="status-select"
-                                    value={priority}
-                                    label="Status"
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value={'working'}>Working</MenuItem>
-                                    <MenuItem value={'ended'}>Ended</MenuItem>
-                                </Select>
-                            </FormControl>
                         </Grid>
 
                         <Grid item xs={12} textAlign="end">
@@ -208,17 +159,16 @@ const ProjectCreate = () => {
                                     }}
                                     className="mr-5px"
                                 />{" "}
-                                Create Project
+                                Create Deployment
                             </Button>
                         </Grid>
                     </Grid>
                 </Box>
             </Card>
 
-            {/* Snackbar for error */}
             <Snackbar
                 open={openSnackbar}
-                autoHideDuration={6000} // Snackbar will auto-close after 6 seconds
+                autoHideDuration={6000}
                 onClose={handleCloseSnackbar}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             >

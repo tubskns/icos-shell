@@ -46,7 +46,7 @@ export default function eCommerce() {
         <>
             {/* Page title */}
             <div className={styles.pageTitle}>
-                <h1>Topology</h1>
+                <h1>ICOS Ecosystem</h1>
                 <ul>
                     <li>
                         <Link href="/">Dashboard</Link>
