@@ -12,6 +12,7 @@ package shellbackend
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -33,7 +34,7 @@ func NewMetricsAPIService() *MetricsAPIService {
 // TrainMetrics - Trains a model on a set of metrics
 func (s *MetricsAPIService) TrainMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
 
-jsonData := body["content"].(string)
+	jsonData := body["content"].(string)
 
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.train_metrics"), strings.NewReader(jsonData))
 	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.train_metrics"))
@@ -54,7 +55,6 @@ jsonData := body["content"].(string)
 // PredictMetrics - Predict metrics development based on model and input metrics
 func (s *MetricsAPIService) PredictMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
 
-log.Printf("Hit PredictAPIService\n")
 	jsonData := body["content"].(string)
 
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.predict_metrics"), strings.NewReader(jsonData))
@@ -99,9 +99,57 @@ log.Printf("Hit DeleteAPIService\n")
 
 // GetMetrics - Returns a list of metric models
 func (s *MetricsAPIService) GetMetrics(ctx context.Context, apiKey string) (ImplResponse, error) {
+log.Printf("Hit GetAPIService\n")
+	data := map[string]string{"model": "all"}    // payload
+	jsonData, _ := json.Marshal(data)
 
-	req, _ := http.NewRequestWithContext(ctx, http.MethodPut, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.get_metrics"), nil)
-	log.Printf("Sending a PUT request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.get_metrics"))
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.get_metrics"), strings.NewReader(string(jsonData)))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.get_metrics"))
+	fmt.Printf("Payload:\n%v\n", string(jsonData))
+
+	req = addBearerToToken(ctx, apiKey, req)
+	req.Header.Add("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
+	if err != nil {
+		return errorConnect(resp, err)
+	} else {
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
+	}
+}
+
+// UnregisterMetrics - Unregisters a model on a set of metrics
+func (s *MetricsAPIService) UnregisterMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
+log.Printf("Hit UnregisterAPIService\n")
+
+jsonData := body["content"].(string)
+
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.unregister_metrics"), strings.NewReader(jsonData))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.unregister_metrics"))
+	fmt.Printf("Payload:\n%v\n", jsonData)
+
+	req = addBearerToToken(ctx, apiKey, req)
+	req.Header.Add("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Printf("Response: ", resp)
+	if err != nil {
+		return errorConnect(resp, err)
+	} else {
+		return Response(resp.StatusCode, unmarshalResponse(resp)), nil
+	}
+}
+
+// StopMetrics - Stops a model on a set of metrics
+func (s *MetricsAPIService) StopMetrics(ctx context.Context, body map[string]interface{}, apiKey string) (ImplResponse, error) {
+log.Printf("Hit StopAPIService\n")
+
+jsonData := body["content"].(string)
+
+	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.stop_metrics"), strings.NewReader(jsonData))
+	log.Printf("Sending a POST request to: " + viper.GetString("components.intelligence.server") + viper.GetString("components.intelligence.stop_metrics"))
+	fmt.Printf("Payload:\n%v\n", jsonData)
 
 	req = addBearerToToken(ctx, apiKey, req)
 	req.Header.Add("Content-Type", "application/json")

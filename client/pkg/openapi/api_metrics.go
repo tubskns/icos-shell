@@ -542,3 +542,239 @@ func (a *MetricsAPIService) TrainMetricsExecute(r ApiTrainMetricsRequest) (map[s
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+//Added manually below:
+type ApiStopMetricsRequest struct {
+	ctx        context.Context
+	ApiService *MetricsAPIService
+	body       *map[string]interface{}
+	apiKey     *string
+}
+
+func (r ApiStopMetricsRequest) Body(body map[string]interface{}) ApiStopMetricsRequest {
+	r.body = &body
+	return r
+}
+
+func (r ApiStopMetricsRequest) ApiKey(apiKey string) ApiStopMetricsRequest {
+	r.apiKey = &apiKey
+	return r
+}
+
+func (r ApiStopMetricsRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.StopMetricsExecute(r)
+}
+
+func (a *MetricsAPIService) StopMetrics(ctx context.Context) ApiStopMetricsRequest {
+	return ApiStopMetricsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+func (a *MetricsAPIService) StopMetricsExecute(r ApiStopMetricsRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetricsAPIService.StopMetrics")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/metrics/stop"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	}
+
+	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+
+	if r.apiKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
+	}
+
+	localVarPostBody = r.body
+	if r.ctx != nil {
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["api_key"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["api_key"] = key
+			}
+		}
+	}
+
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+type ApiUnregisterMetricsRequest struct {
+	ctx        context.Context
+	ApiService *MetricsAPIService
+	body       *map[string]interface{}
+	apiKey     *string
+}
+
+func (r ApiUnregisterMetricsRequest) Body(body map[string]interface{}) ApiUnregisterMetricsRequest {
+	r.body = &body
+	return r
+}
+
+func (r ApiUnregisterMetricsRequest) ApiKey(apiKey string) ApiUnregisterMetricsRequest {
+	r.apiKey = &apiKey
+	return r
+}
+
+func (r ApiUnregisterMetricsRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.UnregisterMetricsExecute(r)
+}
+
+func (a *MetricsAPIService) UnregisterMetrics(ctx context.Context) ApiUnregisterMetricsRequest {
+	return ApiUnregisterMetricsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+func (a *MetricsAPIService) UnregisterMetricsExecute(r ApiUnregisterMetricsRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetricsAPIService.UnregisterMetrics")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/metrics/unregister"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.body == nil {
+		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	}
+
+	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+
+	if r.apiKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "api_key", r.apiKey, "simple", "")
+	}
+
+	localVarPostBody = r.body
+	if r.ctx != nil {
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["api_key"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["api_key"] = key
+			}
+		}
+	}
+
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody,
+		localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+

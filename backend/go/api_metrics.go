@@ -59,6 +59,16 @@ func (c *MetricsAPIController) Routes() Routes {
 			"/api/v3/metrics/predict",
 			c.PredictMetrics,
 		},
+		"StopMetrics": Route{
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/stop",
+			c.StopMetrics,
+		},
+		"UnregisterMetrics": Route{
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/unregister",
+			c.UnregisterMetrics,
+		},
 		"DeleteMetrics": Route{
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/delete",
@@ -103,6 +113,46 @@ func (c *MetricsAPIController) PredictMetrics(w http.ResponseWriter, r *http.Req
 	}
 	apiKeyParam := r.Header.Get("api_key")
 	result, err := c.service.PredictMetrics(r.Context(), bodyParam, apiKeyParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// StopMetrics - Stops metrics
+func (c *MetricsAPIController) StopMetrics(w http.ResponseWriter, r *http.Request) {
+	var bodyParam map[string]interface{}
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+	if err := d.Decode(&bodyParam); err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+	apiKeyParam := r.Header.Get("api_key")
+	result, err := c.service.StopMetrics(r.Context(), bodyParam, apiKeyParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// UnregisterMetrics - Stops metrics
+func (c *MetricsAPIController) UnregisterMetrics(w http.ResponseWriter, r *http.Request) {
+	var bodyParam map[string]interface{}
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+	if err := d.Decode(&bodyParam); err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+	apiKeyParam := r.Header.Get("api_key")
+	result, err := c.service.UnregisterMetrics(r.Context(), bodyParam, apiKeyParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

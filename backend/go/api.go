@@ -50,6 +50,8 @@ type MetricsAPIRouter interface {
 	PredictMetrics(http.ResponseWriter, *http.Request)
 	DeleteMetrics(http.ResponseWriter, *http.Request)
 	GetMetrics(http.ResponseWriter, *http.Request)
+	StopMetrics(http.ResponseWriter, *http.Request)
+	UnregisterMetrics(http.ResponseWriter, *http.Request)
 }
 // ResourceAPIRouter defines the required methods for binding the api requests to a responses for the ResourceAPI
 // The ResourceAPIRouter implementation should parse necessary information from the http request,
@@ -109,6 +111,8 @@ type MetricsAPIServicer interface {
 	TrainMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 	PredictMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 	DeleteMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
+	UnregisterMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
+	StopMetrics(context.Context, map[string]interface{}, string) (ImplResponse, error)
 	GetMetrics(context.Context, string) (ImplResponse, error)
 }
 

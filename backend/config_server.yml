@@ -4,7 +4,7 @@ lighthouse:
 keycloak: 
   server: https://iam.core.icos-staging.10-160-3-151.sslip.io:443/
   client_id: lighthouse
-  client_secret: wtZvulvh5z6bCe5ERymJhHIDywkzKROE
+  client_secret: 1LXAzO9lllWFDJS36lzTczRJPX78V6Lj
   realm: staging-continuum
 
 components: 
@@ -20,4 +20,6 @@ components:
     train_metrics: /train_model_metric
     predict_metrics: /create_model_metric
     get_metrics: /show_models
-    delete_metrics: /unregister_metric
+    unregister_metrics: /unregister_metric
+    stop_metrics: /stop_model_metrics
+    delete_metrics: /remove_model

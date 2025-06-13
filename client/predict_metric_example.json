@@ -1,0 +1,17 @@
+{
+    "metric_name": "test_metric_for_intelligence_inference_and_export_metrics_api",
+    "metric_info": "a metric for prediction of cpu utilization",
+    "metric_type": 2,
+    "labels": {
+        "model_name": "metrics_utilization_model_xgb:latest",
+        "model_type": "XGB",
+        "step_in_seconds": "60",
+        "sequence_size": "12"
+    },
+    "telemetry_metrics": [
+        "scaph_self_cpu_usage_percent{icos_agent_id=\"staging-ocm-1\"}*100"
+    ],
+    "model_tag": "metrics_utilization_model_xgb:latest",
+    "step_in_seconds": 60,
+    "steps_back": 12
+}

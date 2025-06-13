@@ -34,6 +34,20 @@ var metricsCmd = &cobra.Command{
 				log.Fatalf("error: %v", err)
 			}
 			cli.PredictMetrics(fileDescriptor)
+		} else if cmd.Parent().Use == "stop" {
+			fileDescriptorString, _ := cmd.Flags().GetString("file")
+			fileDescriptor, err := os.ReadFile(fileDescriptorString)
+			if err != nil {
+				log.Fatalf("error: %v", err)
+			}
+			cli.StopMetrics(fileDescriptor)
+		} else if cmd.Parent().Use == "unregister" {
+			fileDescriptorString, _ := cmd.Flags().GetString("file")
+			fileDescriptor, err := os.ReadFile(fileDescriptorString)
+			if err != nil {
+				log.Fatalf("error: %v", err)
+			}
+			cli.UnregisterMetrics(fileDescriptor)
 		} else if cmd.Parent().Use == "delete" {
 			fileDescriptorString, _ := cmd.Flags().GetString("file")
 			fileDescriptor, err := os.ReadFile(fileDescriptorString)
@@ -50,14 +64,20 @@ func init() {
 	var predictMetricsCmd = *metricsCmd
 	var trainMetricsCmd = *metricsCmd
 	var getMetricsCmd = *metricsCmd
+	var stopMetricsCmd = *metricsCmd
+	var unregisterMetricsCmd = *metricsCmd
 	var deleteMetricsCmd = *metricsCmd
 	trainCmd.AddCommand(&trainMetricsCmd)
 	predictCmd.AddCommand(&predictMetricsCmd)
 	getCmd.AddCommand(&getMetricsCmd)
+	stopCmd.AddCommand(&stopMetricsCmd)
+	unregisterCmd.AddCommand(&unregisterMetricsCmd)
 	deleteCmd.AddCommand(&deleteMetricsCmd)
 
 	predictMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
 	trainMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
+	stopMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
+	unregisterMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
 	deleteMetricsCmd.PersistentFlags().StringP("file", "", "", "ML Metrics descriptor json file")
 
 }
