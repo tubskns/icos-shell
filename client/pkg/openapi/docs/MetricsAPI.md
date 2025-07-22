@@ -81,7 +81,7 @@ Name | Type | Description  | Notes
 
 ## GetMetrics
 
-> []map[string]interface{} GetMetrics(ctx).ApiKey(apiKey).Execute()
+> map[string]interface{} GetMetrics(ctx).ApiKey(apiKey).Execute()
 
 Returns a list of metrics models
 
@@ -109,7 +109,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `MetricsAPI.GetMetrics``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetMetrics`: []map[string]interface{}
+	// response from `GetMetrics`: map[string]interface{}
 	fmt.Fprintf(os.Stdout, "Response from `MetricsAPI.GetMetrics`: %v\n", resp)
 }
 ```
@@ -129,7 +129,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]map[string]interface{}**](map.md)
+**map[string]interface{}**
 
 ### Authorization
 

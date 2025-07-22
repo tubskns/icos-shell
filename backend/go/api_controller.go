@@ -50,17 +50,39 @@ func NewControllerAPIController(s ControllerAPIServicer, opts ...ControllerAPIOp
 func (c *ControllerAPIController) Routes() Routes {
 	return Routes{
 		"GetControllers": Route{
+			"GetControllers",
 			strings.ToUpper("Get"),
 			"/api/v3/controller/",
 			c.GetControllers,
 		},
 		"AddController": Route{
+			"AddController",
 			strings.ToUpper("Post"),
 			"/api/v3/controller/",
 			c.AddController,
 		},
 	}
 }
+
+// OrderedRoutes returns all the api routes in a deterministic order for the ControllerAPIController
+func (c *ControllerAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"GetControllers",
+			strings.ToUpper("Get"),
+			"/api/v3/controller/",
+			c.GetControllers,
+		},
+		Route{
+			"AddController",
+			strings.ToUpper("Post"),
+			"/api/v3/controller/",
+			c.AddController,
+		},
+	}
+}
+
+
 
 // GetControllers - Returns a list of controllers
 func (c *ControllerAPIController) GetControllers(w http.ResponseWriter, r *http.Request) {

@@ -49,11 +49,31 @@ func NewUserAPIController(s UserAPIServicer, opts ...UserAPIOption) *UserAPICont
 func (c *UserAPIController) Routes() Routes {
 	return Routes{
 		"LoginUser": Route{
+			"LoginUser",
 			strings.ToUpper("Get"),
 			"/api/v3/user/login",
 			c.LoginUser,
 		},
 		"LogoutUser": Route{
+			"LogoutUser",
+			strings.ToUpper("Get"),
+			"/api/v3/user/logout",
+			c.LogoutUser,
+		},
+	}
+}
+
+// OrderedRoutes returns all the api routes in a deterministic order for the UserAPIController
+func (c *UserAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"LoginUser",
+			strings.ToUpper("Get"),
+			"/api/v3/user/login",
+			c.LoginUser,
+		},
+		Route{
+			"LogoutUser",
 			strings.ToUpper("Get"),
 			"/api/v3/user/logout",
 			c.LogoutUser,

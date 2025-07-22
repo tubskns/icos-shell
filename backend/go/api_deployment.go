@@ -52,42 +52,99 @@ func NewDeploymentAPIController(s DeploymentAPIServicer, opts ...DeploymentAPIOp
 func (c *DeploymentAPIController) Routes() Routes {
 	return Routes{
 		"GetDeployments": Route{
+			"GetDeployments",
 			strings.ToUpper("Get"),
 			"/api/v3/deployment/",
 			c.GetDeployments,
 		},
 		"CreateDeployment": Route{
+			"CreateDeployment",
 			strings.ToUpper("Post"),
 			"/api/v3/deployment/",
 			c.CreateDeployment,
 		},
 		"GetDeploymentById": Route{
+			"GetDeploymentById",
 			strings.ToUpper("Get"),
 			"/api/v3/deployment/{deploymentId}",
 			c.GetDeploymentById,
 		},
 		"UpdateDeployment": Route{
+			"UpdateDeployment",
 			strings.ToUpper("Put"),
 			"/api/v3/deployment/{deploymentId}",
 			c.UpdateDeployment,
 		},
 		"DeleteDeploymentById": Route{
+			"DeleteDeploymentById",
 			strings.ToUpper("Delete"),
 			"/api/v3/deployment/{deploymentId}",
 			c.DeleteDeploymentById,
 		},
 		"StartDeploymentById": Route{
+			"StartDeploymentById",
 			strings.ToUpper("Put"),
 			"/api/v3/deployment/{deploymentId}/start",
 			c.StartDeploymentById,
 		},
 		"StopDeploymentById": Route{
+			"StopDeploymentById",
 			strings.ToUpper("Put"),
 			"/api/v3/deployment/{deploymentId}/stop",
 			c.StopDeploymentById,
 		},
 	}
 }
+
+// OrderedRoutes returns all the api routes in a deterministic order for the DeploymentAPIController
+func (c *DeploymentAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"GetDeployments",
+			strings.ToUpper("Get"),
+			"/api/v3/deployment/",
+			c.GetDeployments,
+		},
+		Route{
+			"CreateDeployment",
+			strings.ToUpper("Post"),
+			"/api/v3/deployment/",
+			c.CreateDeployment,
+		},
+		Route{
+			"GetDeploymentById",
+			strings.ToUpper("Get"),
+			"/api/v3/deployment/{deploymentId}",
+			c.GetDeploymentById,
+		},
+		Route{
+			"UpdateDeployment",
+			strings.ToUpper("Put"),
+			"/api/v3/deployment/{deploymentId}",
+			c.UpdateDeployment,
+		},
+		Route{
+			"DeleteDeploymentById",
+			strings.ToUpper("Delete"),
+			"/api/v3/deployment/{deploymentId}",
+			c.DeleteDeploymentById,
+		},
+		Route{
+			"StartDeploymentById",
+			strings.ToUpper("Put"),
+			"/api/v3/deployment/{deploymentId}/start",
+			c.StartDeploymentById,
+		},
+		Route{
+			"StopDeploymentById",
+			strings.ToUpper("Put"),
+			"/api/v3/deployment/{deploymentId}/stop",
+			c.StopDeploymentById,
+		},
+	}
+}
+
+
 
 // GetDeployments - Returns a list of deployments
 func (c *DeploymentAPIController) GetDeployments(w http.ResponseWriter, r *http.Request) {

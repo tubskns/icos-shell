@@ -166,7 +166,7 @@ func (r ApiGetMetricsRequest) ApiKey(apiKey string) ApiGetMetricsRequest {
 	return r
 }
 
-func (r ApiGetMetricsRequest) Execute() ([]map[string]interface{}, *http.Response, error) {
+func (r ApiGetMetricsRequest) Execute() (map[string]interface{}, *http.Response, error) {
 	return r.ApiService.GetMetricsExecute(r)
 }
 
@@ -186,13 +186,13 @@ func (a *MetricsAPIService) GetMetrics(ctx context.Context) ApiGetMetricsRequest
 }
 
 // Execute executes the request
-//  @return []map[string]interface{}
-func (a *MetricsAPIService) GetMetricsExecute(r ApiGetMetricsRequest) ([]map[string]interface{}, *http.Response, error) {
+//  @return map[string]interface{}
+func (a *MetricsAPIService) GetMetricsExecute(r ApiGetMetricsRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []map[string]interface{}
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MetricsAPIService.GetMetrics")

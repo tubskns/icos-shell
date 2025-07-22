@@ -34,7 +34,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Controller'
+                  $ref: "#/components/schemas/Controller"
                 type: array
           description: successful operation
         "204":
@@ -56,7 +56,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Controller'
+              $ref: "#/components/schemas/Controller"
         required: true
       responses:
         "201":
@@ -64,13 +64,7 @@ paths:
         "202":
           description: Controller already exists
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           description: Invalid input
       summary: Adds a new controller
@@ -116,7 +110,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Descriptor'
+              $ref: "#/components/schemas/Descriptor"
         required: true
       responses:
         "201":
@@ -127,13 +121,7 @@ paths:
                 type: object
           description: Deployment created
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+          $ref: "#/components/responses/UnauthorizedError"
         "405":
           description: Invalid input
       summary: Creates a new deployment
@@ -227,7 +215,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Descriptor'
+              $ref: "#/components/schemas/Descriptor"
         required: true
       responses:
         "200":
@@ -439,7 +427,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MlModel'
+              $ref: "#/components/schemas/MlModel"
         required: true
       responses:
         "200":
@@ -452,13 +440,7 @@ paths:
         "400":
           description: Invalid input
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+          $ref: "#/components/responses/UnauthorizedError"
         "404":
           description: Intelligence component not found
         "500":
@@ -482,7 +464,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MlModel'
+              $ref: "#/components/schemas/MlModel"
         required: true
       responses:
         "200":
@@ -495,13 +477,7 @@ paths:
         "400":
           description: Invalid input
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+          $ref: "#/components/responses/UnauthorizedError"
         "404":
           description: Intelligence component not found
         "500":
@@ -525,7 +501,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MlModel'
+              $ref: "#/components/schemas/MlModel"
         required: true
       responses:
         "200":
@@ -538,13 +514,7 @@ paths:
         "400":
           description: Invalid input
         "401":
-          description: API key is missing or invalid
-          headers:
-            WWW_Authenticate:
-              explode: false
-              schema:
-                type: string
-              style: simple
+          $ref: "#/components/responses/UnauthorizedError"
         "404":
           description: Intelligence component not found
         "500":
@@ -569,10 +539,8 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  additionalProperties: true
-                  type: object
-                type: array
+                additionalProperties: true
+                type: object
           description: successful operation
       summary: Returns a list of metrics models
       tags:

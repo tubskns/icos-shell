@@ -40,7 +40,7 @@ Delete metrics models
 
 <a name="getMetrics"></a>
 # **getMetrics**
-> List getMetrics(api\_key)
+> Map getMetrics(api\_key)
 
 Returns a list of metrics models
 
@@ -54,7 +54,7 @@ Returns a list of metrics models
 
 ### Return type
 
-[**List**](../Models/map.md)
+[**Map**](../Models/AnyType.md)
 
 ### Authorization
 

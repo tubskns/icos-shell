@@ -51,11 +51,31 @@ func NewResourceAPIController(s ResourceAPIServicer, opts ...ResourceAPIOption) 
 func (c *ResourceAPIController) Routes() Routes {
 	return Routes{
 		"GetResources": Route{
+			"GetResources",
 			strings.ToUpper("Get"),
 			"/api/v3/resource/",
 			c.GetResources,
 		},
 		"GetResourceById": Route{
+			"GetResourceById",
+			strings.ToUpper("Get"),
+			"/api/v3/resource/{resourceId}",
+			c.GetResourceById,
+		},
+	}
+}
+
+// OrderedRoutes returns all the api routes in a deterministic order for the ResourceAPIController
+func (c *ResourceAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"GetResources",
+			strings.ToUpper("Get"),
+			"/api/v3/resource/",
+			c.GetResources,
+		},
+		Route{
+			"GetResourceById",
 			strings.ToUpper("Get"),
 			"/api/v3/resource/{resourceId}",
 			c.GetResourceById,

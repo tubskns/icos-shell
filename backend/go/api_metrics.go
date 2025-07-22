@@ -50,31 +50,79 @@ func NewMetricsAPIController(s MetricsAPIServicer, opts ...MetricsAPIOption) *Me
 func (c *MetricsAPIController) Routes() Routes {
 	return Routes{
 		"TrainMetrics": Route{
+			"TrainMetrics",
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/train",
 			c.TrainMetrics,
 		},
 		"PredictMetrics": Route{
+			"PredictMetrics",
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/predict",
 			c.PredictMetrics,
 		},
+		"DeleteMetrics": Route{
+			"DeleteMetrics",
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/delete",
+			c.DeleteMetrics,
+		},
 		"StopMetrics": Route{
+			"StopMetrics",
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/stop",
 			c.StopMetrics,
 		},
 		"UnregisterMetrics": Route{
+			"UnregisterMetrics",
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/unregister",
 			c.UnregisterMetrics,
 		},
-		"DeleteMetrics": Route{
+		"GetMetrics": Route{
+			"GetMetrics",
+			strings.ToUpper("Get"),
+			"/api/v3/metrics/get",
+			c.GetMetrics,
+		},
+	}
+}
+
+// OrderedRoutes returns all the api routes in a deterministic order for the MetricsAPIController
+func (c *MetricsAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"TrainMetrics",
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/train",
+			c.TrainMetrics,
+		},
+		Route{
+			"PredictMetrics",
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/predict",
+			c.PredictMetrics,
+		},
+		Route{
+			"StopMetrics",
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/stop",
+			c.StopMetrics,
+		},
+		Route{
+			"UnregisterMetrics",
+			strings.ToUpper("Post"),
+			"/api/v3/metrics/unregister",
+			c.UnregisterMetrics,
+		},
+		Route{
+			"DeleteMetrics",
 			strings.ToUpper("Post"),
 			"/api/v3/metrics/delete",
 			c.DeleteMetrics,
 		},
-		"GetMetrics": Route{
+		Route{
+			"GetMetrics",
 			strings.ToUpper("Get"),
 			"/api/v3/metrics/get",
 			c.GetMetrics,

@@ -49,12 +49,27 @@ func NewDefaultAPIController(s DefaultAPIServicer, opts ...DefaultAPIOption) *De
 func (c *DefaultAPIController) Routes() Routes {
 	return Routes{
 		"GetHealthcheck": Route{
+			"GetHealthcheck",
 			strings.ToUpper("Get"),
 			"/api/v3/healthcheck",
 			c.GetHealthcheck,
 		},
 	}
 }
+
+// OrderedRoutes returns all the api routes in a deterministic order for the DefaultAPIController
+func (c *DefaultAPIController) OrderedRoutes() []Route {
+	return []Route{
+		Route{
+			"GetHealthcheck",
+			strings.ToUpper("Get"),
+			"/api/v3/healthcheck",
+			c.GetHealthcheck,
+		},
+	}
+}
+
+
 
 // GetHealthcheck - Health check
 func (c *DefaultAPIController) GetHealthcheck(w http.ResponseWriter, r *http.Request) {
