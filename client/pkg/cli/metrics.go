@@ -65,5 +65,5 @@ func DeleteMetrics(jsonFile []byte) {
 func GetMetrics() {
 	token := viper.GetString("auth_token")
 	metrics, resp, err := openapi.Client.MetricsAPI.GetMetrics(context.Background()).ApiKey(token).Execute()
-	printArrayPrettyJSON(metrics, resp, err)
+	printPrettyJSON(metrics, resp, err)
 }

@@ -1,4 +1,5 @@
 {
-    "metric_type": 2,
-    "metric_name": "test_metric_for_intelligence_inference_and_export_metrics_api"
+  "metric_type": 2,
+  "metric_name": "test_metric_for_intelligence_inference_and_export_metrics_api"
 }
+
