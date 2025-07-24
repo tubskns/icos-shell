@@ -43,13 +43,14 @@ else
 fi
 
 # Get controllers from lighthouse
-COMPONENTS="[lighthouse]"
-RESPONSE=$(./icos-shell --config=config_client.yml get controller 2> /dev/null) 
-if [ "$RESPONSE" != ""  ]; then
-    log "DONE" "Controllers retrieved successfully" "$COMPONENTS"
-else
-    log "FAIL" "Error while retrieving controllers" "$COMPONENTS"
-fi
+#Thi sis currently commented out as it requires user input (controller selection)
+#COMPONENTS="[lighthouse]"
+#RESPONSE=$(./icos-shell --config=config_client.yml get controller 2> /dev/null) 
+#if [ "$RESPONSE" != ""  ]; then
+#    log "DONE" "Controllers retrieved successfully" "$COMPONENTS"
+#else
+#    log "FAIL" "Error while retrieving controllers" "$COMPONENTS"
+#fi
 
 # healthcheck shell-backend from controller
 COMPONENTS="[shell-backend]"
@@ -152,4 +153,58 @@ if [[ $RESPONSE ]]; then
     log "DONE" "Resources retrieved successfully" "$COMPONENTS"
 else
     log "FAIL" "Error while retrieving resources: $RESPONSE" "$COMPONENTS"
+fi
+
+# Train metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml train metrics --file train_metric_example.json 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Model training started successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while training model: $RESPONSE" "$COMPONENTS"
+fi
+
+# Predict metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml predict metrics --file predict_metric_example.json 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Metrics prediction started successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while predicting metrics: $RESPONSE" "$COMPONENTS"
+fi
+
+# Get metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml get metrics 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Metrics retrieved successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while retrieving metrics: $RESPONSE" "$COMPONENTS"
+fi
+
+# Stop metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml stop metrics --file stop_metric_example.json 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Metrics stopped successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while stopping metrics: $RESPONSE" "$COMPONENTS"
+fi
+
+# Unregister metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml unregister metrics --file unregister_metric_example.json 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Metrics unregistration successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while unregistering metrics: $RESPONSE" "$COMPONENTS"
+fi
+
+# Delete metrics
+COMPONENTS="[shell-backend --> metrics exporter]"
+RESPONSE=$(./icos-shell --config=config_client.yml delete metrics --file delete_metric_example.json 2> /dev/null)
+if [[ $RESPONSE ]]; then
+    log "DONE" "Metrics deletion successfully" "$COMPONENTS"
+else
+    log "FAIL" "Error while deleting metrics: $RESPONSE" "$COMPONENTS"
 fi
