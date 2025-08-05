@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 const controllersData = [
     {
         "name": "staging-a",
-        "address": "10.160.3.20:32500"
+        "address": "127.0.0.1:8080"
     }
 ];
 

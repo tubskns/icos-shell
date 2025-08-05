@@ -1,5 +1,0 @@
---2024-11-02 00:40:46--  http://10.160.3.20:32500/api/v3/user/login?username=admin
-Connecting to 10.160.3.20:32500... connected.
-HTTP request sent, awaiting response... 400 Bad Request
-2024-11-02 00:40:47 ERROR 400: Bad Request.
-
