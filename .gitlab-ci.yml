@@ -18,7 +18,7 @@ variables:
 # Client Jobs
 
 check_for_hardcoded_ips:
-  stage: docker
+  stage: test
   image: alpine
   script:
     - grep -r "10.160.3" | grep -v md | grep -v yml && echo "Hardcoded controller address found in codebase" && exit 1 || echo "No hardcoded controller address found"
