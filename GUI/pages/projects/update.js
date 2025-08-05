@@ -3,17 +3,19 @@ import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
+import SaveIcon from "@mui/icons-material/Save";
 import Link from 'next/link';
 import styles from '@/styles/PageTitle.module.css';
-const axios = require('axios');
+import axios from 'axios';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
-const ProjectCreate = () => {
+const DeploymentUpdate = () => {
     const [error, setError] = useState("");
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const router = useRouter();
+    const { deploymentId } = router.query;
+
     const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
 
     useEffect(() => {
@@ -25,9 +27,8 @@ const ProjectCreate = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        console.log("submit_start");
         const token = Cookies.get('authToken');
+
         if (!token) {
             setError("Authorization token is missing.");
             setOpenSnackbar(true);
@@ -47,8 +48,6 @@ const ProjectCreate = () => {
         reader.onload = () => {
             const fileContent = reader.result;
 
-            console.log(fileContent);
-
             const payload = {
                 content: fileContent,
                 fileName: file.name,
@@ -56,8 +55,8 @@ const ProjectCreate = () => {
             };
 
             const config = {
-                method: 'post',
-                url: `${controllerBaseUrl}/api/v3/deployment/`,
+                method: 'put',
+                url: `${controllerBaseUrl}/api/v3/deployment/${deploymentId}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'api_key': token
@@ -65,20 +64,16 @@ const ProjectCreate = () => {
                 data: JSON.stringify(payload),
             };
 
-            console.log(config);
-
-
             axios.request(config)
                 .then((response) => {
-                    console.log("success");
-                    console.log(response);
+                    console.log("Update success", response);
                     setError("");
                     setOpenSnackbar(false);
-                    // Optionally redirect or show a success message here
+                    // Optionally redirect or show a success message
                 })
                 .catch((error) => {
-                    console.log(error);
-                    setError("Error while connecting to the component");
+                    console.error("Update failed", error);
+                    setError("Error while updating the deployment.");
                     setOpenSnackbar(true);
                 });
         };
@@ -98,32 +93,18 @@ const ProjectCreate = () => {
     return (
         <>
             <div className={styles.pageTitle}>
-                <h1>Deployment Create</h1>
+                <h1>Update Deployment</h1>
                 <ul>
                     <li>
                         <Link href="/">Dashboard</Link>
                     </li>
-                    <li>Deployment Create</li>
+                    <li>Update Deployment</li>
                 </ul>
             </div>
 
-            <Card
-                sx={{
-                    boxShadow: "none",
-                    borderRadius: "10px",
-                    p: "25px 20px 15px",
-                    mb: "15px",
-                }}
-            >
-                <Typography
-                    as="h3"
-                    sx={{
-                        fontSize: 18,
-                        fontWeight: 500,
-                        mb: '15px',
-                    }}
-                >
-                    Upload Deployment File
+            <Card sx={{ boxShadow: "none", borderRadius: "10px", p: 3, mb: 3 }}>
+                <Typography sx={{ fontSize: 18, fontWeight: 500, mb: 2 }}>
+                    Upload New Deployment File
                 </Typography>
 
                 <Box component="form" noValidate onSubmit={handleSubmit}>
@@ -143,7 +124,6 @@ const ProjectCreate = () => {
                                 type="submit"
                                 variant="contained"
                                 sx={{
-                                    mt: 1,
                                     textTransform: "capitalize",
                                     borderRadius: "8px",
                                     fontWeight: "500",
@@ -152,14 +132,8 @@ const ProjectCreate = () => {
                                     color: "#fff !important",
                                 }}
                             >
-                                <AddIcon
-                                    sx={{
-                                        position: "relative",
-                                        top: "-2px",
-                                    }}
-                                    className="mr-5px"
-                                />{" "}
-                                Create Deployment
+                                <SaveIcon sx={{ position: "relative", top: "-2px" }} />{" "}
+                                Update Deployment
                             </Button>
                         </Grid>
                     </Grid>
@@ -180,4 +154,4 @@ const ProjectCreate = () => {
     );
 };
 
-export default ProjectCreate;
+export default DeploymentUpdate;

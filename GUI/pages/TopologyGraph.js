@@ -6,6 +6,10 @@ const TopologyGraph = ({ data }) => {
     const svgRef = useRef();
     const [open, setOpen] = useState(false);
     const [modalContent, setModalContent] = useState('');
+    const [error, setError] = useState('');
+
+    // Debug: log data
+    console.log('TopologyGraph data:', data);
 
     const handleOpen = (content) => {
         setModalContent(content);
@@ -18,9 +22,22 @@ const TopologyGraph = ({ data }) => {
     };
 
     useEffect(() => {
-        const parent = svgRef.current.parentElement;
-        const width = parent.clientWidth;
-        const height = parent.clientHeight;
+        if (!data || !data.cluster) {
+            console.error('No data or cluster data available');
+            setError('No topology data available');
+            return;
+        }
+
+        const parent = svgRef.current?.parentElement;
+        if (!parent) {
+            console.error('Parent element not found');
+            return;
+        }
+
+        const width = parent.clientWidth || 800;
+        const height = parent.clientHeight || 400;
+
+        console.log('Creating topology graph with dimensions:', width, height);
 
         d3.select(svgRef.current).selectAll("*").remove();
 
@@ -63,8 +80,16 @@ const TopologyGraph = ({ data }) => {
         }));
 
         const nodes = Object.keys(data.cluster).flatMap(clusterId => {
-            const nodeEntries = Object.entries(data.cluster[clusterId].node);
-            return nodeEntries.slice(0, 3).map(([nodeId, nodeData]) => ({
+            const clusterData = data.cluster[clusterId];
+            if (!clusterData.node) {
+                console.warn(`No node data for cluster ${clusterId}`);
+                return [];
+            }
+            
+            const nodeEntries = Object.entries(clusterData.node);
+            console.log(`Processing ${nodeEntries.length} nodes for cluster ${clusterId}`);
+            
+            return nodeEntries.slice(0, 5).map(([nodeId, nodeData]) => ({
                 id: nodeId,
                 group: 'node',
                 name: nodeData.name || nodeId,
@@ -72,6 +97,9 @@ const TopologyGraph = ({ data }) => {
                 clusterId: clusterId
             }));
         });
+
+        console.log('Created clusters:', clusters.length);
+        console.log('Created nodes:', nodes.length);
 
         const links = nodes.map(node => ({ source: node.clusterId, target: node.id }));
 
@@ -194,7 +222,12 @@ const TopologyGraph = ({ data }) => {
 
     return (
         <>
-            <div ref={svgRef} style={{ width: '100%', height: '400px', maxHeight: '400px', overflow: 'auto' }}></div>
+            {error && (
+                <div style={{ color: 'red', padding: '20px', textAlign: 'center' }}>
+                    {error}
+                </div>
+            )}
+            <div ref={svgRef} style={{ width: '100%', height: '400px', maxHeight: '400px', overflow: 'auto', border: '1px solid #ccc' }}></div>
             <Modal
                 open={open}
                 onClose={handleClose}

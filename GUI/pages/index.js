@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
-import Link from 'next/link';
-import styles from '@/styles/PageTitle.module.css';
+import Link from "next/link";
+import styles from "@/styles/PageTitle.module.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import axios from 'axios';
-import TopologyGraph from './TopologyGraph.js';  // Import the TopologyGraph component
+import axios from "axios";
+import SimpleTopologyGraph from "./SimpleTopologyGraph.js"; // Import the SimpleTopologyGraph component
 
-export default function eCommerce() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [error, setError] = useState(""); // State for managing the error message
-    const [data, setData] = useState(null); // State for storing the fetched data
-    const router = useRouter(); // Next.js router for navigation
+export default function MainPage() {
+    const [error, setError] = useState("");
+    const [data, setData] = useState(null);
+    const router = useRouter();
+    const controllerAddress = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        const token = Cookies.get('authToken');
-        const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
+        const token = Cookies.get("authToken");
 
         if (!token) {
             router.push("/authentication/sign-in/");
         } else {
+            // Direct connection to real server
             const config = {
-                method: 'get',
+                method: "get",
                 maxBodyLength: Infinity,
-                url: `${controllerBaseUrl}/api/v3/resource/`,
+                url: `${controllerAddress}/api/v3/resource/`,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'api_key': token
+                    "accept": "application/json",
+                    "Content-Type": "application/json",
+                    "api_key": token
                 }
             };
 
-            axios.request(config)
+            console.log('Making request to:', config.url);
+
+            axios
+                .request(config)
                 .then((response) => {
-                    setData(response.data); // Set the fetched data
+                    console.log('Data received:', response.data);
+                    setData(response.data);
                 })
                 .catch((error) => {
-                    console.log(error);
-                    setError("Failed to fetch data");
+                    console.error('Error fetching data:', error);
+                    setError("Failed to fetch data: " + error.message);
                 });
         }
     }, [router]);
@@ -56,27 +60,23 @@ export default function eCommerce() {
             </div>
 
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
-                {/*<Grid item xs={12} md={12} lg={12} xl={8}>*/}
-                {/*    /!* Features *!/*/}
-                {/*    <Features />*/}
-                {/*    */}
-                {/*    <iframe*/}
-                {/*        src="http://37.32.29.40:3003"*/}
-                {/*        style={{ border: 'white', borderRadius: '2%' }}*/}
-                {/*        title="Example"*/}
-                {/*        width="100%"*/}
-                {/*        height="500px"*/}
-                {/*    ></iframe>*/}
-                {/*</Grid>*/}
-
-                <Grid item xs={12} md={12} lg={12} xl={12}>
-                    {/* ClusterNodesByCPUArchitecture */}
-                    {/*<ClusterNodesByCPUArchitecture />*/}
-
-                    {/* Topology Graph */}
-                    {data && <TopologyGraph width="100%" height="500px" data={data} />}
+                <Grid item xs={12}>
+                    {data ? (
+                        <div style={{ padding: '20px' }}>
+                            <h3>ICOS Cluster Topology</h3>
+                            <p>Showing {Object.keys(data.cluster || {}).length} clusters</p>
+                            <SimpleTopologyGraph data={data} />
+                        </div>
+                    ) : error ? (
+                        <div style={{ color: "red", padding: "20px" }}>{error}</div>
+                    ) : (
+                        <div style={{ padding: "20px", textAlign: "center" }}>
+                            <p>Loading topology data...</p>
+                        </div>
+                    )}
                 </Grid>
             </Grid>
         </>
     );
 }
+

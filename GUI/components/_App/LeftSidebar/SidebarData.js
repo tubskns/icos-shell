@@ -65,6 +65,33 @@ export const SidebarData = [
     ],
   },
 
+  {
+    title: "Metrics",
+
+    path: "/metrics/",
+    icon: <CopyAllIcon />,
+    iconClosed: <KeyboardArrowRightIcon />,
+
+    iconOpened: <KeyboardArrowDownIcon />,
+
+    subNav: [
+      {
+
+        title: "All Metrics",
+        path: "/metrics/",
+      },
+
+      {
+        title: "Train New Metric",
+        path: "/train_metrics/",
+      }, 
+      // {
+      //   title: "Controllers Create",
+      //   path: "/controllers/controller-create/",
+      // },
+
+    ],
+  },
 
   {
     title: "Settings",

@@ -15,24 +15,30 @@ import axios from "axios";
 
 const SignInForm = () => {
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false); // State for managing loading animation
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true); // Start the loading animation
-        setError(""); // Clear previous errors
+        setLoading(true);
+        setError("");
 
-        const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
-        const data = new FormData(event.currentTarget);
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get("email");
+        const password = formData.get("password");
+        const controllerAddress = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS
 
-        let config = {
-            method: 'get',
+        // Direct connection to real server
+        const loginUrl = `${controllerAddress}/api/v3/user/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+
+        const config = {
+            method: "get",
             maxBodyLength: Infinity,
-            url: `${controllerBaseUrl}/api/v3/user/login?username=${encodeURIComponent(data.get("email"))}&password=${encodeURIComponent(data.get("password"))}&otp=${encodeURIComponent(data.get("otp"))}`,
+            url: loginUrl,
             headers: {
-                'Content-Type': 'application/json'
-            }
+                "accept": "application/json",
+                "Content-Type": "application/json",
+            },
         };
 
         try {
@@ -42,11 +48,10 @@ const SignInForm = () => {
             Cookies.set("authToken", authToken, { expires: 1 });
             router.push("/");
         } catch (error) {
-            console.error("Error:", error);
-            setError("Authentication Failed! please try again.");
-            setLoading(false);
+            console.error("Login error:", error);
+            setError("Authentication failed! Please try again.");
         } finally {
-            // setLoading(false); // Stop the loading animation after completion
+            setLoading(false);
         }
     };
 
@@ -61,7 +66,7 @@ const SignInForm = () => {
                     padding: "50px 0 100px",
                 }}
             >
-                <Grid item xs={12} md={12} lg={12} xl={12}>
+                <Grid item xs={12}>
                     <Box>
                         <Typography as="h1" fontSize="28px" fontWeight="700" mb="5px">
                             Sign In{" "}
@@ -95,7 +100,6 @@ const SignInForm = () => {
                                         >
                                             Username
                                         </Typography>
-
                                         <TextField
                                             required
                                             fullWidth
@@ -121,7 +125,6 @@ const SignInForm = () => {
                                         >
                                             Password
                                         </Typography>
-
                                         <TextField
                                             required
                                             fullWidth
@@ -148,21 +151,19 @@ const SignInForm = () => {
                                         >
                                             OTP
                                         </Typography>
-
                                         <TextField
                                             required
                                             fullWidth
                                             name="otp"
-                                            label="otp"
-                                            type="otp"
+                                            label="OTP"
+                                            type="text"
                                             id="otp"
-                                            autoComplete=""
+                                            autoComplete="one-time-code"
                                             InputProps={{
                                                 style: { borderRadius: 8 },
                                             }}
                                         />
                                     </Grid>
-
                                 </Grid>
                             </Box>
 
@@ -181,16 +182,16 @@ const SignInForm = () => {
                             )}
 
                             <Grid container alignItems="center" spacing={2}>
-                                <Grid item xs={6} sm={6}>
+                                <Grid item xs={6}>
                                     <FormControlLabel
                                         control={
-                                            <Checkbox value="allowExtraEmails" color="primary" />
+                                            <Checkbox value="remember" color="primary" />
                                         }
                                         label="Remember me."
                                     />
                                 </Grid>
 
-                                <Grid item xs={6} sm={6} textAlign="end">
+                                <Grid item xs={6} textAlign="end">
                                     <Link
                                         href="/authentication/forgot-password"
                                         className="primaryColor text-decoration-none"
@@ -204,7 +205,7 @@ const SignInForm = () => {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                disabled={loading} // Disable button when loading
+                                disabled={loading}
                                 sx={{
                                     mt: 2,
                                     textTransform: "capitalize",
@@ -214,9 +215,9 @@ const SignInForm = () => {
                                     padding: "12px 10px",
                                     color: "#fff !important",
                                 }}
-                                startIcon={loading && <CircularProgress size={20} color="inherit" />} // Add spinner as start icon
+                                startIcon={loading && <CircularProgress size={20} color="inherit" />}
                             >
-                                {loading ? "Signing In..." : "Sign In"} {/* Update button text when loading */}
+                                {loading ? "Signing In..." : "Sign In"}
                             </Button>
                         </Box>
                     </Box>
@@ -227,3 +228,4 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
+
