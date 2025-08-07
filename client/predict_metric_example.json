@@ -13,6 +13,6 @@
   ],
   "model_tag": "metrics_utilization_model_xgb:latest",
   "step_in_seconds": 60,
-  "steps_back": 12
+  "steps_back": 6
 }
 
