@@ -1,126 +1,92 @@
-# icosguiaug5v1 - 29 July Final Version
+# ICOS Shell
 
-A production-ready dashboard with hierarchical topology visualization, project management, and metrics tracking.
+ICOS Shell is a component part of the [ICOS Project](https://cordis.europa.eu/project/id/101070177)
 
-## 🚀 Quick Start
+- Shell Backend: server running as component of the ICOS controller
+- Shell Client: CLI tool interfacing the Shell Backend
 
-### Prerequisites
-- Node.js >= 16.0.0
-- npm >= 8.0.0
-- Docker (optional, for containerized deployment)
+![diagram](Topology.drawio.png)
 
-### Installation & Setup
+## Build and run
 
-#### Method 1: Local Development
-```bash
-# Clone the repository
-git clone <repository-url>
-cd icosguiaug4v5
+### Shell Backend 
 
-# Install dependencies with legacy peer deps (IMPORTANT!)
-npm install --legacy-peer-deps
-
-# Start development server
-npm run dev
-```
-
-#### Method 2: Docker Deployment (Recommended)
-```bash
-# Clone the repository
-git clone <repository-url>
-cd icosguiaug4v5
-
-# Build and run with Docker Compose
-docker compose up -d
-
-# Access the application
-open http://localhost:3000
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-Create a `config_local.yml` file in the root directory:
-```yaml
-# API Configuration
-apiBaseUrl: "http://your-api-server:port"
-jobManagerUrl: "http://your-job-manager:port"
-```
-
-### Authentication
-The application uses dynamic token authentication. Tokens are automatically managed and refreshed.
-
-## 📁 Project Structure
+Building and running the ICOS Shell Backend with Docker
 
 ```
-icosguiaug4v5/
-├── components/          # React components
-├── pages/              # Next.js pages
-├── styles/             # CSS/SCSS files
-├── utils/              # Utility functions
-├── config.js           # Configuration
-├── docker-compose.yml  # Docker configuration
-└── Dockerfile.app      # Production Dockerfile
+cd backend
+docker build -t "shell-backend" .
+docker run --volume ./config.yml:/app/config.yml -p 8080:8080 shell-backend:latest
 ```
 
-## 🛠️ Available Scripts
+### Shell Client
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `docker compose up -d` - Start with Docker
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-#### 1. Dependency Conflicts
-If you encounter peer dependency conflicts:
-```bash
-npm install --legacy-peer-deps
+Building and running the ICOS Shell Client with go
+```
+cd client
+go build -o icos-shell
+./icos-shell -h
 ```
 
-#### 2. Build Failures
-If the build fails due to missing dependencies:
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install --legacy-peer-deps
+## Development 
+
+### OpenAPI
+
+When updating OpenAPI, modify the `openapi.yaml` file from the root directory and regenerate both Shell Backend and Client with:
+
+#### Shell Backend 
+```
+openapi-generator-cli generate -g go-server -i openapi.yaml -o backend/ --git-repo-id Shell --git-user-id icos-project --additional-properties=packageName=shellbackend
 ```
 
-#### 3. Docker Build Issues
-If Docker build fails:
-```bash
-# Clean Docker cache
-docker system prune -a
-# Rebuild
-docker compose up -d --build
+#### Shell Client 
+```
+openapi-generator-cli generate -g go -i openapi.yaml -o client/pkg/openapi --git-repo-id Shell --git-user-id icos-project --additional-properties=packageName=openapi,isGoSubmodule=true
+
+rm client/pkg/openapi/go.mod client/pkg/openapi/go.sum
 ```
 
-### Dependencies Note
-This project uses some packages with peer dependency conflicts. The `--legacy-peer-deps` flag is required for installation to handle these conflicts gracefully.
+### CLI
+Add commands to the Shell Client with `cobra-cli`, more info [here](https://github.com/spf13/cobra-cli#add-commands-to-a-project).
 
-## 🌐 Features
 
-- **Hierarchical Topology Visualization** - Interactive D3.js graphs
-- **Project Management** - Create, deploy, and manage projects
-- **Metrics Tracking** - Real-time metrics and analytics
-- **Authentication** - Dynamic token-based authentication
-- **Responsive Design** - Works on desktop and mobile
-- **Dark/Light Mode** - Theme switching capability
+## Documentation
 
-## 🔐 Security
+**Important: URL's for lighthouse and controllers cannot contain '/' characters!**
 
-- No hardcoded tokens
-- Dynamic authentication
-- Secure API communication
-- Production-ready Docker configuration
+Current version of docs can be found in:
 
-## 📞 Support
+- Shell Backend [here](./backend/docs/README.md)
+- Shell Client [here](./client/docs/icos-shell.md)
 
-For issues or questions, please check the troubleshooting section above or contact the development team.
+### Generate docs
 
-## 📄 License
+Generate documentation OpenAPI docs for Shell Backend and CLI docs for Shell Client with:
 
-Proprietary - ICOS Development Team
+#### Shell Backend 
+
+```
+openapi-generator-cli generate -g markdown -i openapi.yaml -o backend/docs/
+```
+
+#### Shell Client 
+```
+cd client/
+go run main.go create docs --path docs
+```
+
+## Known limitations
+### Lighthouse and Controller addresses
+Due to a dependency (OpenAPI framework), the shell client is unfortunately unable to handle '/' and ':' characters in lighthouse
+or controller addresses. This means that these components should only be defined via their FQDN, not full URLs. It is recommended
+to rely on sub domains for these two components and redirect HTTP traffic to HTTPS, since the latter cannot be defined explicitly.
+
+### Component Reachability
+When using the GUI, the client that interacts with it needs to be able to reach the shell-backend as well as the lighthouse
+directly, since the JS code is executed directly in the client's browser.
+
+# Legal
+The ICOS Shell is released under the Apache license 2.0.
+Copyright © 2022-2025 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
+
+🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
