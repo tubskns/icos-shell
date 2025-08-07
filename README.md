@@ -75,8 +75,18 @@ cd client/
 go run main.go create docs --path docs
 ```
 
+## Known limitations
+### Lighthouse and Controller addresses
+Due to a dependency (OpenAPI framework), the shell client is unfortunately unable to handle '/' and ':' characters in lighthouse
+or controller addresses. This means that these components should only be defined via their FQDN, not full URLs. It is recommended
+to rely on sub domains for these two components and redirect HTTP traffic to HTTPS, since the latter cannot be defined explicitly.
+
+### Component Reachability
+When using the GUI, the client that interacts with it needs to be able to reach the shell-backend as well as the lighthouse
+directly, since the JS code is executed directly in the client's browser.
+
 # Legal
-The lighthouse registration service is released under the Apache license 2.0.
-Copyright © 2022-2024 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
+The ICOS Shell is released under the Apache license 2.0.
+Copyright © 2022-2025 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
 
 🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.

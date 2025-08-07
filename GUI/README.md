@@ -129,4 +129,7 @@ docker-compose up --build -d
 
 ## License
 
-[Add your license information here]
+The ICOS Shell GUI is released under the Apache license 2.0.
+Copyright © 2022-2025 Rasool Seyghaly, Polytechnic University of Catalonia and Marc Michalke, Technische Universität Braunschweig. All rights reserved.
+
+🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
