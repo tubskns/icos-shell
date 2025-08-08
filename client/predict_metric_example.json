@@ -6,7 +6,7 @@
     "model_name": "metrics_utilization_model_xgb:latest",
     "model_type": "XGB",
     "step_in_seconds": "60",
-    "sequence_size": "12"
+    "sequence_size": "6"
   },
   "telemetry_metrics": [
     "scaph_self_cpu_usage_percent{icos_agent_id=\"staging-ocm-1\"}*100"
