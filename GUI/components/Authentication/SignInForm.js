@@ -154,7 +154,7 @@ const SignInForm = () => {
                                         <TextField
                                                                                         fullWidth
                                             name="otp"
-                                            label="OTP"
+                                            label=""
                                             type="text"
                                             id="otp"
                                             autoComplete="one-time-code"
