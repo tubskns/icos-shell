@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 5,
@@ -35,9 +36,22 @@ const MetricsDisplay = () => {
   useEffect(() => {
     const fetchMetrics = async () => {
       setLoading(true);
-      const token = localStorage.getItem('authToken');
-      try {'${controllerBaseUrl}/api/v3/metrics/get', {
-          headers: { Authorization: `Bearer ${token}` },
+      const token = Cookies.get('authToken');
+
+      if (!token) {
+        setError('Not authenticated. Please sign in.');
+        setOpenSnackbar(true);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const controllerAddress = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
+        const response = await axios.get(`${controllerAddress}/api/v3/metrics/get`, {
+          headers: {
+            accept: 'application/json',
+            'api_key': token,
+          },
         });
         setMetrics(response.data);
       } catch (err) {
