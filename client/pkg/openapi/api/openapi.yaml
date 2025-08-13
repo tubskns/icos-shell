@@ -1,0 +1,659 @@
+openapi: 3.0.3
+info:
+  description: This is the ICOS Shell based on the OpenAPI 3.0 specification.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: ICOS Shell
+  version: 1.0.11
+servers:
+- url: http://localhost:8080/api/v3
+security:
+- api_key: []
+tags:
+- description: Operations about resources
+  name: resource
+- description: Operations about deployments
+  name: deployment
+- description: Operations about user
+  name: user
+paths:
+  /healthcheck:
+    get:
+      operationId: getHealthcheck
+      responses:
+        "200":
+          description: successful operation
+      summary: Health check
+  /controller/:
+    get:
+      operationId: getControllers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Controller"
+                type: array
+          description: successful operation
+        "204":
+          description: No content
+      summary: Returns a list of controllers
+      tags:
+      - controller
+    post:
+      operationId: addController
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Controller"
+        required: true
+      responses:
+        "201":
+          description: Controller added
+        "202":
+          description: Controller already exists
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          description: Invalid input
+      summary: Adds a new controller
+      tags:
+      - controller
+  /deployment/:
+    get:
+      description: Returns the list of deployments
+      operationId: getDeployments
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  additionalProperties: true
+                  type: object
+                type: array
+          description: successful operation
+      summary: Returns a list of deployments
+      tags:
+      - deployment
+    post:
+      description: ""
+      operationId: createDeployment
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Descriptor"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: Deployment created
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "405":
+          description: Invalid input
+      summary: Creates a new deployment
+      tags:
+      - deployment
+  /deployment/{deploymentId}:
+    delete:
+      description: Deletes a deployment
+      operationId: deleteDeploymentById
+      parameters:
+      - description: ID of deployment that needs to be deleted
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Deletes a deployment
+      tags:
+      - deployment
+    get:
+      description: Returns a single deployment
+      operationId: getDeploymentById
+      parameters:
+      - description: ID of deployment to return
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Deployment not found
+      summary: Find deployment by ID
+      tags:
+      - deployment
+    put:
+      description: Updates a deployment
+      operationId: updateDeployment
+      parameters:
+      - description: ID of deployment that needs to be updated
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Descriptor"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: Deployment updated
+        "405":
+          description: Invalid input
+      summary: Updates a deployment
+      tags:
+      - deployment
+  /deployment/{deploymentId}/start:
+    put:
+      description: Starts a deployment
+      operationId: startDeploymentById
+      parameters:
+      - description: ID of deployment to be resumed
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Starts a deployment
+      tags:
+      - deployment
+  /deployment/{deploymentId}/stop:
+    put:
+      description: Stops a deployment
+      operationId: stopDeploymentById
+      parameters:
+      - description: ID of deployment that needs to be stopped
+        explode: false
+        in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Stops a deployment
+      tags:
+      - deployment
+  /resource/:
+    get:
+      description: Returns a list of resources
+      operationId: getResources
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Returns a list of resources
+      tags:
+      - resource
+  /resource/{resourceId}:
+    get:
+      description: Returns a single resource
+      operationId: getResourceById
+      parameters:
+      - description: ID of resource to return
+        explode: false
+        in: path
+        name: resourceId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Deployment not found
+      summary: Find resource by ID
+      tags:
+      - resource
+  /user/login:
+    get:
+      description: ""
+      operationId: loginUser
+      parameters:
+      - description: The user name for login
+        explode: true
+        in: query
+        name: username
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The password for login in clear text
+        explode: true
+        in: query
+        name: password
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The OTP token for login in clear text
+        explode: true
+        in: query
+        name: otp
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: string
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              explode: false
+              schema:
+                format: int32
+                type: integer
+              style: simple
+            X-Expires-After:
+              description: date in UTC when token expires
+              explode: false
+              schema:
+                format: date-time
+                type: string
+              style: simple
+        "400":
+          description: Invalid username/password supplied
+      summary: Logs user into the system
+      tags:
+      - user
+  /user/logout:
+    get:
+      description: ""
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+      summary: Logs out current logged in user session
+      tags:
+      - user
+  /metrics/train:
+    post:
+      description: ""
+      operationId: trainMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MlModel"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: submitted successfully
+        "400":
+          description: Invalid input
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
+      summary: Trains a model on a set of metrics
+      tags:
+      - metrics
+  /metrics/predict:
+    post:
+      description: ""
+      operationId: predictMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MlModel"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: submitted successfully
+        "400":
+          description: Invalid input
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
+      summary: Predict metrics development based on model and input metrics
+      tags:
+      - metrics
+  /metrics/delete:
+    post:
+      description: ""
+      operationId: deleteMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MlModel"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: submitted successfully
+        "400":
+          description: Invalid input
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "404":
+          description: Intelligence component not found
+        "500":
+          description: Intelligence component error
+      summary: Delete metrics models
+      tags:
+      - metrics
+  /metrics/get:
+    get:
+      description: Returns a list of metrics models
+      operationId: getMetrics
+      parameters:
+      - explode: false
+        in: header
+        name: api_key
+        required: false
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+          description: successful operation
+      summary: Returns a list of metrics models
+      tags:
+      - metrics
+components:
+  responses:
+    UnauthorizedError:
+      description: API key is missing or invalid
+      headers:
+        WWW_Authenticate:
+          explode: false
+          schema:
+            type: string
+          style: simple
+  schemas:
+    Resource:
+      example:
+        id: 1
+        name: resource_1
+        type: controller
+        parentId: 1
+        status: online
+      properties:
+        id:
+          description: Unique identifier of the resource
+          format: int64
+          type: integer
+        name:
+          description: Name of the resource
+          type: string
+        type:
+          description: Type of resource
+          enum:
+          - controller
+          - node
+          type: string
+        parentId:
+          description: ID of the parent resource
+          format: int64
+          type: integer
+        status:
+          description: Status of the resource
+          enum:
+          - online
+          - offline
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    Deployment:
+      example:
+        id: 1
+        name: test_deployment
+        status: running
+      properties:
+        id:
+          description: Unique identifier of the deployment
+          format: int64
+          type: integer
+        name:
+          description: Name of the deployment
+          type: string
+        status:
+          description: Status of the deployment
+          enum:
+          - running
+          - pending
+          type: string
+      required:
+      - id
+      type: object
+    Controller:
+      example:
+        address: 192.168.100.1
+        name: controller_1
+      properties:
+        name:
+          description: Name of the controller
+          example: controller_1
+          type: string
+        address:
+          description: IP address of the controller
+          example: 192.168.100.1
+          type: string
+      required:
+      - address
+      - name
+      type: object
+    Descriptor:
+      example:
+        name: my_application
+        components:
+        - name: component-1
+          type: helm
+          repository: foo/bar
+        Requirements:
+        - optimization_metric: metric_x
+        repository: foo/bar
+      type: object
+    MlModel:
+      example:
+        name: ml_input
+        components:
+        - name: component-1
+          type: helm
+          repository: foo/bar
+        Requirements:
+        - optimization_metric: metric_x
+        repository: foo/bar
+      type: object
+  securitySchemes:
+    api_key:
+      in: header
+      name: api_key
+      type: apiKey

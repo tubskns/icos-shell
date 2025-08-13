@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 npm-debug.log*
@@ -11004,3 +11005,13 @@ coverage
 config_local.yml
 .DS_Store
 .DS_Store
+=======
+.vscode/
+.idea/
+client/shell-client
+GUI/cache/
+client/icos-shell
+backend/config_server.yml
+client/config_client.yml
+.gitignore
+>>>>>>> d06f9c431af588ddbf5309434a52ceaf42a6d58e

@@ -75,6 +75,7 @@ cd client/
 go run main.go create docs --path docs
 ```
 
+<<<<<<< HEAD
 ## Known limitations
 ### Lighthouse and Controller addresses
 Due to a dependency (OpenAPI framework), the shell client is unfortunately unable to handle '/' and ':' characters in lighthouse
@@ -88,5 +89,10 @@ directly, since the JS code is executed directly in the client's browser.
 # Legal
 The ICOS Shell is released under the Apache license 2.0.
 Copyright © 2022-2025 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
+=======
+# Legal
+The lighthouse registration service is released under the Apache license 2.0.
+Copyright © 2022-2024 Marc Michalke & Francisco Carpio, Technische Universität Braunschweig. All rights reserved.
+>>>>>>> d06f9c431af588ddbf5309434a52ceaf42a6d58e
 
 🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.

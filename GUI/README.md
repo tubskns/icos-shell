@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ICOS Ecosystem GUI
 
 A Next.js-based web interface for the ICOS Shell that displays cluster topology, deployments, resources, and metrics — all fetched live from the real server after user login.
@@ -84,6 +85,8 @@ Apache-2.0
 
 🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
 
+=======
+>>>>>>> d06f9c431af588ddbf5309434a52ceaf42a6d58e
 # ICOS Ecosystem GUI
 
 A Next.js-based web interface for the ICOS Ecosystem that displays cluster topology and deployment information.
@@ -215,7 +218,11 @@ docker-compose up --build -d
 
 ## License
 
+<<<<<<< HEAD
 The ICOS Shell GUI is released under the Apache license 2.0.
 Copyright © 2022-2025 Rasool Seyghaly, Polytechnic University of Catalonia and Marc Michalke, Technische Universität Braunschweig. All rights reserved.
 
 🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
+=======
+[Add your license information here]
+>>>>>>> d06f9c431af588ddbf5309434a52ceaf42a6d58e

@@ -1,0 +1,22 @@
+services:
+    icos-shell-backend:
+        image: michalkeit/icos-shell-backend
+        build: ./
+        container_name: icos-shell-backend
+        restart: always
+        ports:
+            - "8080:8080"
+        volumes:
+            - ./config_server.yml:/app/config.yml
+            - /etc/ssl/certs/icos-lh-cert.pem:/etc/ssl/certs/icos-lh-cert.pem
+    gui:
+      build:
+        context: ../GUI
+        dockerfile: Dockerfile
+      ports:
+        - '3000:3000'
+      restart: always
+      environment:
+        - NEXT_PUBLIC_CONTROLLER_ADDRESS=http://127.0.0.1:8080
+#        - NEXT_PUBLIC_CONTROLLER_ADDRESS=https://shell.controller-a.staging.10-160-3-14.sslip.io
+        - NEXT_PUBLIC_LIGHTHOUSE_ADDRESS=https://lighthouse.core.icos-staging.10-160-3-151.sslip.io

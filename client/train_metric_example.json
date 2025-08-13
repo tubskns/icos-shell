@@ -1,0 +1,26 @@
+{
+    "model_name": "sample_test_exort_metrics",
+    "model_type": "XGB",
+    "test_size": 0.2,
+    "dataclay": false,
+    "dataset_name": "cpu_dataset_500_samples.csv",
+    "steps_in_seconds": 60,
+    "steps_back": 12,
+    "max_models_count": 5,
+    "max_mlruns_count": 10,
+    "shap_samples": 100,
+    "model_parameters": {
+        "xgboost_model_parameters": {
+            "n_estimators": 1000,
+            "max_depth": 7,
+            "eta": 0.1,
+            "subsample": 0.7,
+            "colsample_bytree": 0.8,
+            "alpha": 0
+        }
+    },
+    "telemetry_metrics": [
+        "(1 - avg(irate(node_cpu_seconds_total{mode=\"idle\", icos_agent_id=\"staging-ocm-1\", icos_host_id=\"a04a67ba78534559840cfc8b9101f218\"}[2m])) without (cpu,mode)) * 100",
+        "100 * (1 - ((avg_over_time(node_memory_MemFree_bytes{icos_agent_id=\"staging-ocm-1\", icos_host_id=\"a04a67ba78534559840cfc8b9101f218\"}[10m]) + avg_over_time(node_memory_Cached_bytes{icos_agent_id=\"staging-ocm-1\", icos_host_id=\"a04a67ba78534559840cfc8b9101f218\"}[10m]) + avg_over_time(node_memory_Buffers_bytes{icos_agent_id=\"staging-ocm-1\", icos_host_id=\"a04a67ba78534559840cfc8b9101f218\"}[10m])) / avg_over_time(node_memory_MemTotal_bytes{icos_agent_id=\"staging-ocm-1\", icos_host_id=\"a04a67ba78534559840cfc8b9101f218\"}[10m])))"
+    ]
+}

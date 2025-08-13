@@ -1,0 +1,23 @@
+name: shell-demo-application
+description: "app to demo deployment"
+components:
+- name: hello-world
+  type: manifest
+  manifests:
+    - name: hello-world
+
+manifests:
+  - name: hello-world
+    manifest:
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: hello-world
+        namespace: shell-demo
+      spec:
+        containers:
+        - name: hello-world-pod
+          image: testcontainers/helloworld
+          resources:
+            requests: 
+              memory: 1Gi
