@@ -152,8 +152,7 @@ const SignInForm = () => {
                                             OTP
                                         </Typography>
                                         <TextField
-                                            required
-                                            fullWidth
+                                                                                        fullWidth
                                             name="otp"
                                             label="OTP"
                                             type="text"
