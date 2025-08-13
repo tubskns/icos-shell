@@ -201,10 +201,9 @@ const SignInForm = () => {
                                             OTP Code
                                         </Typography>
                                         <TextField
-                                            required
                                             fullWidth
                                             name="otp"
-                                            label="OTP Code"
+                                            label="OTP Code (optional)"
                                             type="text"
                                             id="otp"
                                             autoComplete="one-time-code"

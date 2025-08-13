@@ -1,3 +1,89 @@
+## ICOS Ecosystem GUI
+
+A Next.js-based web interface for the ICOS Shell that displays cluster topology, deployments, resources, and metrics — all fetched live from the real server after user login.
+
+### Key Features
+- Real-time data from ICOS Shell after login (no mocks, no hardcoded tokens)
+- Authentication via Shell `/user/login` (username/password, optional OTP)
+- Topology visualization and deployments view
+- Metrics listing and actions (train/predict/delete)
+- Works locally (Node.js) or with Docker
+
+## Quick Start
+
+### Prerequisites
+- Node.js ≥ 16 and npm ≥ 8 (or Docker & Docker Compose)
+- Network/VPN access to your ICOS Shell instance
+
+### Environment
+Create `.env.local` (or use `.env.example`):
+```
+NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500/api/v3
+NEXT_PUBLIC_CONTROLLER_TIMEOUT=15000
+```
+
+### Development
+```
+npm install --legacy-peer-deps
+npm run dev
+# http://localhost:3000
+```
+
+### Docker
+```
+docker compose up -d --build
+# http://127.0.0.1:3000
+```
+
+## Configuration
+
+- `NEXT_PUBLIC_CONTROLLER_ADDRESS`: Base URL of ICOS Shell (no trailing slash)
+- `NEXT_PUBLIC_CONTROLLER_TIMEOUT`: Request timeout in ms (optional)
+
+No Lighthouse variable is used.
+
+## Data Flow
+
+1) Login via `/user/login` → token (string)
+2) Store token as `api_key`
+3) Use `api_key` for all subsequent requests
+4) Fetch and render deployments/controllers/resources/metrics
+
+## Shell API (used by GUI)
+
+- Auth: GET `/user/login` (query: username, password, otp?)
+- Resources: GET `/resource/`
+- Controllers: GET `/controller/`
+- Deployments: GET `/deployment/`, PUT `/deployment/{id}/start|stop`, DELETE `/deployment/{id}`
+- Metrics: GET `/metrics/get`, POST `/metrics/train|predict|delete`
+
+Headers: `api_key: <token>` (+ `accept: application/json` where applicable)
+
+## Troubleshooting
+
+- Connection refused → check VPN/connectivity and controller address
+- 401 → credentials/token; login again
+- 204/empty → valid; verify Shell state
+
+## Deployment Updates
+```
+docker compose stop
+docker compose rm -f
+docker compose up -d --build
+```
+
+## Contributing
+
+- Work on branch `GUI`; do not commit secrets
+- Ensure all data fetched live with `api_key`
+- Group changes by area (config/auth/projects/pages/metrics) in commits
+
+## License
+
+Apache-2.0
+
+🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
+
 # ICOS Ecosystem GUI
 
 A Next.js-based web interface for the ICOS Ecosystem that displays cluster topology and deployment information.
