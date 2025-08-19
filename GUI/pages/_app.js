@@ -17,15 +17,18 @@ import theme from '../styles/theme'
 
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import Layout from "@/components/_App/Layout";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ErrorBoundary>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ErrorBoundary>
       </ThemeProvider>
     </>
   );

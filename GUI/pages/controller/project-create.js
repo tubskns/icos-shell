@@ -15,6 +15,8 @@ const axios = require('axios');
 import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import config from '../../config.js';
+import AuthManager from '../../utils/auth-manager.js';
 
 const RichTextEditor = dynamic(() => import('@mantine/rte'), {
     ssr: false,
@@ -34,40 +36,35 @@ const ProjectCreate = () => {
         }
     }, [router]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const token = Cookies.get('authToken');
-        if (!token) {
-            setError("Authorization token is missing.");
-            setOpenSnackbar(true); // Open Snackbar
-            return;
-        }
+        try {
+            // Use AuthManager for automatic token handling
+            await AuthManager.apiCallWithTokenRefresh(async (token) => {
+                const formData = new FormData(event.target);
+                const axiosConfig = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: `${config.controllerAddress}/api/v3/deployment/`,
+                    headers: {
+                        'api_key': token
+                        // Content-Type will be set automatically for FormData
+                    },
+                    data: formData,
+                };
 
-        const formData = new FormData(event.target);
-        const config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'lighthouse.icos-project.eu:8080/api/v3/deployment',
-            headers: {
-                'Content-Type': 'application/json',
-                'api_key': token
-            },
-            data: formData,
-        };
-
-        axios.request(config)
-            .then((response) => {
+                const response = await axios.request(axiosConfig);
                 setData(response.data); // Set the fetched data
                 setError(""); // Clear error if the request succeeds
                 setOpenSnackbar(false); // Close Snackbar if successful
-                // Optionally redirect or show a success message here
-            })
-            .catch((error) => {
-                console.log(error);
-                setError("lighthouse.icos-project.eu: Error while connecting to the component " ); // Set the error message
-                setOpenSnackbar(true); // Open Snackbar to show error
+                return response;
             });
+        } catch (error) {
+            console.log(error);
+            setError("Error while connecting to the component"); // Set the error message
+            setOpenSnackbar(true); // Open Snackbar to show error
+        }
     };
 
     const handleChange = (event) => {

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -11,7 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from "@mui/material/CircularProgress";
 import Cookies from "js-cookie";
 import styles from "@/components/Authentication/Authentication.module.css";
-import axios from "axios";
+import https from 'https';
+import Link from 'next/link';
 
 const SignInForm = () => {
     const [error, setError] = useState("");
@@ -26,30 +27,78 @@ const SignInForm = () => {
         const formData = new FormData(event.currentTarget);
         const username = formData.get("email");
         const password = formData.get("password");
-        const controllerAddress = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS
-
-        // Direct connection to real server
-        const loginUrl = `${controllerAddress}/api/v3/user/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-
-        const config = {
-            method: "get",
-            maxBodyLength: Infinity,
-            url: loginUrl,
-            headers: {
-                "accept": "application/json",
-                "Content-Type": "application/json",
-            },
-        };
+        const otp = formData.get("otp");
 
         try {
-            const response = await axios.request(config);
-            const authToken = response.data;
-
-            Cookies.set("authToken", authToken, { expires: 1 });
-            router.push("/");
-        } catch (error) {
-            console.error("Login error:", error);
-            setError("Authentication failed! Please try again.");
+            console.log("🔑 Attempting to get token from Keycloak...");
+            
+            // Get token from our API route (which calls ICOS Shell /user/login)
+            const response = await axios.post('/api/auth/token', {
+                username: username,
+                password: password,
+                otp: otp
+            }, {
+                timeout: 60000, // 60 second timeout
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            console.log("✅ Token response:", response.data);
+            const token = response.data.access_token;
+            if (!token) throw new Error("No token received from IAM");
+            
+            // Clean the token to ensure it's in proper JWT format
+            const cleanToken = token.trim().replace(/\s+/g, '');
+            
+            console.log("🔄 Setting cookies...");
+            Cookies.set("authToken", cleanToken, { 
+                expires: 1, 
+                path: '/', 
+                sameSite: 'lax' 
+            });
+            Cookies.set("authMethod", "api_key", { 
+                expires: 1, 
+                path: '/', 
+                sameSite: 'lax' 
+            });
+            
+            // Also save to localStorage as backup
+            localStorage.setItem("authToken", cleanToken);
+            localStorage.setItem("authMethod", "api_key");
+            console.log("✅ Cookies and localStorage set");
+            
+            // Verify cookies are set
+            const savedToken = Cookies.get("authToken");
+            const savedMethod = Cookies.get("authMethod");
+            console.log("🔍 Verification - Token:", savedToken ? "Present" : "Missing");
+            console.log("🔍 Verification - Method:", savedMethod);
+            
+            if (!savedToken) {
+                throw new Error("Failed to save token to cookies");
+            }
+            
+            // Small delay to ensure cookies are set
+            setTimeout(() => {
+                console.log("🔄 Redirecting to Dashboard...");
+                window.location.href = "/";
+            }, 500);
+        } catch (err) {
+            console.error("❌ Token error:", err);
+            console.error("❌ Error response:", err.response?.data);
+            
+            let errorMessage = "Failed to get token from IAM";
+            if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
+                errorMessage = "Connection timeout - please try again";
+            } else if (err.response?.data?.error) {
+                errorMessage = `IAM Error: ${err.response.data.error}`;
+            } else if (err.response?.data?.axios_error && err.response?.data?.curl_error) {
+                errorMessage = "Both connection methods failed - check network";
+            } else {
+                errorMessage = `Connection failed: ${err.message}`;
+            }
+            
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -149,12 +198,12 @@ const SignInForm = () => {
                                                 display: "block",
                                             }}
                                         >
-                                            OTP
+                                            OTP Code
                                         </Typography>
                                         <TextField
-                                                                                        fullWidth
+                                            fullWidth
                                             name="otp"
-                                            label=""
+                                            label="OTP Code (optional)"
                                             type="text"
                                             id="otp"
                                             autoComplete="one-time-code"

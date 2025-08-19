@@ -8,7 +8,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 EXPOSE 3000
 
