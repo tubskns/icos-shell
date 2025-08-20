@@ -1,15 +1,15 @@
-# 🚀 ICOS GUI Deployment Guide
+# ICOS GUI Deployment Guide
 
-## ✅ Project Status: READY FOR DEPLOYMENT
+## Project Status: READY FOR DEPLOYMENT
 
-The ICOS GUI project has been successfully configured to avoid dependency issues and is ready for deployment on any system.
+The ICOS GUI project has been successfully configured and is now connected to the real ICOS Shell server. All data is fetched live with no mock data.
 
-## 🎯 Quick Start (Choose One)
+## Quick Start (Choose One)
 
 ### Option 1: Docker (Recommended - Easiest)
 ```bash
 # 1. Extract/Clone the project
-cd icosguiaug4v5
+cd GUI
 
 # 2. Run with Docker (handles everything automatically)
 docker compose up -d
@@ -21,7 +21,7 @@ open http://localhost:3000
 ### Option 2: Auto Setup Script
 ```bash
 # 1. Extract/Clone the project
-cd icosguiaug4v5
+cd GUI
 
 # 2. Run the auto setup script
 ./start.sh
@@ -32,138 +32,110 @@ cd icosguiaug4v5
 ### Option 3: Manual Setup
 ```bash
 # 1. Extract/Clone the project
-cd icosguiaug4v5
+cd GUI
 
 # 2. Install dependencies (IMPORTANT: Use legacy peer deps)
 npm install --legacy-peer-deps
 
-# 3. Start development server
+# 3. Configure environment
+cp .env.example .env.local
+# Edit .env.local with your ICOS Shell address
+
+# 4. Start development server
 npm run dev
 
-# 4. Access the application
+# 5. Access the application
 open http://localhost:3000
 ```
 
-## 🔧 What We Fixed
+## Environment Configuration
 
-### ✅ Dependency Issues Resolved
-- **Problem**: Peer dependency conflicts with React 18
-- **Solution**: Added `--legacy-peer-deps` flag to all npm commands
-- **Files Updated**: 
-  - `package.json` - Added new scripts and dependencies
-  - `.npmrc` - Auto-configures legacy peer deps
-  - `Dockerfile.app` - Updated build process
-  - `Dockerfile` - Updated build process
+### Required Environment Variables
+Create `.env.local` file with:
 
-### ✅ Missing Dependencies Added
-- **Problem**: Missing `@mantine/core` and `@mantine/hooks`
-- **Solution**: Added to `package.json` dependencies
-- **Result**: Rich text editor now works properly
-
-### ✅ React Hook Rules Fixed
-- **Problem**: Conditional hook calls in `AllProjects/index.js`
-- **Solution**: Moved conditional return after all hooks
-- **Result**: Build process now completes successfully
-
-### ✅ Documentation Created
-- **README.md** - Complete setup guide
-- **QUICK_SETUP.md** - Fast setup instructions
-- **FEATURES.md** - Detailed feature documentation
-- **PROJECT_SUMMARY.md** - Technical overview
-- **start.sh** - Auto setup script
-
-## 📋 Files Created/Updated
-
-### New Files
-- ✅ `.npmrc` - Auto-configures legacy peer deps
-- ✅ `QUICK_SETUP.md` - Quick setup guide
-- ✅ `FEATURES.md` - Feature documentation
-- ✅ `PROJECT_SUMMARY.md` - Project overview
-- ✅ `start.sh` - Auto setup script
-
-### Updated Files
-- ✅ `package.json` - Added missing dependencies and scripts
-- ✅ `README.md` - Complete rewrite with clear instructions
-- ✅ `Dockerfile.app` - Fixed build process
-- ✅ `Dockerfile` - Fixed build process
-- ✅ `components/Projects/AllProjects/index.js` - Fixed React hooks
-
-## 🎯 Success Indicators
-
-When the project is running correctly, you should see:
-
-### Docker Method
 ```bash
-# Container status
-docker ps
-# Should show: icos-gui-final (Up)
+# ICOS Shell server address (REQUIRED)
+NEXT_PUBLIC_CONTROLLER_ADDRESS=http://YOUR_SERVER_IP:PORT/api/v3
 
-# Application logs
-docker logs icos-gui-final
-# Should show: "Ready in XXXms"
-
-# Health check
-curl http://localhost:3000
-# Should return HTML content
+# Request timeout in milliseconds (optional)
+NEXT_PUBLIC_CONTROLLER_TIMEOUT=15000
 ```
 
-### Local Method
+### Example Configuration
 ```bash
-# Development server
-npm run dev
-# Should show: "Ready - started server on 0.0.0.0:3000"
-
-# Application access
-open http://localhost:3000
-# Should load the dashboard
+# For the current production server
+NEXT_PUBLIC_CONTROLLER_ADDRESS=http://10.160.3.20:32500/api/v3
+NEXT_PUBLIC_CONTROLLER_TIMEOUT=15000
 ```
 
-## 🔍 Troubleshooting
+## What We Fixed
 
-### If Docker Fails
+### Environment Configuration
+- **Problem**: Missing `NEXT_PUBLIC_CONTROLLER_ADDRESS` environment variable
+- **Solution**: Added proper environment variable support with `.env.local` and `.env.example`
+- **Result**: GUI now connects to real ICOS Shell server
+
+### Real Server Connection
+- **Problem**: GUI was not connecting to actual ICOS Shell
+- **Solution**: Configured connection to real server address
+- **Result**: All data now fetched live from real server
+
+### Authentication System
+- **Problem**: No proper token management
+- **Solution**: Implemented dynamic token generation on every login
+- **Result**: Secure authentication with fresh tokens
+
+### No Mock Data
+- **Problem**: Potential for fake data
+- **Solution**: All data fetched from real ICOS Shell endpoints
+- **Result**: 100% real-time data from production server
+
+## Data Sources
+
+All data is fetched from real ICOS Shell endpoints:
+
+- **Projects/Deployments**: `/deployment/`
+- **Metrics**: `/metrics/get`, `/metrics/train`, `/metrics/predict`, `/metrics/delete`
+- **Controllers**: `/controller/`
+- **Resources**: `/resource/`
+- **Authentication**: `/user/login`
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Connection Failed**: Check your ICOS Shell server address in `.env.local`
+2. **Authentication Error**: Ensure your credentials are correct
+3. **Dependency Issues**: Use `npm install --legacy-peer-deps`
+4. **Port Conflicts**: Ensure port 3000 is available
+
+### Network Requirements
+
+- **VPN Access**: May be required to access ICOS Shell server
+- **Firewall**: Ensure port access to ICOS Shell server
+- **DNS Resolution**: Server address must be resolvable
+
+## Production Deployment
+
+### Docker Production
 ```bash
-# Clean and rebuild
-docker system prune -a
-docker compose up -d --build
+# Build production image
+docker build -t icos-gui:latest .
+
+# Run production container
+docker run -d -p 3000:3000 --env-file .env.local icos-gui:latest
 ```
 
-### If Local Setup Fails
+### Environment Variables for Production
 ```bash
-# Clear everything and reinstall
-rm -rf node_modules package-lock.json
-npm install --legacy-peer-deps
-npm run dev
+NEXT_PUBLIC_CONTROLLER_ADDRESS=https://your-production-server.com/api/v3
+NEXT_PUBLIC_CONTROLLER_TIMEOUT=30000
 ```
 
-### If Build Fails
-```bash
-# Install missing dependencies
-npm install @mantine/core @mantine/hooks @mantine/rte --legacy-peer-deps
-npm run build
-```
+## Support
 
-## 📊 Current Status
-
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Dependencies | ✅ Fixed | Legacy peer deps configured |
-| Docker Build | ✅ Working | Multi-stage build optimized |
-| Local Build | ✅ Working | All dependencies resolved |
-| Documentation | ✅ Complete | Multiple guides available |
-| Auto Setup | ✅ Ready | start.sh script available |
-
-## 🎉 Ready for Distribution
-
-The project is now ready for distribution to other users. They can:
-
-1. **Use Docker** (easiest) - No dependency issues
-2. **Use Auto Script** - `./start.sh` handles everything
-3. **Use Manual Setup** - Clear instructions provided
-
-All dependency issues have been resolved, and comprehensive documentation is available.
-
----
-
-**Status**: ✅ Production Ready  
-**Last Updated**: August 2024  
-**Version**: Final Release 
+For issues or questions:
+1. Check this deployment guide
+2. Verify environment configuration
+3. Test network connectivity to ICOS Shell
+4. Review browser console for errors
