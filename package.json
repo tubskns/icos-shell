@@ -1,0 +1,78 @@
+{
+  "name": "icosguiaug5v1",
+  "version": "1.0.0-final",
+  "description": "ICOS GUI 29 July Final Version - Production Ready Dashboard with Hierarchical Topology Visualization, Project Management, and Metrics Tracking",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export",
+    "clean": "rm -rf .next out",
+    "reset": "rm -rf .next node_modules package-lock.json && npm install --legacy-peer-deps",
+    "install-deps": "npm install --legacy-peer-deps",
+    "postinstall": "echo '✅ Dependencies installed successfully with legacy peer deps'"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.20",
+    "@mui/x-data-grid": "^6.18.2",
+    "@mui/x-date-pickers": "^6.18.2",
+    "@mantine/core": "^3.6.14",
+    "@mantine/hooks": "^3.6.14",
+    "@mantine/rte": "^3.5.0",
+    "axios": "^1.6.2",
+    "body-parser": "^2.2.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "d3": "^7.8.5",
+    "express": "^5.1.0",
+    "js-cookie": "^3.0.5",
+    "next": "13.5.6",
+    "nookies": "^2.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-swipeable-views": "^0.14.0",
+    "react-tabs": "^6.1.0",
+    "swiper": "^11.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-config-next": "13.5.6"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "icos",
+    "gui",
+    "dashboard",
+    "topology",
+    "visualization",
+    "nextjs",
+    "react",
+    "material-ui",
+    "d3",
+    "production-ready"
+  ],
+  "author": "ICOS Development Team",
+  "license": "Proprietary",
+  "repository": {
+    "type": "git",
+    "url": "internal-repository"
+  },
+  "homepage": "http://localhost:3000",
+  "bugs": {
+    "url": "internal-support"
+  },
+  "main": "index.js",
+  "browserslist": [
+    ">0.3%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
