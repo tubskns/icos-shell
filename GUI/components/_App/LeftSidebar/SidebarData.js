@@ -14,6 +14,7 @@ import CopyAllIcon from "@mui/icons-material/CopyAll";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import ViewQuiltIcon from "@mui/icons-material/ViewQuilt";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
 
 export const SidebarData = [
   {
@@ -27,16 +28,26 @@ export const SidebarData = [
   },
 
   {
+    title: "Hierarchical View",
+    path: "/hierarchical",
+    icon: <AccountTreeIcon />,
+    iconClosed: <KeyboardArrowRightIcon />,
+    iconOpened: <KeyboardArrowDownIcon />,
+
+
+  },
+
+  {
     title: "Deployments",
-    path: "",
+    path: "/projects",
     icon: <CopyAllIcon />,
     iconClosed: <KeyboardArrowRightIcon />,
     iconOpened: <KeyboardArrowDownIcon />,
 
     subNav: [
       {
-        title: "Deployments",
-        path: "/projects/",
+        title: "All Deployments",
+        path: "/projects",
       },
       {
         title: "Deployment Create",
@@ -67,29 +78,24 @@ export const SidebarData = [
 
   {
     title: "Metrics",
-
-    path: "/metrics/",
-    icon: <CopyAllIcon />,
+    path: "/metric/",
+    icon: <AddchartIcon />,
     iconClosed: <KeyboardArrowRightIcon />,
-
     iconOpened: <KeyboardArrowDownIcon />,
 
     subNav: [
       {
-
         title: "All Metrics",
-        path: "/metrics/",
+        path: "/metric/",
       },
-
       {
-        title: "Train New Metric",
-        path: "/train_metrics/",
-      }, 
-      // {
-      //   title: "Controllers Create",
-      //   path: "/controllers/controller-create/",
-      // },
-
+        title: "Train Metrics",
+        path: "/metric/train_metric",
+      },
+      {
+        title: "Create Metric",
+        path: "/metric/create",
+      },
     ],
   },
 
@@ -103,7 +109,7 @@ export const SidebarData = [
     subNav: [
       {
         title: "Logout",
-        path: "/authentication/logout/",
+        path: "/authentication/logout",
       },
     ],
   },

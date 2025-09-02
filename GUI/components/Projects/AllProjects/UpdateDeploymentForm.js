@@ -35,7 +35,7 @@ const UpdateDeploymentForm = ({ deploymentId, initialData, onUpdate }) => {
 
         try {
             const response = await axios.put(
-                `${controllerBaseUrl}/api/v3/deployment/update/${deploymentId}`,
+                `${controllerBaseUrl}/deployment/${deploymentId}`,
                 formData,
                 {
                     headers: {

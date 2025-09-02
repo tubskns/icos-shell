@@ -9,6 +9,7 @@ import styles from '@/styles/PageTitle.module.css';
 import axios from 'axios';
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import config from '../../config.js';
 
 const DeploymentUpdate = () => {
     const [error, setError] = useState("");
@@ -16,7 +17,7 @@ const DeploymentUpdate = () => {
     const router = useRouter();
     const { deploymentId } = router.query;
 
-    const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
+    const controllerBaseUrl = config.controllerAddress;
 
     useEffect(() => {
         const token = Cookies.get('authToken');
@@ -54,7 +55,7 @@ const DeploymentUpdate = () => {
                 fileType: file.type
             };
 
-            const config = {
+            const axiosConfig = {
                 method: 'put',
                 url: `${controllerBaseUrl}/api/v3/deployment/${deploymentId}`,
                 headers: {
@@ -64,7 +65,7 @@ const DeploymentUpdate = () => {
                 data: JSON.stringify(payload),
             };
 
-            axios.request(config)
+            axios.request(axiosConfig)
                 .then((response) => {
                     console.log("Update success", response);
                     setError("");

@@ -1,135 +1,72 @@
 # ICOS Ecosystem GUI
 
-A Next.js-based web interface for the ICOS Ecosystem that displays cluster topology and deployment information.
+A Next.js-based web interface for the ICOS Shell that displays cluster topology, deployments, resources, and metrics — all fetched live from the real server after user login.
 
-## Features
+## Key Features
 
-- ✅ **Real-time Data**: Connects directly to ICOS backend server
-- ✅ **Authentication**: Secure login with real server credentials
-- ✅ **Topology Visualization**: Interactive cluster topology graphs
-- ✅ **Universal Deployment**: Works on any system with Docker
-- ✅ **Fallback Support**: Graceful handling of connection issues
+- **Real-time Data**: All data fetched from ICOS Shell (no mocks, no hardcoded tokens)
+- **Dynamic Authentication**: New token generated every login via `/user/login`
+- **Live Topology**: Interactive cluster topology visualization
+- **Project Management**: Real-time deployments and resources
+- **Metrics Tracking**: Live metrics with train/predict/delete capabilities
+- **Universal Access**: Works locally (Node.js) or with Docker
 
 ## Quick Start
 
 ### Prerequisites
+- Node.js ≥ 16 and npm ≥ 8 (or Docker & Docker Compose)
+- Network/VPN access to your ICOS Shell instance
 
-- Docker and Docker Compose installed
-- VPN connection to the ICOS testbed (if required)
-- Access to the ICOS backend server
+### Environment Setup
+1. Copy `.env.example` to `.env.local`
+2. Update with your actual ICOS Shell address:
 
-### Deployment
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd <repository-folder>
-   ```
-
-2. **Build and run with Docker:**
-   ```bash
-   docker-compose up --build -d
-   ```
-
-3. **Access the application:**
-   - Open your browser and go to `http://127.0.0.1:3000`
-   - Login with your ICOS credentials
+```bash
+# Example configuration
+NEXT_PUBLIC_CONTROLLER_ADDRESS=http://YOUR_SERVER_IP:PORT/api/v3
+NEXT_PUBLIC_CONTROLLER_TIMEOUT=15000
+```
 
 ### Development
+```bash
+# Install dependencies (IMPORTANT: Use legacy peer deps)
+npm install --legacy-peer-deps
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+# Start development server
+npm run dev
+# Access at: http://localhost:3000
+```
 
-2. **Run in development mode:**
-   ```bash
-   npm run dev
-   ```
-
-3. **Access at `http://localhost:3000`**
+### Docker Deployment
+```bash
+# Build and start with Docker
+docker compose up -d --build
+# Access at: http://127.0.0.1:3000
+```
 
 ## Configuration
 
-### Environment Variables
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_CONTROLLER_ADDRESS` | Base URL of ICOS Shell (no trailing slash) | ✅ Yes |
+| `NEXT_PUBLIC_CONTROLLER_TIMEOUT` | Request timeout in milliseconds | ❌ No (default: 15000) |
 
-The application uses the following environment variables:
+## Data Flow
 
-- `NEXT_PUBLIC_CONTROLLER_ADDRESS`: ICOS backend server address
-- `NEXT_PUBLIC_LIGHTHOUSE_ADDRESS`: Lighthouse server address
+1. **Login** → User authenticates via `/user/login` endpoint
+2. **Token Generation** → New token received from ICOS Shell
+3. **API Calls** → All subsequent requests use `api_key: ${TOKEN}` header
+4. **Real-time Data** → Deployments, controllers, resources, and metrics fetched live
 
-### Server Configuration
+## Important Notes
 
-The application connects directly to:
-- **Backend Server**: `http://10.160.3.20:32500`
-- **API Endpoints**: 
-  - Login: `/api/v3/user/login`
-  - Resources: `/api/v3/resource/`
-  - Deployments: `/api/v3/deployment/`
-
-## Architecture
-
-### Components
-
-- **Authentication**: Direct connection to ICOS backend
-- **Topology Graph**: D3.js-based visualization
-- **Data Fetching**: Real-time API calls with fallback
-- **Error Handling**: Graceful degradation
-
-### Data Flow
-
-1. User logs in → Direct API call to backend
-2. Token stored → Used for subsequent requests
-3. Data fetched → Real-time cluster information
-4. Graph rendered → Interactive topology display
+- **No Mock Data**: All data is fetched from real ICOS Shell server
+- **Dynamic Tokens**: New authentication token generated on every login
+- **Real Server**: No hardcoded data or fake endpoints
+- **Network Access**: Requires connection to ICOS Shell instance
 
 ## Troubleshooting
 
-### Common Issues
-
-1. **Connection Refused**: Check VPN connection and server availability
-2. **Authentication Failed**: Verify credentials with backend team
-3. **No Data Displayed**: Check API endpoints and token validity
-
-### Logs
-
-View application logs:
-```bash
-docker-compose logs -f app
-```
-
-### Updates
-
-To update the application:
-```bash
-docker-compose stop
-docker-compose rm -f
-docker-compose up --build -d
-```
-
-## API Documentation
-
-### Authentication
-- **Method**: GET
-- **URL**: `/api/v3/user/login`
-- **Parameters**: `username`, `password`
-- **Headers**: `accept: application/json`
-
-### Resources
-- **Method**: GET
-- **URL**: `/api/v3/resource/`
-- **Headers**: `api_key: <token>`, `accept: application/json`
-
-## Contributing
-
-1. Make changes to the codebase
-2. Test with Docker deployment
-3. Ensure universal compatibility
-4. Submit pull request
-
-## License
-
-The ICOS Shell GUI is released under the Apache license 2.0.
-Copyright © 2022-2025 Rasool Seyghaly, Polytechnic University of Catalonia and Marc Michalke, Technische Universität Braunschweig. All rights reserved.
-
-🇪🇺 This work has received funding from the European Union's HORIZON research and innovation programme under grant agreement No. 101070177.
+- **Connection Issues**: Check your ICOS Shell server address and network access
+- **Authentication Errors**: Ensure your credentials are correct
+- **Dependency Issues**: Use `npm install --legacy-peer-deps` for compatibility

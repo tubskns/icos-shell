@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from '@/styles/PageTitle.module.css'
-import AllProjects from '@/components/Projects/AllProjects';
+import ErrorWrapper from '@/components/Projects/AllProjects/ErrorWrapper';
 
 const Projects = () => {
   return (
@@ -17,7 +17,7 @@ const Projects = () => {
         </ul>
       </div>
 
-      <AllProjects />
+      <ErrorWrapper />
     </>
   )
 }

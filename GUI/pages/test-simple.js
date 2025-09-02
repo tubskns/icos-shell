@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../config.js';
 
 const TestSimple = () => {
     const [data, setData] = useState(null);
@@ -9,7 +10,7 @@ const TestSimple = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const APIBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS || "http://localhost:3001";
+                const APIBaseUrl = config.controllerAddress;
                 console.log('Fetching from:', APIBaseUrl);
                 
                 const response = await axios.get(`${APIBaseUrl}/api/data`);

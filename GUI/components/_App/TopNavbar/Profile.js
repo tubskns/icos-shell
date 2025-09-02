@@ -128,7 +128,7 @@ const Profile = () => {
           </ListItemIcon>
 
           <Link
-            href="/authentication/logout/"
+            href="/authentication/logout"
             fontSize="13px"
             color="inherit"
             underline="none"

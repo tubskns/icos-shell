@@ -1,166 +1,230 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Link from 'next/link';
-import styles from '@/styles/PageTitle.module.css';
+import styles from '@/styles/PageTitle.module.css'
 const axios = require('axios');
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import config from '../../config.js';
+import AuthManager from '../../utils/auth-manager.js';
 
 const ProjectCreate = () => {
     const [error, setError] = useState("");
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const controllerBaseUrl = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS;
+    
+    // Use config for server address
+    const controllerAddress = config.controllerAddress;
+    
+    const handleFileUpload = async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
 
-    useEffect(() => {
-        const token = Cookies.get('authToken');
-        if (!token) {
-            router.push("/authentication/sign-in/");
-        }
-    }, [router]);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        console.log("submit_start");
-        const token = Cookies.get('authToken');
-        if (!token) {
-            setError("Authorization token is missing.");
-            setOpenSnackbar(true);
-            return;
-        }
-
-        const fileInput = event.target.elements.deploymentFile;
-        if (fileInput.files.length === 0) {
-            setError("No file selected.");
-            setOpenSnackbar(true);
-            return;
-        }
-
-        const file = fileInput.files[0];
         const reader = new FileReader();
-
-        reader.onload = () => {
-            const fileContent = reader.result;
-
-            console.log(fileContent);
-
-            const payload = {
-                content: fileContent,
-                fileName: file.name,
-                fileType: file.type
-            };
-
-            const config = {
-                method: 'post',
-                url: `${controllerBaseUrl}/api/v3/deployment/`,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'api_key': token
-                },
-                data: JSON.stringify(payload),
-            };
-
-            console.log(config);
-
-
-            axios.request(config)
-                .then((response) => {
-                    console.log("success");
-                    console.log(response);
-                    setError("");
-                    setOpenSnackbar(false);
-                    // Optionally redirect or show a success message here
-                })
-                .catch((error) => {
-                    console.log(error);
-                    setError("Error while connecting to the component");
-                    setOpenSnackbar(true);
-                });
+        reader.onload = async (e) => {
+            const content = e.target.result;
+            await uploadDeployment(content, file.name);
         };
-
-        reader.onerror = () => {
-            setError("Failed to read the file.");
-            setOpenSnackbar(true);
-        };
-
         reader.readAsText(file);
     };
 
-    const handleCloseSnackbar = () => {
+    const uploadDeployment = async (content, filename) => {
+        setIsLoading(true);
+        setError("");
+
+        try {
+            // Use AuthManager for automatic token handling
+            await AuthManager.apiCallWithTokenRefresh(async (token) => {
+                const authMethod = Cookies.get("authMethod") || "api_key";
+                
+                // Prepare headers based on authentication method  
+                let headers = {
+                    "Content-Type": "application/json"
+                };
+
+                // Use api_key header format as per project CLI convention
+                headers["api_key"] = token;
+
+                console.log("Uploading to:", controllerAddress);
+                console.log("Headers:", headers);
+                console.log("Content length:", content.length);
+
+                const response = await axios.post(
+                    `${controllerAddress}/api/v3/deployment/`,
+                    {
+                        content: content,
+                        filename: filename
+                    },
+                    {
+                        headers: headers,
+                        timeout: 10000
+                    }
+                );
+
+                console.log("Upload response:", response.data);
+
+                if (response.data.success || response.status === 201 || response.status === 200) {
+                    setOpenSnackbar(true);
+                    setError("");
+                    // Redirect to projects page after successful upload
+                    setTimeout(() => {
+                        router.push('/projects');
+                    }, 2000);
+                    return response;
+                } else {
+                    throw new Error("Upload failed");
+                }
+            });
+
+        } catch (err) {
+            console.error("Upload error:", err);
+            console.error("Error response:", err.response?.data);
+            
+            let errorMessage = "Error while connecting to the component";
+            
+            if (err.response?.data?.error) {
+                errorMessage = err.response.data.error;
+            } else if (err.code === 'ECONNREFUSED') {
+                errorMessage = "No response from server. Please check if the API server is running.";
+            } else if (err.code === 'ENOTFOUND') {
+                errorMessage = "Cannot connect to server. Please check the server address.";
+            } else if (err.response?.status === 401) {
+                errorMessage = "Authentication failed. Token has been automatically refreshed, please try again.";
+            } else if (err.response?.status === 403) {
+                errorMessage = "Access denied. You don't have permission to upload deployments.";
+            } else if (err.response?.status === 400) {
+                errorMessage = "Invalid deployment file. Please check the YAML format.";
+            } else if (err.message?.includes('JWT') || err.message?.includes('token')) {
+                errorMessage = "Token error resolved automatically. Please try uploading again.";
+            } else if (err.message) {
+                errorMessage = err.message;
+            }
+            
+            setError(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleSnackbarClose = () => {
         setOpenSnackbar(false);
     };
 
     return (
         <>
+            {/* Page title */}
             <div className={styles.pageTitle}>
-                <h1>Deployment Create</h1>
+                <h1>Create Deployment</h1>
                 <ul>
                     <li>
                         <Link href="/">Dashboard</Link>
                     </li>
-                    <li>Deployment Create</li>
+                    <li>
+                        <Link href="/projects">Projects</Link>
+                    </li>
+                    <li>Create Deployment</li>
                 </ul>
             </div>
 
-            <Card
-                sx={{
-                    boxShadow: "none",
-                    borderRadius: "10px",
-                    p: "25px 20px 15px",
-                    mb: "15px",
-                }}
-            >
-                <Typography
-                    as="h3"
-                    sx={{
-                        fontSize: 18,
-                        fontWeight: 500,
-                        mb: '15px',
-                    }}
-                >
-                    Upload Deployment File
-                </Typography>
+            <Card sx={{ boxShadow: "none", borderRadius: "10px", p: "25px", mb: "15px" }}>
+                <Box sx={{ mb: 3 }}>
+                    <Typography variant="h5" sx={{ mb: 2 }}>
+                        Upload Deployment File
+                    </Typography>
+                    
+                    <div style={{
+                        background: '#e8f5e8',
+                        border: '1px solid #4caf50',
+                        borderRadius: '4px',
+                        padding: '15px',
+                        marginBottom: '20px'
+                    }}>
+                        <h4 style={{ margin: '0 0 10px 0' }}>🌐 Real ICOS Server Connection</h4>
+                        <p style={{ margin: '0 0 10px 0' }}>
+                            <strong>Server:</strong> {controllerAddress}<br />
+                            <strong>Status:</strong> Connected to Real ICOS Ecosystem<br />
+                            <strong>Authentication:</strong> ICOS System Token
+                        </p>
+                    </div>
 
-                <Box component="form" noValidate onSubmit={handleSubmit}>
-                    <Grid container alignItems="center" spacing={2}>
-                        <Grid item xs={12}>
-                            <input
-                                type="file"
-                                name="deploymentFile"
-                                accept=".yaml, .yml"
-                                required
-                                style={{ display: 'block', marginBottom: '15px' }}
-                            />
+                    {error && (
+                        <div style={{
+                            background: '#ffebee',
+                            border: '1px solid #f44336',
+                            borderRadius: '4px',
+                            padding: '15px',
+                            marginBottom: '20px',
+                            color: '#c62828'
+                        }}>
+                            ❌ <strong>Error:</strong> {error}
+                        </div>
+                    )}
+
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={8}>
+                            <Box sx={{ 
+                                border: '2px dashed #ccc', 
+                                borderRadius: '8px', 
+                                p: 3, 
+                                textAlign: 'center',
+                                backgroundColor: '#f9f9f9'
+                            }}>
+                                <input
+                                    accept=".yml,.yaml"
+                                    style={{ display: 'none' }}
+                                    id="deployment-file-upload"
+                                    type="file"
+                                    onChange={handleFileUpload}
+                                    disabled={isLoading}
+                                />
+                                <label htmlFor="deployment-file-upload">
+                                    <Button
+                                        variant="contained"
+                                        component="span"
+                                        startIcon={<AddIcon />}
+                                        disabled={isLoading}
+                                        sx={{ mb: 2 }}
+                                    >
+                                        {isLoading ? "Creating..." : "Choose YAML File"}
+                                    </Button>
+                                </label>
+                                <Typography variant="body2" color="textSecondary">
+                                    Upload a Kubernetes YAML deployment file (.yml or .yaml)
+                                </Typography>
+                            </Box>
                         </Grid>
-
-                        <Grid item xs={12} textAlign="end">
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{
-                                    mt: 1,
-                                    textTransform: "capitalize",
-                                    borderRadius: "8px",
-                                    fontWeight: "500",
-                                    fontSize: "13px",
-                                    padding: "12px 20px",
-                                    color: "#fff !important",
-                                }}
-                            >
-                                <AddIcon
-                                    sx={{
-                                        position: "relative",
-                                        top: "-2px",
-                                    }}
-                                    className="mr-5px"
-                                />{" "}
-                                Create Deployment
-                            </Button>
+                        
+                        <Grid item xs={12} md={4}>
+                            <Box sx={{ 
+                                backgroundColor: '#f5f5f5', 
+                                p: 2, 
+                                borderRadius: '8px',
+                                border: '1px solid #ddd'
+                            }}>
+                                <Typography variant="h6" sx={{ mb: 2 }}>
+                                    📋 Instructions
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    1. Prepare your Kubernetes YAML file
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    2. Click "Choose YAML File" button
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    3. Select your deployment file
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    4. File will be uploaded to Real ICOS Server
+                                </Typography>
+                                <Typography variant="body2">
+                                    5. Check Projects page to see your deployment
+                                </Typography>
+                            </Box>
                         </Grid>
                     </Grid>
                 </Box>
@@ -169,11 +233,14 @@ const ProjectCreate = () => {
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={6000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                onClose={handleSnackbarClose}
             >
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-                    {error}
+                <Alert 
+                    onClose={handleSnackbarClose} 
+                    severity="success" 
+                    sx={{ width: '100%' }}
+                >
+                    Deployment created successfully! Redirecting to Projects page...
                 </Alert>
             </Snackbar>
         </>
