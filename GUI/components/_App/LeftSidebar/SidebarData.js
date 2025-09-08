@@ -57,24 +57,6 @@ export const SidebarData = [
   },
 
 
-  {
-    title: "Controllers",
-    path: "/controller/",
-    icon: <CopyAllIcon />,
-    iconClosed: <KeyboardArrowRightIcon />,
-    iconOpened: <KeyboardArrowDownIcon />,
-
-    subNav: [
-      {
-        title: "All Controllers",
-        path: "/controller/",
-      },
-      // {
-      //   title: "Controllers Create",
-      //   path: "/controllers/controller-create/",
-      // },
-    ],
-  },
 
   {
     title: "Metrics",

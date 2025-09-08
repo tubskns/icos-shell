@@ -139,7 +139,6 @@ const MetricsDisplay = () => {
             </Button>
           }
         >
-          ✅ Real metrics data is being displayed from ICOS Ecosystem
         </Alert>
       )}
 

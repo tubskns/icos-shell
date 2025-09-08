@@ -3,6 +3,7 @@
 // process.env.NEXT_PUBLIC_FOO. Do not iterate over process.env.
 
 const controllerAddress = process.env.NEXT_PUBLIC_CONTROLLER_ADDRESS || '';
+const lighthouseAddress = process.env.NEXT_PUBLIC_LIGHTHOUSE_ADDRESS || '';
 const controllerTimeout = parseInt(process.env.NEXT_PUBLIC_CONTROLLER_TIMEOUT || '15000', 10);
 
 // On the server, enforce presence; in the browser, just warn to avoid runtime crash
@@ -18,6 +19,9 @@ if (!controllerAddress) {
 const config = {
   // Controller (Shell) base URL, e.g. https://your-server:8080/api/v3
   controllerAddress,
+
+  // Lighthouse base URL for controller data
+  lighthouseAddress,
 
   // Default timeouts (optional)
   controllerTimeout,

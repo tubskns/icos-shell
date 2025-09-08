@@ -44,9 +44,11 @@ const Controllers = () => {
         setError("");
 
         try {
+            // Use lighthouseAddress for controllers, fall back to controllerAddress if not set
+            const baseUrl = config.lighthouseAddress || config.controllerAddress;
             const axiosConfig = {
                 method: 'get',
-                url: `${config.controllerAddress}${config.apiEndpoints.controllers}`,
+                url: `${baseUrl}${config.apiEndpoints.controllers}`,
                 headers: { 'Content-Type': 'application/json', 'api_key': authToken },
                 timeout: config.controllerTimeout
             };
@@ -110,18 +112,6 @@ const Controllers = () => {
             )}
 
             {/* Success Message */}
-            {!loading && !error && controllersData.length > 0 && (
-                <Alert severity="success" sx={{ mb: 2 }}>
-                    ✅ <strong>Success!</strong> Real server data is being displayed from ICOS Ecosystem
-                </Alert>
-            )}
-
-            {/* Info Message for No Controllers */}
-            {!loading && !error && controllersData.length === 0 && (
-                <Alert severity="info" sx={{ mb: 2 }}>
-                    ℹ️ <strong>Info:</strong> Successfully connected to ICOS Ecosystem. No controllers are currently registered.
-                </Alert>
-            )}
 
             {/* Loading State */}
             {loading && (
