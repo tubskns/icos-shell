@@ -137,20 +137,6 @@ const ProjectCreate = () => {
                         Upload Deployment File
                     </Typography>
                     
-                    <div style={{
-                        background: '#e8f5e8',
-                        border: '1px solid #4caf50',
-                        borderRadius: '4px',
-                        padding: '15px',
-                        marginBottom: '20px'
-                    }}>
-                        <h4 style={{ margin: '0 0 10px 0' }}>🌐 Real ICOS Server Connection</h4>
-                        <p style={{ margin: '0 0 10px 0' }}>
-                            <strong>Server:</strong> {controllerAddress}<br />
-                            <strong>Status:</strong> Connected to Real ICOS Ecosystem<br />
-                            <strong>Authentication:</strong> ICOS System Token
-                        </p>
-                    </div>
 
                     {error && (
                         <div style={{
