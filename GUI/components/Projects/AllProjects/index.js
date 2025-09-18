@@ -167,18 +167,6 @@ const AllProjects = () => {
             </Box>
 
             {/* Server Status */}
-            <div style={{
-                background: '#e8f5e8',
-                border: '1px solid #4caf50',
-                borderRadius: '4px',
-                padding: '10px',
-                marginBottom: '20px',
-                color: '#2e7d32'
-            }}>
-                🌐 <strong>Real Server Mode</strong><br />
-                Connected to ICOS Shell at {config.controllerAddress}<br />
-                Authenticated with ICOS System Token
-            </div>
 
             {error && (
                 <div style={{
@@ -216,7 +204,7 @@ const AllProjects = () => {
                     color: '#e65100'
                 }}>
                     📋 <strong>No Deployments Found</strong><br />
-                    No deployments are currently available on the Real ICOS Server.<br />
+                    No deployments are currently available on the ICOS Server.<br />
                     You can upload a deployment using the Create Deployment page.
                 </div>
             )}

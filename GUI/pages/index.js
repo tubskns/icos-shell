@@ -230,7 +230,6 @@ export default function MainPage() {
                                     
                                     {data.status === 'no_data' ? (
                                         <div style={{ textAlign: 'center', padding: '40px' }}>
-                                            <h3>🔗 Connected to ICOS Ecosystem</h3>
                                             <p>Server is responding but no deployments are currently available.</p>
                                             <p>This means the connection is working correctly but no deployments are registered in the system yet.</p>
                                         </div>

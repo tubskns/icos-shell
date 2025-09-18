@@ -128,7 +128,7 @@ const SimpleTopologyGraph = ({ data }) => {
             .attr("x", 600)
             .attr("y", 40)
             .attr("text-anchor", "middle")
-            .text("ICOS Cluster Topology - Real Server Data")
+            .text("ICOS Cluster Topology - Server Data")
             .attr("fill", "#333")
             .style("font-size", "18px")
             .style("font-weight", "bold");

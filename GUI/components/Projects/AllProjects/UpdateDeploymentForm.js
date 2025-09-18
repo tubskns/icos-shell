@@ -62,7 +62,7 @@ const UpdateDeploymentForm = ({ deploymentId, initialData, onUpdate }) => {
                 Update Deployment
             </Typography>
 
-            {/* Example fields - customize based on real deployment schema */}
+            {/* Example fields - customize based on deployment schema */}
             <TextField
                 fullWidth
                 name="appName"

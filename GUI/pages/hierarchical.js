@@ -182,7 +182,6 @@ const HierarchicalPage = () => {
                         </Button>
                     }
                 >
-                    ✅ Real hierarchical data is being displayed from ICOS Ecosystem
                 </Alert>
             )}
 

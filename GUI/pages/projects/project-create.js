@@ -55,7 +55,7 @@ const ProjectCreate = () => {
                 console.log("Content length:", content.length);
 
                 const response = await axios.post(
-                    `${controllerAddress}/api/v3/deployment/`,
+                    `${controllerAddress}/deployment/`,
                     {
                         content: content,
                         filename: filename
@@ -137,20 +137,6 @@ const ProjectCreate = () => {
                         Upload Deployment File
                     </Typography>
                     
-                    <div style={{
-                        background: '#e8f5e8',
-                        border: '1px solid #4caf50',
-                        borderRadius: '4px',
-                        padding: '15px',
-                        marginBottom: '20px'
-                    }}>
-                        <h4 style={{ margin: '0 0 10px 0' }}>🌐 Real ICOS Server Connection</h4>
-                        <p style={{ margin: '0 0 10px 0' }}>
-                            <strong>Server:</strong> {controllerAddress}<br />
-                            <strong>Status:</strong> Connected to Real ICOS Ecosystem<br />
-                            <strong>Authentication:</strong> ICOS System Token
-                        </p>
-                    </div>
 
                     {error && (
                         <div style={{
@@ -210,16 +196,16 @@ const ProjectCreate = () => {
                                     📋 Instructions
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    1. Prepare your Kubernetes YAML file
+                                    1. Prepare your ICOS application descriptor YAML file
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
                                     2. Click "Choose YAML File" button
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    3. Select your deployment file
+                                    3. Select your deployment descriptor file
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    4. File will be uploaded to Real ICOS Server
+                                    4. File will be uploaded to ICOS Server
                                 </Typography>
                                 <Typography variant="body2">
                                     5. Check Projects page to see your deployment
