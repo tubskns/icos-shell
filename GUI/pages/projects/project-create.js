@@ -55,7 +55,7 @@ const ProjectCreate = () => {
                 console.log("Content length:", content.length);
 
                 const response = await axios.post(
-                    `${controllerAddress}/api/v3/deployment/`,
+                    `${controllerAddress}/deployment/`,
                     {
                         content: content,
                         filename: filename
@@ -196,16 +196,16 @@ const ProjectCreate = () => {
                                     📋 Instructions
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    1. Prepare your Kubernetes YAML file
+                                    1. Prepare your ICOS application descriptor YAML file
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
                                     2. Click "Choose YAML File" button
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    3. Select your deployment file
+                                    3. Select your deployment descriptor file
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    4. File will be uploaded to Real ICOS Server
+                                    4. File will be uploaded to ICOS Server
                                 </Typography>
                                 <Typography variant="body2">
                                     5. Check Projects page to see your deployment

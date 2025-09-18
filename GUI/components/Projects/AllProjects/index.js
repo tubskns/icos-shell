@@ -204,7 +204,7 @@ const AllProjects = () => {
                     color: '#e65100'
                 }}>
                     📋 <strong>No Deployments Found</strong><br />
-                    No deployments are currently available on the Real ICOS Server.<br />
+                    No deployments are currently available on the ICOS Server.<br />
                     You can upload a deployment using the Create Deployment page.
                 </div>
             )}
